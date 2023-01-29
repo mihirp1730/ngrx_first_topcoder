@@ -1,0 +1,68 @@
+@import 'libs/app/styles';
+
+.opportunity-catalog {
+  position: relative;
+  margin: 0 auto;
+  .page-header {
+    border-bottom: 1px solid $color-white;
+    padding: 15px 20px;
+    box-shadow: 0px 2px 4px 0 $color-grey-05;
+    background-color: $color-white;
+    .heading {
+      display: flex;
+      justify-content: space-between;
+      .back-link {
+        padding: 0 5px 0 0;
+        margin: 6px 16px 0 0;
+        .mat-icon {
+          cursor: pointer;
+        }
+      }
+      .title {
+        @include font-size(24);
+        margin: 0;
+        flex: auto;
+        font-weight: normal;
+      }
+    }
+  }
+  .filter-container {
+    margin-bottom: -10px;
+  }
+  .cards-container {
+    width: 97%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 16px;
+
+    @media screen and (min-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+    @media screen and (min-width: 720px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media screen and (min-width: 1080px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media screen and (min-width: 1400px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .no-data {
+    height: 45vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  .oppor-wrapper-viewport {
+    height: calc(100vh - 250px);
+    width: 100%;
+  }
+}

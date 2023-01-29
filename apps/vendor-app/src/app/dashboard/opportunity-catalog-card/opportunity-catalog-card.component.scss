@@ -1,0 +1,202 @@
+@import 'libs/app/styles';
+
+.opportunity-card {
+  height: calc(100% - 1px);
+  padding: 0 !important;
+  .mat-card-image {
+    height: 185px;
+    object-fit: cover;
+    width: 100%;
+    margin-top: 0;
+    border-radius: 3px 3px 0 0;
+  }
+  .mat-card-content {
+    margin-top: 8px;
+    margin-bottom: 0;
+    padding: 0px !important;
+    color: $color-black;
+    .flex-col {
+      display: flex;
+      flex-direction: column;
+    }
+    .flex-row {
+      display: flex;
+      flex-direction: row;
+
+      .chips {
+        .chip-content {
+          display: flex;
+          align-items: flex-end;
+          gap: 3px;
+
+          .mat-icon {
+            height: 15px !important;
+            color: $color-white;
+          }
+        }
+      }
+    }
+    .data-objects {
+      min-height: 50px;
+      align-items: center;
+      display: flex;
+      gap: 35px;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      padding: 30px 30px 10px 20px;
+      .badge {
+        top: -22px !important;
+      }
+
+      .mat-badge-content {
+        top: -21px !important;
+        right: -16px !important;
+      }
+
+      .disable-icon {
+        user-select: none;
+        color: $color-grey-11;
+        fill: $color-grey-11;
+
+        .mat-badge-content {
+          color: $color-white;
+          background-color: $color-grey-11;
+        }
+      }
+      .see-more-wrapper {
+        margin-left: auto;
+      }
+    }
+    .properties-container {
+      font-size: 0.75rem;
+      list-style: none;
+      padding: 0 20px 5px;
+      border-bottom: 1px solid $color-grey-08;
+      margin-bottom: 0;
+      li {
+        display: flex;
+        .label {
+          width: 32px;
+          color: $color-grey-06;
+        }
+        .value.no-data {
+          color: $color-grey-06;
+        }
+        .value {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          span {
+            font-weight: 700;
+          }
+        }
+      }
+    }
+    .menu {
+      .more {
+        cursor: pointer;
+      }
+    }
+    ::ng-deep mat-menu {
+      .mat-menu-item {
+        font-size: 12px;
+      }
+    }
+
+    .flex-row.time {
+      height: 70px;
+      padding: 0px 0px;
+      border-top: 1px solid $color-grey-08;
+      div.box {
+        padding: 5px;
+        width: 50%;
+        text-align: center;
+      }
+      div.edge {
+        border-right: 1px solid $color-grey-08;
+      }
+    }
+    .flex-row.caption {
+      padding: 0 20px;
+      justify-content: flex-end;
+      div.name {
+        margin-right: auto;
+        .opportunity-caption {
+          font-size: 16px;
+          font-weight: 500;
+          margin-bottom: 5px;
+          width: 16vw;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+        .mat-chip {
+          color: $color-black;
+        }
+        .mat-standard-chip.mat-chip-disabled {
+          background: $color-grey-10;
+        }
+        .mat-chip.draft {
+          background-color: $color-grey-13;
+        }
+        .mat-chip.published {
+          background-color: $color-emerald-green;
+          color: $color-black;
+        }
+        .mat-chip.unpublished {
+          background-color: $color-very-dark-grey1;
+          color: $color-white;
+        }
+        .mat-chip.expired {
+          background-color: $color-light-orange;
+          color: $color-very-dark-grey1;
+        }
+        .mat-chip.publishing {
+          background-color: $color-text-warning;
+        }
+        .mat-chip.public {
+          background-color: $color-light-blue;
+          color: $color-white;
+        }
+        .mat-chip.private {
+          background-color: $color-light-brown;
+          color: $color-white;
+        }
+      }
+    }
+  }
+  .loader-container.loading-media {
+    background: transparent;
+    display: flex;
+    height: 35%;
+    position: absolute;
+    width: 93%;
+    left: 3%;
+    top: 6%;
+  }
+}
+
+mat-icon.disabledIcon {
+  ::ng-deep svg {
+    color: $color-grey-06 !important;
+    opacity: 0.5;
+  }
+}
+
+mat-icon.disable-icon.badge {
+  ::ng-deep path {
+    fill: $color-grey-06 !important;
+    opacity: 0.5;
+  }
+}
+
+::ng-deep .data-objects {
+  .dls-popover-content {
+    background: $color-grey-01 !important;
+    .data-objects-popover {
+      background: $color-grey-01;
+      color: $color-white;
+      padding: 4px;
+    }
+  }
+}

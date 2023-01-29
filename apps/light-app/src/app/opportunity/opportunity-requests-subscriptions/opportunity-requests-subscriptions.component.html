@@ -1,0 +1,55 @@
+<section class="requests-subscriptions-dashboard">
+    <div class="title">
+        <h2>My Opportunities</h2>
+    </div>
+    <mat-tab-group
+        horizontalPosition="left"
+        verticalPosition="above"
+        #tabGroup
+    >
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Subscriptions
+            </ng-template>
+            <div class="cards-container" *ngIf="(opportunitySubscriptions$ | async)?.length > 0; else noOpportunitySubscription">
+                <apollo-subscriptions-card  *ngFor="let opportunitySubscriptionDetails of (opportunitySubscriptions$ | async)"
+                [opportunitySubscriptionDetails]="opportunitySubscriptionDetails"></apollo-subscriptions-card>
+            </div>
+            <ng-template #noOpportunitySubscription>
+                <div class="container-no-opportunity-subscription"
+                  *ngIf="((showSubscriptionLoader$ | async) === false)"
+                  data-slb-id="no-opportunity-subscription-message">
+                    <div class="content">
+                        <h6 class="heading">No opportunity Subscription</h6>
+                        <span class="message">Opportunities you have subscribed to will be shown here.</span>
+                    </div>
+                </div>
+            </ng-template>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Requests
+            </ng-template>
+            <div class="cards-container" *ngIf="(opportunityRequests$ | async)?.length > 0; else noOpportunityRequests">
+                <apollo-request-card  *ngFor="let opportunityRequestDetails of (opportunityRequests$ | async)"
+                [opportunityRequestDetails]="opportunityRequestDetails"></apollo-request-card>
+            </div>
+            <ng-template #noOpportunityRequests>
+                <div class="container-no-opportunity-request"
+                  *ngIf="((showRequestLoader$ | async) === false)"
+                  data-slb-id="no-opportunity-request-message">
+                    <div class="content">
+                        <h6 class="heading">No opportunity Requested</h6>
+                        <span class="message">Opportunities you have requested will be shown here.</span>
+                    </div>
+                </div>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+    <div class="loader-container" *ngIf="((showRequestLoader$ | async) && tabGroup.selectedIndex === 1)">
+      <mat-spinner data-slb-id="load-request-spinner"></mat-spinner>
+    </div>
+    <div class="loader-container" *ngIf="(showSubscriptionLoader$ | async)">
+      <mat-spinner data-slb-id="load-subscription-spinner"></mat-spinner>
+    </div>
+</section>

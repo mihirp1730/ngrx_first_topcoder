@@ -1,0 +1,45 @@
+jobs:
+  - job: Job_1
+    displayName: Build
+    pool:
+      name: de-build
+      demands:
+        - java
+    variables:
+      - group: VSTS User & Token for QP Express
+    steps:
+      - checkout: self
+        clean: true
+      - task: Bash@3
+        displayName: Make `apps/storage-server/build/build.sh` script executable
+        inputs:
+          targetType: inline
+          script: >-
+            chmod +x apps/storage-server/build/build.sh
+
+            rm -rf /root/.cache
+
+            npm cache clean --force
+      - task: Bash@3
+        displayName: Run `apps/storage-server/build/build.sh` script
+        inputs:
+          filePath: apps/storage-server/build/build.sh
+      - task: PublishTestResults@2
+        displayName: Publish Test Results testresults/**/*.xml
+        inputs:
+          testResultsFiles: testresults/**/*.xml
+          mergeTestResults: true
+      - task: PublishCodeCoverageResults@1
+        displayName: Publish code coverage from $(Build.SourcesDirectory)/coverage/apps/storage-server/cobertura-coverage.xml
+        inputs:
+          codeCoverageTool: Cobertura
+          summaryFileLocation: $(Build.SourcesDirectory)/coverage/apps/storage-server/cobertura-coverage.xml
+          reportDirectory: $(Build.SourcesDirectory)/coverage/apps/storage-server
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: buildartifacts'
+        inputs:
+          PathtoPublish: buildartifacts/storage-server
+          ArtifactName: buildartifacts
+      - task: mspremier.PostBuildCleanup.PostBuildCleanup-task.PostBuildCleanup@3
+        displayName: 'Clean Agent Directories'
+        condition: always()

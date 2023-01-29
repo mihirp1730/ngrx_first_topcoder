@@ -1,0 +1,56 @@
+@import 'libs/app/styles';
+
+.additionalServicesFields {
+  .info {
+    @include font-size(12);
+    color: $color-grey-06;
+  }
+
+  .attribute.form-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    margin-right: -10px;
+    align-items: stretch;
+
+    .label {
+      margin-top: 2px;
+    }
+
+    .field {
+      width: 50%;
+
+      ::ng-deep .mat-form-field {
+        width: 50%;
+      }
+
+      ::ng-deep .mat-form-field-flex {
+        background-color: $color-white;
+      }
+    }
+  }
+
+  .required {
+    color: $color-candy;
+  }
+
+  .mat-form-field {
+    width: 50%;
+    margin-bottom: -8px;
+
+    .mat-form-field-label-wrapper {
+      .mat-form-field-label {
+        color: $color-grey-06 !important;
+      }
+    }
+
+    .mat-form-field-flex {
+      color: $color-grey-06 !important;
+      background-color: $color-white;
+    }
+  }
+  .info.tab-sub-heading {
+    width: 50%;
+  }
+}

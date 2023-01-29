@@ -1,0 +1,35 @@
+{
+  "authConfig": {
+    "authProxyApi": "$APP_AUTH_SERVICE",
+    "timeoutInterval": "$AUTH_TIMEOUT_INTERVAL"
+  },
+  "delfiGuiAuthConfig": {
+    "delfiGuiBaseUrl": "$DELFI_GUI_BASE_URL"
+  },
+  "delfiPortalApp": "$DELFI_PORTAL_APP",
+  "assetTransactionAppCode": "$AT_APP_CODE",
+  "api": {
+    "commonFileManager": "$APP_COMMON_FILE_MANAGER_URL",
+    "multipleFileDownload": "$MULTIPLE_MEDIA_FILE_DOWNLOAD_API_URL",
+    "osduFileManager": "$APP_OSDU_FILE_MANAGER_URL",
+    "appBaseUrl": "$APP_BASE_URL",
+    "metadata": "$APP_METADATA_SERVICE",
+    "dataPackages": "$APP_DATA_PACKAGES_SERVICE",
+    "dataSubscription": "$APP_DATA_SUBSCRIPTION_SERVICE",
+    "opportunity": "$APP_OPPORTUNITY_SERVICE",
+    "opportunitySubscriptions": "$APP_OPPORTUNITY_SUBSCRIPTION_SERVICE",
+    "communication": "$APP_COMMUNICATION_SERVICE",
+    "wsCommunicationUrl": "$APP_COMMUNICATION_WS_URL",
+    "opportunitySubscriptionRequest": "$APP_OPPORTUNITY_SUBSCRIPTION_REQUEST",
+    "opportunityMapRepresentation": "$APP_OPPORTUNITY_MAP_SERVICE",
+    "opportunityAttendee": "$APP_OPPORTUNITY_ATTENDEE_SERVICE",
+    "appCCMServiceHost": "$APP_CCM_SERVICE_HOST"
+  },
+  "trafficManagerConfig": "$TM_CONSUMER_DETAILS",
+  "trafficManager": {
+    "trafficManagerUrl": "$APP_TRAFFIC_MANAGER_URL_VENDOR",
+    "errorRedirect": "$APP_TRAFFIC_MANAGER_ERROR_REDIRECT",
+    "isEnabled": "$APP_TRAFFIC_MANAGER_IS_ENABLED"
+  },
+  "measurementId": "$ANALYTICS_MEASUREMENT_ID_VENDOR"
+}

@@ -1,0 +1,108 @@
+{{$definitionName := getenv "BUILD_DEFINITIONNAME" -}}
+{{$sourceBranchName := getenv "BUILD_SOURCEBRANCHNAME" -}}
+{{$buildNumber := getenv "BUILD_BUILDNUMBER" -}}
+{{$gcloudProject := getenv "GCLOUD_PROJECT" -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{$definitionName}}$DEPLOYMENTID
+  annotations:
+    release-description: "$RELEASE_DESCRIPTION"
+  labels:
+    BUILD_DEFINITIONNAME: "{{$definitionName}}"
+    BUILD_SOURCEBRANCHNAME: "{{$sourceBranchName}}"
+    BUILD_BUILDNUMBER: "{{$buildNumber}}"
+    RELEASE_NAME: "$RELEASE_NAME"
+    RELEASE_REQUESTEDFOR: "$REQUESTED_FOR"
+spec:
+  replicas: $REPLICAS
+  selector:
+    matchLabels:
+      app: {{$definitionName}}$DEPLOYMENTID
+  template:
+    metadata:
+      labels:
+        ssr: EAR-AA-20129
+        project-id: $GCLOUD_PROJECT
+        cluster-name: $CONTAINER_CLUSTER
+        app: {{$definitionName}}$DEPLOYMENTID
+        version: "{{$buildNumber}}"
+        BUILD_DEFINITIONNAME: "{{$definitionName}}"
+        BUILD_SOURCEBRANCHNAME: "{{$sourceBranchName}}"
+        BUILD_BUILDNUMBER: "{{$buildNumber}}"
+    spec:
+      serviceAccountName: $GCLOUD_PROJECT-k8sa-svc
+      containers:
+      - name: esp
+        ports:
+        - containerPort: 8081
+          name: http-esp
+        image: gcr.io/endpoints-release/endpoints-runtime:$ESP_IMAGE_VERSION
+        args: [
+          "--http_port", "8081",
+          "--backend", "127.0.0.1:8080",
+          "--service", "gateway-server-$CONTAINER_CLUSTER.endpoints.$GCLOUD_PROJECT.cloud.goog",
+          "--rollout_strategy", "managed",
+        ]
+      - image: gcr.io/{{$gcloudProject}}/{{$definitionName}}:{{$sourceBranchName}}-{{$buildNumber}}
+        name: {{$definitionName}}
+        ports:
+        - name: http-gateway
+          containerPort: 8080
+        env:
+        - name: GATEWAY_SERVER_CONFIG_LOGGER_SERVICE_NAME
+          value: "gateway-server"
+        - name: GATEWAY_SERVER_CONFIG_LOGGER_LOG_LEVEL
+          value: "info"
+        - name: GATEWAY_SERVER_ENABLE_TRACE
+          value: "true"
+        - name: GATEWAY_SERVER_DEPLOY
+          value: "true"
+        - name: GATEWAY_SERVER_ENDPOINT
+          value: "/api/gateway/"
+        - name: GATEWAY_SERVER_PORT
+          value: "8080"
+        - name: GATEWAY_SERVER_CSRF_PROTECTION
+          value: "$ENABLE_CSRF_PROTECTION"
+        - name: GATEWAY_SERVER_NAME
+          value: "gateway-server"
+        - name: GATEWAY_SERVER_DATA_SOURCE_TYPE_GRPC_HOST
+          value: "$GATEWAY_SERVER_DATA_SOURCE_TYPE_GRPC_HOST"
+        - name: GATEWAY_SERVER_DATA_SOURCE_TYPE_GRPC_PORT
+          value: "$GATEWAY_SERVER_DATA_SOURCE_TYPE_GRPC_PORT"
+        - name: CONSUMER_SUBSCRIPTION_SERVICE
+          value: "$CONSUMER_SUBSCRIPTION_SERVICE"
+        - name: CONSUMER_SUBSCRIPTION_SERVICE_CLUSTER
+          value: "$CONSUMER_SUBSCRIPTION_SERVICE_CLUSTER"
+        - name: DATA_SUBSCRIPTION_SERVICE_CLUSTER
+          value: "$DATA_SUBSCRIPTION_SERVICE_CLUSTER"
+        - name: METADATA_SERVICE_PORT
+          value: "$METADATA_SERVICE_PORT"
+        - name: AUTH_CLIENT_ID
+          value: "$AUTH_CLIENT_ID"
+        - name: AUTH_JWK_URI
+          value: "$AUTH_JWK_URI"
+        - name: VALIDATION_CACHE_TIMEOUT_SEC
+          value: "$VALIDATION_CACHE_TIMEOUT_SEC"
+        - name: VALIDATION_NUMBERS_OF_RETRIES
+          value: "$VALIDATION_NUMBERS_OF_RETRIES"
+        - name: VALIDATION_RETRY_INTERVAL
+          value: "$VALIDATION_RETRY_INTERVAL"
+        - name: TRAFFIC_MANAGER_VALIDATION_ENDPOINT
+          value: "http://light-auth-server$DEPLOYMENTID:8080/api/auth/traffic-validate"
+        - name: TRAFFIC_MANAGER_VALIDATION_CACHE_KEY
+          value: "$TRAFFIC_MANAGER_VALIDATION_CACHE_KEY"
+        - name: TRAFFIC_MANAGER_IS_ENABLED
+          value: "$APP_TRAFFIC_MANAGER_IS_ENABLED"
+        - name: METRICS_INTERVAL
+          value: "$METRICS_INTERVAL"
+        - name: METRICS_PORT
+          value: "$METRICS_PORT"
+        - name: SPAN_PROCESSOR_HOST
+          value: "$SPAN_PROCESSOR_HOST"
+        - name: SPAN_PROCESSOR_PORT
+          value: "$SPAN_PROCESSOR_PORT"
+        - name: GATEWAY_SERVER_OPPORTUNITY_GRPC_HOST
+          value: "$GATEWAY_SERVER_OPPORTUNITY_GRPC_HOST"
+        - name: GATEWAY_SERVER_OPPORTUNITY_GRPC_PORT
+          value: "$GATEWAY_SERVER_OPPORTUNITY_GRPC_PORT"

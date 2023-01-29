@@ -1,0 +1,23 @@
+{
+  "projectType": "library",
+  "root": "libs/app/styles",
+  "sourceRoot": "libs/app/styles/src",
+  "prefix": "apollo",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/styles/src/**/*.ts", "libs/app/styles/src/**/*.html"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/styles"],
+      "options": {
+        "jestConfig": "libs/app/styles/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

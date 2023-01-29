@@ -1,0 +1,21 @@
+@import '../../../../../styles';
+
+.flex-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  white-space: nowrap;
+  vertical-align: center;
+  margin-left: 2px;
+  justify-content: center;
+
+  .icon-label-approve-title {
+    color: $color-emerald-green !important;
+    font-weight: normal !important;
+  }
+
+  .icon-label-error-title {
+    color: $color-candy !important;
+    font-weight: normal !important;
+  }
+}

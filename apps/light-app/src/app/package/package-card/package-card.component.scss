@@ -1,0 +1,125 @@
+@use 'sass:math';
+@import 'libs/app/styles';
+
+$max-width: 1200px;
+
+$package-cards-per-row: 4;
+$package-cards-gap: 10px;
+$package-card-height: 410px;
+
+apollo-packages-filter {
+  width: 100%;
+  display: flex;
+}
+
+.package-card {
+  $w: math.div($max-width - ($package-cards-gap * 3), $package-cards-per-row);
+
+  background-color: $color-grey-02;
+  border: 1px solid $color-grey-05;
+  border-radius: 2px;
+  color: $color-grey-08;
+  height: $package-card-height;
+  max-width: $w;
+  overflow: hidden;
+  transition: all 1s;
+
+  &:hover {
+    cursor: pointer;
+    border-color: $color-grey-02;
+  }
+
+  &--disabled {
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: $color-grey-01;
+      opacity: 0.7;
+      z-index: 1;
+    }
+  }
+
+  &__header {
+    display: flex;
+    height: 65px;
+    padding: 13px;
+    align-items: center;
+    justify-content: space-between;
+
+    .slb-icon {
+      margin-right: 10px;
+      min-width: 20px;
+
+      ::ng-deep & > svg {
+        vertical-align: top;
+      }
+    }
+  }
+
+  &__title {
+    @include font-size(16);
+    @include line-height(21);
+    color: $color-white;
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  &__thumb {
+    height: 110px;
+    background-color: $color-grey-04;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  &__info-container {
+    padding: 10px 10px 0;
+  }
+
+  &__info {
+    display: flex;
+    margin-bottom: 3px;
+
+    &-label {
+      color: $color-grey-10;
+      font-weight: normal;
+      width: 50%;
+    }
+
+    &-data {
+      color: $color-grey-10;
+      font-weight: 300;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 50%;
+    }
+  }
+
+  &__description-title {
+    color: $color-grey-10;
+    font-weight: normal;
+    width: 50%;
+    margin-top: 20px;
+    margin-bottom: 0px;
+  }
+
+  &__description {
+    display: flex;
+    margin: 3px 5px;
+    overflow: hidden;
+    flex-direction: column;
+    text-overflow: ellipsis;
+  }
+
+}

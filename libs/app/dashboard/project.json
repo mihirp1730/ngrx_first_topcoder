@@ -1,0 +1,36 @@
+{
+  "projectType": "library",
+  "root": "libs/app/dashboard",
+  "sourceRoot": "libs/app/dashboard/src",
+  "prefix": "apollo",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "options": {
+        "tsConfig": "libs/app/dashboard/tsconfig.lib.json",
+        "project": "libs/app/dashboard/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/app/dashboard/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/dashboard/src/**/*.ts", "libs/app/dashboard/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/dashboard"],
+      "options": {
+        "jestConfig": "libs/app/dashboard/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

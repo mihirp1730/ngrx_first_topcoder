@@ -1,0 +1,19 @@
+@import 'libs/app/styles';
+
+:host {
+  height: 20px;
+  width: 20px;
+}
+
+mat-spinner {
+  position: absolute;
+  z-index: 10;
+}
+
+mat-icon {
+  z-index: 1;
+}
+
+mat-icon.disabled {
+  color: $color-grey-05;
+}

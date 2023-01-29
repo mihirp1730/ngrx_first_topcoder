@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row title">VDR</div>
+  <div class="row content">
+    <div class="icon-column">
+      <mat-icon svgIcon="check"></mat-icon>
+    </div>
+    <div class="details-column">
+      <div class="row">
+        <p>Your Access request for VDR has been approved</p>
+      </div>
+      <div class="row">
+        <div class="column field">
+          <div>Department</div>
+          <div>{{ opportunityVdrDetails.departmentName }}</div>
+        </div>
+        <div class="column field">
+          <div>Account</div>
+          <div>{{ opportunityVdrDetails.accountName }}</div>
+        </div>
+      </div>
+      <div class="access-period">
+        <div class="row access-duration">
+          <p>Access Duration</p>
+        </div>
+        <div class="row">
+          <div class="column field">
+            <div>From</div>
+            <div>{{ vdrSubscriptionInfo.startDate | date: 'dd-MMM-YYYY' }}</div>
+          </div>
+          <div class="column field">
+            <div>To</div>
+            <div>{{ vdrSubscriptionInfo.endDate | date: 'dd-MMM-YYYY' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="launch-btn-column">
+      <button slb-button  [disabled]="!opportunityVdrDetails?.hasAccess" (click)="launchVDR(opportunityVdrDetails.vdrLink)">Launch VDR</button>
+    </div>
+  </div>
+</div>

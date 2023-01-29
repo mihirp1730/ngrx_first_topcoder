@@ -1,0 +1,42 @@
+{
+  "projectType": "library",
+  "root": "libs/app/services/media-document-uploader",
+  "sourceRoot": "libs/app/services/media-document-uploader/src",
+  "prefix": "apollo",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["dist/libs/app/services/media-document-uploader"],
+      "options": {
+        "project": "libs/app/services/media-document-uploader/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/app/services/media-document-uploader/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/app/services/media-document-uploader/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/services/media-document-uploader"],
+      "options": {
+        "jestConfig": "libs/app/services/media-document-uploader/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/app/services/media-document-uploader/src/**/*.ts",
+          "libs/app/services/media-document-uploader/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

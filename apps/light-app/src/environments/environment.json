@@ -1,0 +1,37 @@
+{
+  "api": {
+    "metadata": "$APP_METADATA_SERVICE",
+    "session": "$APP_SESSION_SERVICE",
+    "appBaseUrl": "$APP_BASE_URL",
+    "dataPackages": "$APP_DATA_PACKAGES_SERVICE",
+    "consumerSubscriptions": "$APP_CONSUMER_SUBSCRIPTION_SERVICE",
+    "dataSubscription": "$APP_DATA_SUBSCRIPTION_SERVICE",
+    "content": "$APP_CONTENT_SERVICE",
+    "commonFileManager": "$APP_COMMON_FILE_MANAGER_URL",
+    "opportunityGatewayAttendee": "$APP_OPPORTUNITY_GATEWAY_ATTENDEE_SERVICE",
+    "opportunityAttendee": "$APP_OPPORTUNITY_ATTENDEE_SERVICE",
+    "communication": "$APP_COMMUNICATION_SERVICE",
+    "wsCommunicationUrl": "$APP_COMMUNICATION_WS_URL",
+    "opportunitySubscriptionRequest": "$APP_OPPORTUNITY_SUBSCRIPTION_REQUEST",
+    "opportunityRequestsAttendee": "$APP_OPPORTUNITY_REQUEST_ATTENDEE",
+    "opportunitySubscriptionsAttendee": "$APP_OPPORTUNITY_SUBSCRIPTION_ATTENDEE",
+    "multipleFileDownload": "$MULTIPLE_MEDIA_FILE_DOWNLOAD_API_URL",
+    "hostAppUrl": "$HOST_APP_URL"
+  },
+  "trafficManagerConfig": "$TM_CONSUMER_DETAILS",
+  "trafficManager": {
+    "trafficManagerUrl": "$APP_TRAFFIC_MANAGER_URL_CONSUMER",
+    "errorRedirect": "$APP_TRAFFIC_MANAGER_ERROR_REDIRECT",
+    "isEnabled": "$APP_TRAFFIC_MANAGER_IS_ENABLED"
+  },
+  "authConfig": {
+    "authProxyApi": "$APP_AUTH_SERVICE",
+    "timeoutInterval": "$AUTH_TIMEOUT_INTERVAL"
+  },
+  "delfiGuiAuthConfig": {
+    "delfiGuiBaseUrl": "$DELFI_GUI_BASE_URL"
+  },
+  "measurementId": "$ANALYTICS_MEASUREMENT_ID_CONSUMER",
+  "enableGuestLogin": "$ENABLE_GUEST_LOGIN",
+  "whitelistedGuestList": "$WHITELISTED_GUEST_LIST"
+}

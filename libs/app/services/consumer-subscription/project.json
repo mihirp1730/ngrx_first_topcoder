@@ -1,0 +1,24 @@
+{
+  "projectType": "library",
+  "root": "libs/app/services/consumer-subscription",
+  "sourceRoot": "libs/app/services/consumer-subscription/src",
+  "prefix": "apollo",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/services/consumer-subscription/src/**/*.ts", "libs/app/services/consumer-subscription/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/services/consumer-subscription"],
+      "options": {
+        "jestConfig": "libs/app/services/consumer-subscription/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

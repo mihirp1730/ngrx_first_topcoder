@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  height: 50px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+mat-checkbox {
+  margin-left: 15px;
+}

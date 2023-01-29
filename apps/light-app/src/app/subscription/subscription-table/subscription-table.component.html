@@ -1,0 +1,67 @@
+<article [attr.data-slb-id]="'subscription-table-'+subscription.dataSubscriptionId" class="expandable-card">
+  <mat-expansion-panel data-slb-id="expandable-card__expandable" (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false" class="expandable-card__expandable" [class.isSelected]="panelOpenState" hideToggle
+    [disabled]="isRequest">
+
+    <mat-expansion-panel-header class="expandable-card__data" [ngClass]="{'data-subscription-requests': isRequest}">
+      <mat-panel-title data-slb-id="is-request" *ngIf="isRequest">
+        <span *ngIf="packageDetails" [title]="packageDetails.name"><a class="package-name"
+            [routerLink]="['/packages', packageDetails.dataPackageId]"><strong (click)="$event.stopPropagation()">{{
+              packageDetails.name }}</strong></a></span>
+        <span> Not provided </span>
+        <span> Not provided </span>
+        <span> {{ pendingRequest?.requestedOn | date:'YYYY-MM-dd HH:mm' }} </span>
+        <span [title]="subscription.requestStatus">{{ subscription.requestStatus | uppercase }}</span>
+        <apollo-subscription-table-actions [subscriptionStatus]="subscription.requestStatus">
+        </apollo-subscription-table-actions>
+      </mat-panel-title>
+      <mat-panel-title data-slb-id="is-not-request" *ngIf="!isRequest">
+        <span *ngIf="packageDetails" [title]="packageDetails.name"><a
+            [routerLink]="['/packages', packageDetails.dataPackageId]"><strong (click)="$event.stopPropagation()">{{
+              packageDetails.name }}</strong></a></span>
+        <span> Not provided </span>
+        <span> Not provided </span>
+        <span> Not provided </span>
+        <span [title]="subscription.dataSubscriptionStatus">{{ subscription.dataSubscriptionStatus }}</span>
+        <apollo-subscription-table-actions [subscriptionStatus]="subscription.dataSubscriptionStatus"
+          [subscriptionId]="subscription.dataSubscriptionId">
+        </apollo-subscription-table-actions>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div *ngIf="!isRequest" class="expandable-card__expanded">
+      <div class="expandable-card__expanded__title">
+        Package Details
+        <ul class="expandable-card__expanded__container">
+          <li data-slb-id="vendorId" class="expandable-card__expanded__item">Data
+            Provider:&nbsp;<a>{{dataVendor?.name}}</a></li>
+          <li data-slb-id="subscriptionPrice" class="expandable-card__expanded__item">
+            Price:&nbsp;{{subscription.subscriptionPrice}} USD</li>
+          <li data-slb-id="subscriptionDuration" class="expandable-card__expanded__item">
+            Duration:&nbsp;{{subscription.subscriptionDuration}} Months</li>
+          <li class="expandable-card__expanded__item">Last package update:&nbsp; N/A </li>
+        </ul>
+      </div>
+
+      <div class="expandable-card__expanded__title">
+        Subscriptions Details
+        <ul data-slb-id="subcription-details-container" class="expandable-card__expanded__container">
+          <li class="expandable-card__expanded__item">Request date and time: &nbsp; N/A </li>
+          <ng-container *ngIf="isRequest; else subscribed">
+            <li data-slb-id="subscriptionRequestId" class="expandable-card__expanded__item">Request ID: {{
+              subscription.subscriptionRequestId }}</li>
+          </ng-container>
+          <ng-template #subscribed>
+            <li data-slb-id="dataSubscriptionId" class="expandable-card__expanded__item">Subscription ID: {{
+              subscription.dataSubscriptionId }}</li>
+            <li data-slb-id="startDate" class="expandable-card__expanded__item">Subscription start date and time:&nbsp;
+              {{ (subscription.startDate || '') | date:'YYYY-MM-dd HH:mm' }}
+            </li>
+            <li data-slb-id="endDate" class="expandable-card__expanded__item">Subscription end date and time:&nbsp;
+              {{ (subscription.endDate || '') | date:'YYYY-MM-dd HH:mm' }} </li>
+          </ng-template>
+        </ul>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</article>

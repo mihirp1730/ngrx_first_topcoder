@@ -1,0 +1,10 @@
+<div class="documents-container" *ngIf="(documents$ | async)?.length >= 1">
+    <div class="documents-container__header">Documents</div>
+    <div class="documents-container__content" *ngFor="let document of (documents$ | async)">
+        <div class="document" (click)="clickDocument(document)">
+            <mat-icon [svgIcon]="documentIcon(document)"></mat-icon>
+            <div>{{document.name}}</div>
+            <mat-spinner *ngIf="documenLoading(document) | async" data-slb-id="load-spinner" diameter="20"></mat-spinner>
+        </div>
+    </div>
+</div>

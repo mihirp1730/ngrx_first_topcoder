@@ -1,0 +1,23 @@
+{
+  "root": "libs/server/jwt-token-middleware",
+  "sourceRoot": "libs/server/jwt-token-middleware/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/server/jwt-token-middleware/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/server/jwt-token-middleware"],
+      "options": {
+        "jestConfig": "libs/server/jwt-token-middleware/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

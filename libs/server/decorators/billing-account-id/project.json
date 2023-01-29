@@ -1,0 +1,23 @@
+{
+  "root": "libs/server/decorators/billing-account-id",
+  "sourceRoot": "libs/server/decorators/billing-account-id/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/server/decorators/billing-account-id/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/server/decorators/billing-account-id"],
+      "options": {
+        "jestConfig": "libs/server/decorators/billing-account-id/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

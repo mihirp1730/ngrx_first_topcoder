@@ -1,0 +1,23 @@
+{
+  "projectType": "library",
+  "root": "libs/app/components/documents",
+  "sourceRoot": "libs/app/components/documents/src",
+  "prefix": "apollo",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/components/documents"],
+      "options": {
+        "jestConfig": "libs/app/components/documents/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/components/documents/src/**/*.ts", "libs/app/components/documents/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

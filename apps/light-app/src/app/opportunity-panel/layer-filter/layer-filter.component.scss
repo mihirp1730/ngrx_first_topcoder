@@ -1,0 +1,34 @@
+@import 'libs/app/styles';
+
+::ng-deep .dls-dropdown-panel {
+  height: 28px !important;
+
+  .dls-panel-trigger-arrow {
+    display: none !important;
+  }
+  .filter-content {
+    display: flex;
+    align-items: center;
+    width: 115px;
+    padding: 4px;
+    justify-content: space-between;
+    font-family: 'Roboto';
+    ::ng-deep .dls-panel-trigger-arrow {
+      display: none !important;
+    }
+  }
+}
+::ng-deep .dls-dropdown-panel.mat-standard-chip {
+  padding: 15px 3px !important;
+  border: 1px solid $color-grey-07;
+}
+
+::ng-deep .dls-dropdown-panel.filter-selected {
+  .mat-chip-ripple {
+    background-color: $color-voss-blue !important;
+    color: $color-white !important;
+  }
+  span {
+    color: $color-white;
+  }
+}

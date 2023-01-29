@@ -1,0 +1,19 @@
+<div class="communication-container">
+  <header class="page-header">
+      <div class="heading">
+          <h2 class="title">Messages</h2>
+      </div>
+  </header>
+  <div class="container">
+      <div class="chat-list">
+          <apollo-chat-list [chatList]="chats$ | async" (chatClick)="onChatClick($event)"
+          [selectedChatId]="selectedChatId"></apollo-chat-list>
+      </div>
+      <div class="chat-window">
+          <router-outlet></router-outlet>
+      </div>
+  </div>
+  <div class="loader-container" *ngIf="(loadingChats$ | async) || (isLoadingWhileGettingMessages$ | async)">
+    <mat-spinner data-slb-id="load-subscription-spinner"></mat-spinner>
+  </div>
+</div>

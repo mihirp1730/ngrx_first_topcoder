@@ -1,0 +1,39 @@
+@import 'libs/app/styles';
+
+:host {
+  display: flex;
+  width: 100vw;
+  background-color: $color-vox-blue;
+  padding: 80px 0;
+}
+
+.card-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 90px;
+
+  img {
+    width: 76px;
+    height: 76px;
+  }
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+    grid-gap: 0;
+  }
+}
+
+.card {
+  &__title {
+    font-size: clamp(1.3rem, 5vw, 2rem);
+    line-height: normal;
+  }
+
+  &__description {
+    font-size: clamp(1rem, 5vw, 1.5rem);
+    line-height: normal;
+  }
+}

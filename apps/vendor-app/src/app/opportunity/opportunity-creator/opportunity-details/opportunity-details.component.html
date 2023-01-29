@@ -1,0 +1,164 @@
+<form class="details" [formGroup]="opportunityDetails" [apolloFormPatcher]="initialFormData$ | async">
+
+  <div class="opportunity-details">
+    <div class="opportunity-description">
+      <section class="primary-info-selection">
+        <div class="attribute">
+          <mat-label class="label">Country<span class="required">*</span></mat-label>
+          <mat-form-field slbFormField class="opportunity-field">
+            <mat-select formControlName="countries" placeholder="Search country" name="country" [compareWith]="compareValues">
+              <mat-option *ngFor="let country of countryName$ | async" [value]="[country.value]" required>
+                {{ country.viewText }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="attribute">
+          <mat-label>Asset Type<span class="required">*</span></mat-label>
+          <mat-form-field slbFormField class="opportunity-field">
+            <mat-select formControlName="assetType" placeholder="Select" name="asset" [compareWith]="compareValues">
+              <mat-option *ngFor="let assetType of assetType$ | async" [value]="[assetType.value]" required>
+                {{ assetType.viewText }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="attribute">
+          <mat-label>Offer Type<span class="required">*</span></mat-label>
+          <mat-form-field slbFormField class="opportunity-field">
+            <mat-select formControlName="offerType" placeholder="Select" name="offer" [compareWith]="compareValues">
+              <mat-option *ngFor="let offer of offerType$ | async" [value]="[offer.value]" required>
+                {{ offer.viewText }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="attribute">
+          <mat-label>Contract Type<span class="required">*</span></mat-label>
+          <mat-form-field slbFormField class="opportunity-field">
+            <mat-select formControlName="contractType" placeholder="Select" name="contract" [compareWith]="compareValues">
+              <mat-option *ngFor="let contract of contractType$ | async" [value]="[contract.value]" required>
+                {{ contract.viewText }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="attribute">
+          <mat-label>Delivery Type<span class="required">*</span></mat-label>
+          <mat-form-field slbFormField class="opportunity-field">
+            <mat-select formControlName="deliveryType" placeholder="Select" name="deliveryType" [compareWith]="compareValues">
+              <mat-option *ngFor="let deliveryType of deliveryType$ | async" [value]="[deliveryType.value]" required>
+                {{ deliveryType.viewText }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="attribute">
+          <mat-label>Phase type<span class="required">*</span></mat-label>
+          <mat-form-field slbFormField class="opportunity-field">
+            <mat-select formControlName="phase" placeholder="Select" name="phase" [compareWith]="compareValues">
+              <mat-option *ngFor="let phase of phaseType$ | async" [value]="[phase.value]" required>
+                {{ phase.viewText }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="attribute form-field">
+          <mat-label class="label">Start Date<span class="required">*</span></mat-label>
+          <div class="field date-picker">
+            <slb-date-picker
+              [value]="startDate$ | async"
+              [minValue]="minDate"
+              [disableTextInput]="true"
+              [dateControl]="startDate"
+              (dateChange)="dateSelected('startDate', $event)"
+              placeholder="Select Date"
+              [hint]="false"
+            >
+            </slb-date-picker>
+          </div>
+        </div>
+        <div class="attribute">
+          <mat-label>Duration<span class="required">*</span></mat-label>
+          <mat-form-field slbFormField class="opportunity-field">
+            <mat-select (selectionChange)="durationChange($event)" formControlName="duration" name="duration" [compareWith]="compareWith">
+              <mat-option *ngFor="let duration of durationValues" [value]="duration" required>
+                {{ duration.viewText }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="attribute form-field" *ngIf="opportunityDetails.get('duration').value.value !== 99 * 12">
+          <mat-label class="label">End Date<span *ngIf="!endDateDisabled" class="required">*</span></mat-label>
+          <div
+            class="field date-picker"
+            [ngClass]="{
+              'date-disabled': endDateDisabled
+            }"
+          >
+            <slb-date-picker
+              [minValue]="opporEndMinDate"
+              [dateControl]="endDate"
+              (dateChange)="dateSelected('endDate', $event)"
+              placeholder="Select Date"
+              [hint]="false"
+              [disableTextInput]="true"
+            >
+            </slb-date-picker>
+          </div>
+        </div>
+        <div class="attribute form-field" *ngIf="opportunityDetails.get('duration').value.value === 99 * 12">
+          <mat-label class="label">End Date</mat-label>
+          <div>
+            <mat-form-field slbFormField class="opportunity-field">
+              <input matInput type="text" value="Unlimited (Manual Expiry)" disabled />
+            </mat-form-field>
+          </div>
+        </div>
+      </section>
+      <section class="sub-info-selection" *ngIf="opportunityDetails.get('assetType')?.value?.toString()?.trim() === 'Carbon Trading'">
+        <div class="attribute form-field">
+          <mat-label class="label">Expected Sequestration</mat-label>
+          <div class="expected-sequestration-input sub-inputs">
+            <mat-form-field slbFormField class="opportunity-field">
+              <input matInput type="number" placeholder="Type here" formControlName="expectedSequestration" />
+            </mat-form-field>
+            <span class="label unit" [matTooltip]="'Tonne'">t</span>
+          </div>
+        </div>
+        <div class="attribute form-field">
+          <mat-label class="label">Cost of CO2 Abated</mat-label>
+          <div class="cost-of-carbon-abated-input sub-inputs">
+            <mat-form-field slbFormField class="opportunity-field">
+              <input matInput type="number" placeholder="Type here" formControlName="costOfCarbonAbated" />
+            </mat-form-field>
+            <span class="label unit" [matTooltip]="'$/Tonne'">$/t</span>
+          </div>
+        </div>
+        <div class="attribute form-field">
+          <mat-label class="label">Certifier</mat-label>
+          <div class="certifier-input sub-inputs">
+            <mat-form-field slbFormField class="opportunity-field">
+              <input matInput type="text" placeholder="Type here" formControlName="certifier" />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="attribute form-field">
+          <mat-label class="label">Last Validated Or Verified</mat-label>
+          <div class="last-validated-or-verified sub-inputs">
+            <div class="field">
+              <slb-date-picker
+                class="calendar"
+                closeCalendarOnRangeSelected="true"
+                formControlName="lastValidatedOrVerified"
+                placeholder="Select Date"
+                [hint]="false"
+              >
+              </slb-date-picker>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</form>

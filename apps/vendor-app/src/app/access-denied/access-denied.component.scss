@@ -1,0 +1,47 @@
+@import 'libs/app/styles';
+
+.access-denied {
+  &-container {
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0 auto;
+    height: 100vh;
+    background: $color-white;
+    color: $color-very-dark-grey1;
+    width: 100vw;
+    text-align: center;
+  }
+  &-inner-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    max-width: 551px;
+    margin: 0 auto;
+    .icon-wrapper {
+      background-color: $color-grey-10;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      position: relative;
+      .mat-icon {
+        color: $color-candy;
+        position: absolute;
+        left: 50%;
+        margin-right: -50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        height: 50px;
+        width: 38px;
+      }
+    }
+    .sub-heading {
+      margin-bottom: 0;
+    }
+    .heading {
+      margin-bottom: 20px;
+    }
+    .btn-portal-redirect {
+      margin-top: 35px;
+    }
+  }
+}

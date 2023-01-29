@@ -1,0 +1,141 @@
+#  If you are going to add new environment variable to this file, please remeber you have to also modife input in the envsubst command in the deploy.sh file
+swagger: "2.0"
+info:
+  version: 2.0.0
+  title: GAIA Light Gateway Server $CONTAINER_CLUSTER $GCLOUD_PROJECT
+  description: GAIA Light server for providing interfaces to other backend services.
+host: gateway-server-$CONTAINER_CLUSTER.endpoints.$GCLOUD_PROJECT.cloud.goog
+basePath: /api/gateway
+tags:
+  - name: Gateway
+    description: API for providing access to backend services.
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+x-google-endpoints:
+  - name: gateway-server-$CONTAINER_CLUSTER.endpoints.$GCLOUD_PROJECT.cloud.goog
+x-google-backend:
+  disable_auth: true
+
+# API
+paths:
+  /health:
+    get:
+      operationId: health
+      tags:
+        - health
+      summary: "health endpoint "
+      description: "health endpoint "
+      parameters:
+        - in: header
+          name: appKey
+          type: string
+          description: "App Key for the Application"
+          required: true
+      responses:
+        "200":
+          description: returns OK meaning that service is up and running
+        "404":
+          description: returns when "appKey" is not defined in headers. Must for this endpoint to function
+  "/consumer/data-package/{dataPackageId}":
+    get:
+      operationId: "dataPackageConsumer"
+      tags:
+        - Gateway
+      summary: "Query for the data package of the consumer."
+      description: "Query for the data package of the consumer."
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          default: Bearer {token}
+        - in: path
+          name: dataPackageId
+          type: string
+          required: true
+          description: The id of the data package to get.
+      responses:
+        "200":
+          description: "Query for the data package of a consumer"
+  "/vendor/data-packages":
+    patch:
+      operationId: "dataPackageVendorResults"
+      tags:
+        - Gateway
+      summary: "Query for vendor packages."
+      description: "Query for vendor packages."
+      parameters:
+        - in: header
+          name: billingAccountId
+          description: Billing Account Id of the Data Vendor
+          required: true
+          type: string
+        - in: body
+          name: filterRequest
+          description: filter on data packages
+          schema:
+            type: object
+      responses:
+        "200":
+          description: "Query for vendor packages."
+  "/{examplePathParameter}":
+    get:
+      operationId: "gatewayPathExample"
+      parameters:
+        - in: path
+          name: examplePathParameter
+          type: string
+          required: true
+          description: This is a placeholder path parameter to allow a deployment.
+      tags:
+        - Gateway
+      summary: "An initial path to allow for an initial deployment."
+      description: "An initial path to allow for an initial deployment."
+      responses:
+        "200":
+          description: "An initial path to allow for an initial deployment."
+  /attendee/opportunities/{opportunityId}:
+    get:
+      operationId: getOpportunity
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          default: Bearer {token}
+          type: string
+        - in: path
+          name: opportunityId
+          type: string
+          required: true
+          description: To get published opportunity based on opportunity id.
+      tags:
+        - Gateway
+      summary: Returns opportunity.
+      description: Returns opportunity.
+      responses:
+        "200":
+          description: A Opportunity.
+  /host/opportunity-subscription-request:
+    get:
+      operationId: getOpportunitySubscriptionRequests
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          default: Bearer {token}
+          type: string
+        - name: vendorid
+          in: header
+          required: true
+          type: string
+      tags:
+        - Gateway
+      summary: Returns opportunity subscription request.
+      description: Returns opportunity requests.
+      responses:
+        "200":
+          description: Opportunity subscription requests.

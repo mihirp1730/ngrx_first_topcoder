@@ -1,0 +1,35 @@
+<section data-slb-id="file-progress" class="file-progress">
+  <div class="file-progress__header">
+    <div class="file-progress__name">
+      <ng-container [ngSwitch]="fileStatus$|async">
+        <ng-container *ngSwitchCase="FileStatus.Completed">
+          <div class="file-progress__complete">
+            <mat-icon svgIcon="check"></mat-icon>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="FileStatus.Erroneous">
+          <div class="file-progress__erroneous">
+            <mat-icon svgIcon="error"></mat-icon>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="FileStatus.InProgress">
+          <mat-spinner diameter="20"></mat-spinner>
+        </ng-container>
+      </ng-container>
+      <label [title]="fileName$|async">{{ fileName$|async }}</label>
+    </div>
+    <div class="file-progress__actions">
+      <button data-slb-id="cancel" class="file-progress__cancel" disabled slb-icon-button (click)="onCancelUpload()"
+        [disabled]="isDeleteDisabled || (fileStatus$|async) === FileStatus.InProgress || (fileStatus$|async) === FileStatus.Erroneous">
+        <mat-icon svgIcon="delete"></mat-icon>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="fileProgressErrorMessage$|async as errorMessage" class="file-progress__errorMessage">
+    {{errorMessage}}
+  </div>
+  <!-- Keep the progress bar html to be worked in the future once we make a decision on how we want to handle it -->
+  <!-- <div class="file-progress__bar" *ngIf="!file.progress.completed">
+      <slb-progress-indicator [value]="file.progress.percentage" [mode]="'determinate'" [type]="'positive'"></slb-progress-indicator>
+    </div> -->
+</section>

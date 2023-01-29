@@ -1,0 +1,36 @@
+{
+  "projectType": "library",
+  "root": "libs/app/menu",
+  "sourceRoot": "libs/app/menu/src",
+  "prefix": "apollo",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "options": {
+        "tsConfig": "libs/app/menu/tsconfig.lib.json",
+        "project": "libs/app/menu/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/app/menu/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/menu/src/**/*.ts", "libs/app/menu/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/menu"],
+      "options": {
+        "jestConfig": "libs/app/menu/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

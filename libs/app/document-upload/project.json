@@ -1,0 +1,23 @@
+{
+  "projectType": "library",
+  "root": "libs/app/document-upload",
+  "sourceRoot": "libs/app/document-upload/src",
+  "prefix": "apollo",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/document-upload"],
+      "options": {
+        "jestConfig": "libs/app/document-upload/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/document-upload/src/**/*.ts", "libs/app/document-upload/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

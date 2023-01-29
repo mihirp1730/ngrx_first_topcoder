@@ -1,0 +1,162 @@
+jobs:
+  - job: Job_1
+    displayName: Build
+    timeoutInMinutes: 90
+    pool:
+      name: de-build
+    variables:
+      - group: VSTS User & Token for QP Express
+    steps:
+      - checkout: self
+        clean: False
+        persistCredentials: True
+      - task: Bash@3
+        displayName: Make `apps/vendor-app/build/build.sh` script executable
+        inputs:
+          targetType: inline
+          script: >
+            chmod +x apps/vendor-app/build/build.sh
+
+            rm -rf /root/.cache
+
+            npm cache clean --force
+      - task: Bash@3
+        displayName: Run `apps/vendor-app/build/build.sh` script
+        inputs:
+          filePath: apps/vendor-app/build/build.sh
+          script: >
+            chmod +x apps/auth-server/build/build.sh
+      - task: PublishTestResults@2
+        displayName: Publish Test Results testresults/**/*.xml
+        inputs:
+          testResultsFiles: testresults/**/*.xml
+          mergeTestResults: true
+      - task: PublishCodeCoverageResults@1
+        displayName: Publish code coverage from $(Build.SourcesDirectory)/coverage/apps/vendor-app/cobertura-coverage.xml
+        inputs:
+          codeCoverageTool: Cobertura
+          summaryFileLocation: $(Build.SourcesDirectory)/coverage/apps/vendor-app/cobertura-coverage.xml
+          reportDirectory: $(Build.SourcesDirectory)/coverage/apps/vendor-app
+      - task: SonarQubePrepare@4
+        displayName: Prepare analysis on SonarQube
+        inputs:
+          SonarQube: 8697bcbd-21f8-4e8e-a3d9-5f371de419e4
+          scannerMode: CLI
+          configFile: apps/vendor-app/sonar-project.properties
+      - task: SonarQubeAnalyze@4
+        displayName: Run Code Analysis
+      - task: SonarQubePublish@4
+        displayName: Publish Quality Gate Result
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: buildartifacts'
+        inputs:
+          PathtoPublish: buildartifacts/vendor-app
+          ArtifactName: buildartifacts
+      - task: Docker@1
+        displayName: Pull docker image
+        enabled: False
+        inputs:
+          command: pull
+          arguments: gcr.io/gaia-devops/$(BUILD.DEFINITIONNAME):$(BUILD.SOURCEBRANCHNAME)-$(BUILD.BUILDNUMBER)
+          buildContext: '**'
+      - task: Bash@3
+        displayName: Get Commit Description
+        inputs:
+          targetType: inline
+          script: >-
+            CHANGES=`git log -1 --pretty=%B`
+
+            mkdir -p $(Build.artifactStagingDirectory)/exported
+
+            echo $(Build.artifactStagingDirectory)/exported
+
+            echo "$(Build.Repository.Name)" > $(Build.artifactStagingDirectory)/exported/CHANGES
+
+            echo "$CHANGES" >> $(Build.artifactStagingDirectory)/exported/CHANGES
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: Git commit'
+        inputs:
+          PathtoPublish: $(Build.ArtifactStagingDirectory)/exported
+          ArtifactName: exported
+      - task: Docker@2
+        displayName: Pull docker image
+        continueOnError: True
+        enabled: False
+        inputs:
+          containerRegistry: 3e08f4f3-5eb2-4308-8002-62c219024857
+          command: pull
+          arguments: gcr.io/gaia-devops/$(BUILD.DEFINITIONNAME):$(BUILD.SOURCEBRANCHNAME)-$(BUILD.BUILDNUMBER)
+      - task: Trivy@0
+        displayName: Trivy
+        continueOnError: True
+        enabled: False
+        inputs:
+          image: gcr.io/gaia-devops/$(BUILD.DEFINITIONNAME):$(BUILD.SOURCEBRANCHNAME)-$(BUILD.BUILDNUMBER)
+          ssrid: EAR-AA-20129
+          version: 1.0
+          component: light-vendor-app
+      - task: PowerShell@2
+        displayName: Publish Trivy scan result to QP-Express
+        continueOnError: True
+        enabled: False
+        inputs:
+          targetType: inline
+          script: "$project = \"EAR-AA-20129\"\n$version = \"1.0\"\n$stage = \"Dev\"\n$stageQa = \"QA-Staging\"\n\n\nfunction New-TemporaryDirectory {\n    $parent = [System.IO.Path]::GetTempPath()\n    [string] $name = [System.Guid]::NewGuid()\n    New-Item -ItemType Directory -Path (Join-Path $parent $name)\n}\n\n$gitrepo = \"https://$(VSTSUser):$(VSTSToken)@slb-it.visualstudio.com/ea-quality-process-improvement/_git/qp-EAR-AA-20129\";\n$comment = \"Check-in files for project EAR-AA-20129/1.0/Dev\";\n$tempdir = New-TemporaryDirectory\n$destinationDir = \"$tempdir/$version\"\n$currentdir = (Get-Item -Path \".\\\" -Verbose).FullName\n\nWrite-Output \"currentdir -- $currentdir\"\n\nWrite-Output \"destinationDir -- $destinationDir\"\n\n$agentBuildDirectory = $Env:AGENT_BUILDDIRECTORY\n\nWrite-Output \"agentBuildDirectory -- $agentBuildDirectory\"\n\n$files = \"$agentBuildDirectory/qpexpress/$version/$stage*\"\n$files1 = \"$agentBuildDirectory/qpexpress/$version/$stage/*\"\n\nWrite-Output \"files to be copied -- $files\"\n\nfunction CheckIntoGit {\n    param()\n    Write-Output \"GitRepo: $gitrepo\"\n    Write-Output \"Temp directory : $tempdir\"\n\n    $path = [System.IO.Path]::GetTempFileName()\n\n    git clone --quiet $gitrepo $tempdir | Write-Output\n    try\n    {\n        Write-Output \"Change Dir to $tempdir\"\n        Set-Location -Path $tempdir\n        \n       $location =  Get-Location\n       Write-Output \"Location: $location\"\n        \n        Write-Output \"Copy Item from $files to $destinationDir\"\n\n        New-Item -Path \"$destinationDir/\" -ItemType Directory -Force\n\n        Copy-Item $files -Destination \"$destinationDir/\" -Recurse -force -Verbose\n        Copy-Item $files1 -Destination \"$destinationDir/$stageQa\" -Recurse -force -Verbose\n\n        git config --global user.email \"$(VSTSUser)@slb.com\" --replace-all | Write-Output\n\n        git config --global user.name \"qp checkin\" --replace-all  | Write-Output\n\n        git config core.safecrlf false\n        git config core.autocrlf false\n        \n        Write-Output \"Comment is $comment\"\n\n       $Path =  Convert-Path .\n       Write-Output \"Current Path is $Path\"\n\n        git status | Write-Output\n\n        Write-Output \"Adding $destinationDir\"\n        git add \"$destinationDir/*\" | Write-Output\n\n\n        Write-Output \"Committing\"\n        git commit \"$destinationDir\" -m \"$comment\"\n\n        git diff HEAD | Write-Output\n       $Path =  Convert-Path .\n        Write-Output \"Current Path is $Path\"\n\n        Write-Output \"Pushing\"\n        git push --all origin | Write-Output\n    }\n    finally\n    {\n        Set-Location -Path $currentdir\n    }\n}\n\nWrite-Output $comment\nWrite-Output \"Temporary Directory: $tempdir\"\n\nCheckIntoGit\n"
+          pwsh: true
+  - job: Job_2
+    displayName: PR job
+    timeoutInMinutes: 90
+    condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
+    pool:
+      name: de-build
+    variables:
+      - group: VSTS User & Token for QP Express
+    steps:
+      - checkout: self
+        clean: False
+      - task: DownloadBuildArtifacts@0
+        displayName: Download Build Artifacts
+        condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
+        enabled: False
+        inputs:
+          buildType: specific
+          project: d5d65afc-aafc-4c80-8969-299ae1944357
+          definition: 17742
+          buildId: 3726111
+          downloadType: specific
+          itemPattern: '**/build/**'
+          downloadPath: $(Build.SourcesDirectory)
+          extractTars: false
+      - task: Bash@3
+        displayName: dos2unix
+        condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
+        enabled: False
+        inputs:
+          targetType: inline
+          script: >-
+            # Write your commands here
+
+
+            sudo apt-get update
+
+
+            sudo apt-get install -y dos2unix
+
+
+            ls -lrt $(Build.SourcesDirectory)/scripts/build
+
+            ls -lrt $(Build.SourcesDirectory)/build
+
+
+            dos2unix $(Build.SourcesDirectory)/scripts/build/check_pr_line_limit.sh
+      - task: Bash@3
+        displayName: PR Line Limit Check
+        condition: and(succeeded(), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
+        enabled: False
+        inputs:
+          filePath: $(Build.SourcesDirectory)/scripts/build/check_pr_line_limit.sh
+          arguments: 500
+          script: "#!/bin/bash\n\nset -e\n\nlineLimit=500\nfullBranchName=\"$SYSTEM_PULLREQUEST_SOURCEBRANCH\"\necho \"fullBranchNameee\"\necho $fullBranchName\nbranchName=\"temp\"\nif [[ $fullBranchName -eq \"\" ]]\nthen\n  branchName=\"$BUILD_SOURCEBRANCHNAME\"\nelse\n  branchName=`printf ${fullBranchName:11}`\nfi\n\necho \"branchNameee\"\necho $branchName\ndiffResult=`git diff --shortstat origin/master...origin/$branchName`\necho \"$diffResult\"\nstrIndex() { \n  x=\"${1%%$2*}\"\n  [[ \"$x\" = \"$1\" ]] && echo -1 || echo ${#x}\n}\ncomma=\",\"\ncommaIndexA=`strIndex \"${diffResult}\" \"${comma}\"`\nStringA=`echo ${diffResult:$commaIndexA}`\nnA=`echo $StringA | cut -d' ' -f 2`\nStringA=`echo ${StringA:2}`\ncommaIndexB=`strIndex \"${StringA}\" \"${comma}\"`\nif [[ $commaIndexB -eq -1 ]]\nthen\n  nB=0\nelse\n  StringB=`echo ${StringA:$commaIndexB}`\n  nB=`echo $StringB | cut -d' ' -f 2`\nfi\nn=$(($nA + $nB))\necho There are $n line changes in your PR\nif [[ $n -gt $lineLimit ]]\nthen\n  echo You have been a very bad human being whose branch has more than $lineLimit line changes. \n  echo YOU SHALL NOT PASS!\n  exit 1\nelse\n  echo Congratulations! Take a moment and reflect and be proud that you have kept the number of line changes in your branch under $lineLimit\n  exit 0\nfi"
+      - task: mspremier.PostBuildCleanup.PostBuildCleanup-task.PostBuildCleanup@3
+        displayName: 'Clean Agent Directories'
+        condition: always()

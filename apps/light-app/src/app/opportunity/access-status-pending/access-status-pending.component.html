@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="title-row">{{accessType}}</div>
+  <div class="row content">
+    <div class="icon-column">
+      <mat-icon svgIcon="availability"></mat-icon>
+    </div>
+    <div class="details-column">
+      <p>Your access for VDR is Pending</p>
+      <div class="row">
+        <div class="column">
+          <div>Request Raised On</div>
+          <div>{{ vdrRequestInfo.requestedOn | date:'dd-MMM-YYYY' }}</div>
+        </div>
+        <div class="column pending-with">
+        </div>
+      </div>
+    </div>
+    <div class="cancel-btn-column"></div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+{
+  "projectType": "library",
+  "root": "libs/app/shape-file-validator",
+  "sourceRoot": "libs/app/shape-file-validator/src",
+  "prefix": "apollo",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "options": {
+        "tsConfig": "libs/app/shape-file-validator/tsconfig.lib.json",
+        "project": "libs/app/shape-file-validator/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/app/shape-file-validator/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/shape-file-validator/src/**/*.ts", "libs/app/shape-file-validator/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/shape-file-validator"],
+      "options": {
+        "jestConfig": "libs/app/shape-file-validator/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,126 @@
+@import 'libs/app/styles';
+
+.package-details-pane-content {
+  width: 100%;
+  background-color: $color-very-dark-grey;
+  .mask {
+    visibility: hidden;
+  }
+  .grid-container {
+    display: grid;
+    grid-gap: 10px;
+    padding: 5px;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
+    font-size: 12px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    .grid-item {
+      text-align: center;
+      padding: 5px;
+    }
+    .header-left1 {
+      grid-column: 1;
+      grid-row: 1;
+      text-align: left;
+      padding-left: 5px;
+      div h4 {
+        margin-bottom: 0px;
+      }
+      div span {
+        padding-left: 2px;
+      }
+    }
+
+    .header-left2 {
+      grid-column: 2 / span 2;
+      grid-row: 1;
+      text-align: right;
+    }
+    .header-left1,
+    .header-left2,
+    .header-right3 {
+      height: 70px;
+    }
+
+    .imgcell-left1 {
+      grid-column: 1 / span 2;
+      grid-row: 2 / span 3;
+      margin: 20px;
+      img {
+        width: 100%;
+        height: 100%;
+        padding: 5px;
+        border: 1px solid;
+      }
+    }
+    .imgcell-left2 {
+      grid-column: 2;
+      grid-row: 2;
+      img {
+        width: 100%;
+        height: 100%;
+        padding: 5px;
+        border: 1px solid $color-grey-08;
+      }
+    }
+    .datalist-right {
+      grid-column: 3;
+      grid-row: 2;
+      ul.profile {
+        list-style: none;
+        text-align: left;
+        margin: 0px 0px 0px -40px;
+        li span.label {
+          font-weight: bolder;
+        }
+        li span.value {
+          float: right;
+        }
+        li:first-child span.value {
+          color: $color-voss-blue;
+        }
+      }
+    }
+
+    .imgcell-left1,
+    .imgcell-left2,
+    .datalist-right {
+      height: 470px;
+    }
+
+    .descript-left1 {
+      grid-column: 1 / span 2;
+      grid-row: 3;
+      text-align: left;
+      padding-left: 10px;
+      p.sub-title {
+        text-align: left;
+        font-weight: bolder;
+        font-size: 14px;
+      }
+      ul li {
+        list-style-type: disc;
+      }
+    }
+
+    .request-card {
+      grid-column: 3;
+      grid-row: 3;
+    }
+
+    .descript-left1,
+    .descript-left2,
+    .request-card {
+      height: auto;
+    }
+
+  }
+}
+.progress-spinner {
+  display: block;
+  position: absolute;
+  justify-content: center;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  opacity: 0.7;
+}

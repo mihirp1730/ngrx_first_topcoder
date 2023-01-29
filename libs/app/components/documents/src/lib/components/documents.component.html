@@ -1,0 +1,21 @@
+<div class="container">
+  <ng-container *ngFor="let document of documents">
+    <div class="document"
+         [title]="document.fileName">
+      <div class="image-preview" (click)="openedDocument.next(document)">
+        <ng-container *ngIf="document.imgUrl === null; else ShowLoadedImage">
+          <mat-spinner diameter="20"></mat-spinner>
+        </ng-container>
+        <ng-template #ShowLoadedImage>
+          <img [src]="document.imgUrl" [alt]="document.fileName">
+        </ng-template>
+      </div>
+      <div class="name" [title]="document.fileName" (click)="openedDocument.next(document)">
+       {{document.fileName}}
+      </div>
+      <div class="caption" [title]="document.caption">
+        {{document.caption}}
+      </div>
+    </div>
+  </ng-container>
+</div>

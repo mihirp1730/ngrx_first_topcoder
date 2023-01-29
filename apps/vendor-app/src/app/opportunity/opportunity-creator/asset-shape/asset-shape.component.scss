@@ -1,0 +1,239 @@
+@import 'libs/app/styles';
+
+.opportunity-asset-shape {
+  .fontwght-500 {
+    font-weight: 500;
+  }
+
+  header {
+    display: flex;
+    flex-direction: column;
+    .label {
+      font-weight: 500;
+      flex: 0.46;
+    }
+    .asset-shape-color {
+      display: flex;
+      .color-box {
+        height: 20px;
+        width: 20px;
+        margin-bottom: 15px;
+        border: 1px solid $color-grey-06;
+      }
+      .asset-type {
+        margin-left: 0.5rem;
+      }
+    }
+
+    .asset-data-type {
+      display: flex;
+      &_label {
+        font-weight: 500;
+        flex: 0.4;
+      }
+      &_container {
+        display: flex;
+        flex: 0.46;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .data-type-value {
+        font-weight: 500;
+      }
+    }
+
+    .upload-asset-shape {
+      display: flex;
+      &_label {
+        font-weight: 500;
+        flex: 0.74;
+      }
+      &_box {
+        display: flex;
+        flex-direction: column;
+        .close-btn {
+          text-align: center;
+
+          mat-icon {
+            cursor: pointer;
+
+            &:hover {
+              color: $color-candy;
+            }
+          }
+        }
+
+        .ellipsis-text {
+          width: 140px;
+          overflow: hidden !important;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .file-name {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .info {
+      @include font-size(12);
+      color: $color-grey-06;
+    }
+
+    .required {
+      color: $color-candy !important;
+    }
+
+    .data-type {
+      ::ng-deep mat-form-field {
+        width: 200px !important;
+      }
+    }
+
+    .no-action {
+      &:hover mat-icon {
+        ::ng-deep svg {
+          color: $color-grey-06 !important;
+          cursor: not-allowed !important;
+          opacity: 0.5;
+        }
+      }
+    }
+
+    mat-form-field.mat-form-field {
+      ::ng-deep mat-select.mat-select-disabled {
+        .mat-select-value {
+          color: $color-grey-06 !important;
+        }
+      }
+    }
+
+    .toggle-asset-data-type {
+      margin-left: 80px;
+    }
+
+    .toggle-file {
+      .toggle-asset-data-type {
+        margin-left: 18px;
+      }
+    }
+
+    .remove-btn {
+      button {
+        margin-left: auto;
+        margin-right: 8em;
+      }
+
+      ::ng-deep button {
+        .dls-button-wrapper {
+          color: $color-candy !important;
+        }
+      }
+
+      .no-action {
+        ::ng-deep button {
+          .dls-button-wrapper {
+            color: $color-grey-06 !important;
+            cursor: not-allowed !important;
+            opacity: 0.5;
+
+            mat-icon {
+              ::ng-deep svg {
+                color: $color-grey-06 !important;
+                cursor: not-allowed !important;
+                opacity: 0.5;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .file-box {
+      display: flex;
+      align-items: center;
+
+      .status-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 1px solid #28a228;
+        width: 22px;
+        height: 22px;
+        padding: 4px;
+        margin-top: 2px;
+        margin-right: 4px;
+
+        mat-icon {
+          height: 18px;
+          width: 18px;
+          line-height: 10px;
+          color: #28a228;
+        }
+      }
+
+      mat-spinner {
+        width: 26px !important;
+        height: 26px !important;
+
+        ::ng-deep svg {
+          width: 24px !important;
+          height: 24px !important;
+        }
+      }
+    }
+
+    ::ng-deep apollo-upload-widget {
+      .slb-dropzone {
+        padding: 4px;
+      }
+
+      .file-uploader .document-dropzone .dls-dragzone-area {
+        height: 80%;
+        margin: 4px;
+      }
+
+      .file-uploader .document-dropzone .upload-validity {
+        margin-top: -4px;
+        margin-bottom: 8px;
+      }
+
+      .icon-container {
+        height: 36px;
+        margin-top: 6px;
+        text-align: center;
+      }
+    }
+
+    hr {
+      margin-top: 16px 0;
+    }
+  }
+}
+
+.toggle-global-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid $color-grey-08;
+  border-bottom: 1px solid $color-grey-08;
+  padding: 5px;
+  margin: 12px 0;
+
+  mat-icon {
+    color: $color-vox-blue;
+  }
+
+  .global-option-label {
+    color: $color-vox-blue;
+    font-weight: 700;
+  }
+
+  .global-option-button-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+}

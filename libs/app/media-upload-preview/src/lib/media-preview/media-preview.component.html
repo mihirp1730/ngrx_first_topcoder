@@ -1,0 +1,35 @@
+<div class="media-preview">
+  <div class="preview">
+    <img *ngIf="source" [src]="source" [alt]="altText">
+  </div>
+  <div class="media-label">
+    <div class="media-name">
+      <mat-icon svgIcon="document"></mat-icon>
+      <span [title]="file?.name">
+        {{file?.name}}
+      </span>
+    </div>
+    <button *ngIf="!isPublished" type="button" slb-icon-button class="delete-btn" (click)="removeMediaEmit(file.id)">
+      <mat-icon title="Remove media" svgIcon="delete"></mat-icon>
+    </button>
+  </div>
+  <div class="caption-container">
+   <form [formGroup]="mediaTextForm"> 
+    <mat-form-field slbFormField>
+      <mat-label>
+        Caption
+      </mat-label>
+      <textarea
+        matInput
+        class="caption-field"
+        formControlName="mediaCaption"
+        name="mediaCaption"
+        placeholder="caption"
+        maxlength="80"
+        rows="4">
+      </textarea>
+    </mat-form-field>
+    <div class="text-limit-80">Maximum text limit is 80 characters.</div>
+   </form> 
+  </div>
+</div>

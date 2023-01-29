@@ -1,0 +1,38 @@
+<article [attr.data-slb-id]="'package-request-' + (selectedProfileId$ | async)" class="request">
+  <div class="request__container">
+    <ng-container *ngIf="(isGuest$ | async) else UserPackageRequest">
+      <div class="title">Package Request</div>
+      <div class="paragraph">
+        <p class="no-margin-bottom">To request this package you will need to login first.</p>
+        <p>Sign in to your account and try to request it again.</p> 
+      </div>
+      <div class="container">
+        <section class="create-comment-container" data-slb-id="create-comment-container">
+          <div class="btn-container">
+            <button data-slb-id="signIn" slb-button class="package-request-btn" (click)="redirectToSignIn()">Sign in</button>
+          </div>
+        </section>
+      </div>
+    </ng-container>
+
+    <ng-template #UserPackageRequest>
+      <ng-container [ngSwitch]="selectedPackageSubscriptionStatus$ | async">
+        <ng-container *ngSwitchCase="DataPackageSubscriptionStatus.Void">
+          <apollo-package-request-subscription-void></apollo-package-request-subscription-void>
+        </ng-container>
+        <ng-container *ngSwitchCase="DataPackageSubscriptionStatus.Requested">
+          <apollo-package-request-subscription-requested></apollo-package-request-subscription-requested>
+        </ng-container>
+        <ng-container *ngSwitchCase="DataPackageSubscriptionStatus.Approved">
+          <apollo-package-request-subscription-approved></apollo-package-request-subscription-approved>
+        </ng-container>
+        <ng-container *ngSwitchCase="DataPackageSubscriptionStatus.Active">
+          <apollo-package-request-subscription-active></apollo-package-request-subscription-active>
+        </ng-container>
+        <ng-container *ngSwitchCase="DataPackageSubscriptionStatus.Expired">
+          <apollo-package-request-subscription-expired></apollo-package-request-subscription-expired>
+        </ng-container>
+      </ng-container>
+    </ng-template>
+  </div>
+</article>

@@ -1,0 +1,236 @@
+<div class="loader-container" *ngIf="showLoader">
+  <mat-spinner data-slb-id="load-spinner"></mat-spinner>
+</div>
+
+<section class="package">
+  <header class="page-header">
+    <div class="breadcrum-container">
+      <span class="home-link" slb-tertiary-button>
+        <mat-icon data-slb-id="home-btn" svgIcon="home" matTooltip="Home" [routerLink]="['/vendor']"></mat-icon>
+      </span>
+      <div class="bread-crumb-container">
+        |<span class="bread-crumb">Data Packages</span>|<span class="bread-crumb">Package View</span>|<span class="bread-crumb"
+          >Package Details</span>|
+      </div>
+    </div>
+    <div class="heading">
+      <span class="back-link" slb-tertiary-button>
+        <mat-icon data-slb-id="go-back-btn" svgIcon="arrow-left-1" (click)="goBack()" matTooltip="Go back"></mat-icon>
+      </span>
+      <h2 class="title">Package Details</h2>
+      <div *ngIf="isPackagePublished" class="published-package-text">This package has been already published. You can only edit deliverables.</div>
+    </div>
+  </header>
+
+  <form class="package__info" [formGroup]="packageDetailForm" #packageFormRef="ngForm">
+    <header class="package__subheader">
+      <section>
+        <h4 class="package__name">{{ packageName }}</h4>
+        <label class="package__vendor">By <span>{{dataVendor?.name}}</span></label>
+      </section>
+      <section class="package__price-duration">
+        <div class="package__price">
+          <label class="package__label">Package Price and Duration<span>*</span></label>
+          <mat-radio-group formControlName="onRequest" [disabled]="isPackagePublished">
+            <mat-radio-button class="package__price-radio-button" [value]="false"></mat-radio-button>
+            <mat-form-field slbFormField>
+              <input
+                matInput
+                slbCurrencyInput
+                type="text"
+                name="priceValue"
+                placeholder="Enter Price"
+                class="short-input"
+                autocomplete="off"
+                formControlName="priceUsd"
+                maxlength="16"
+                [options]="priceInputConfig"
+                (keydown)="keyFilter($event)"
+              />
+              <span matSuffix>USD</span>
+              <mat-error *ngIf="packageDetailForm?.controls.priceUsd?.errors?.required">Price is required.</mat-error>
+              <mat-error *ngIf="packageDetailForm?.controls.priceUsd?.errors?.min">Minimum price is 1.00 USD.</mat-error>
+            </mat-form-field>
+            <span class="package__radio-button-input-splitter">for</span>
+            <mat-form-field slbFormField>
+              <input
+                matInput
+                type="text"
+                formControlName="subscriptionDuration"
+                name="subscriptionDuration"
+                placeholder="Enter Duration"
+                oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                maxlength="4"
+              />
+              <span matSuffix>Months</span>
+              <mat-error *ngIf="packageDetailForm?.controls.subscriptionDuration?.errors?.required">Duration is required.</mat-error>
+              <mat-error *ngIf="packageDetailForm?.controls.subscriptionDuration?.errors?.min">Minimum duration is 1 month.</mat-error>
+            </mat-form-field>
+
+            <mat-radio-button class="package__onrequest-radio-button" [value]="true">On Request</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </section>
+    </header>
+
+    <section class="package__details">
+      <div class="package__center-content">
+
+        <section class="package__section">
+            <label class="package__label">Package Media<span>*</span></label>
+            <apollo-media-upload-preview
+              [options]="mediaUploadoptions"
+              [uploaderError]="packageDetailForm?.controls?.supportMedia?.errors?.mediaReqError && packageFormRef.submitted"
+              (uploadedFileIds)="uploadedFileIds($event)"
+              [existingMediaFileList]="existingMediaFileList"
+              [componentIdentifier]="'package-editor'"
+              [isPackagePublished]="isPackagePublished"
+              formControlName="supportMedia"
+              ngDefaultControl
+            ></apollo-media-upload-preview>
+        </section>
+        <hr class="package__breakpoint" />
+        <section  class="package__section">
+          <label class="package__label">Region<span>*</span></label>
+           <mat-form-field class="package__region" slbFormField>
+            <mat-select formControlName="regions" placeholder="Select" multiple (ngModelChange)="validateRegion()">
+              <mat-select-trigger>
+                {{ packageDetailForm?.value.regions ? packageDetailForm?.value.regions[0] : '' }}
+                <span *ngIf="packageDetailForm?.value.regions?.length > 1" class="example-additional-selection">
+                  (+{{ packageDetailForm.value.regions.length - 1 }}
+                  {{ packageDetailForm.value.regions.length === 2 ? 'item' : 'items' }})
+                </span>
+              </mat-select-trigger>
+              <mat-option *ngFor="let region of regions$ | async" [value]="region.value">{{ region.viewText }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="invalidRegion && !isRegionDirty">Region is required.</mat-error>
+          </mat-form-field>
+        </section>
+
+        <hr class="package__breakpoint" />
+        <section  class="package__section">
+          <label class="package__label">Opportunity<span>*</span></label>
+           <mat-form-field class="package__opportunity" slbFormField>
+            <mat-select formControlName="opportunity" placeholder="Select">
+              <mat-option *ngFor="let opportunity of opportunity$ | async" [value]="opportunity.value">{{opportunity.viewText}}</mat-option>
+            </mat-select>
+            <mat-error>Opportunity is required.</mat-error>
+          </mat-form-field>
+        </section>
+        <hr class="package__breakpoint" />
+
+        <section class="package__section">
+          <label class="package__label">Overview<span>*</span></label>
+          <p class="package__intro">Provide an overview of the package with details and key points to showcase the unique selling points</p>
+          <quill-editor
+              [ngClass]="{'quill-error': (packageFormRef.submitted && packageDetailForm?.controls.packageOverview?.invalid)|| (packageDetailForm?.controls.packageOverview.touched && packageDetailForm?.controls.packageOverview?.invalid)}"
+              placeholder="Please type here..."
+              [modules]="editorModules"
+              (onEditorCreated)='editorInit($event)'
+              formControlName="packageOverview"
+              [required]="true"
+              ngDefaultControl
+          >
+          </quill-editor>
+          <span class="package__errmsg"
+           *ngIf="(packageFormRef.submitted && packageDetailForm?.controls.packageOverview?.invalid)|| (packageDetailForm?.controls.packageOverview.touched && packageDetailForm?.controls.packageOverview?.invalid)">
+            Package overview is required.
+          </span>
+        <br>
+
+          <div class="keypoints" formArrayName="overviewKeypoints" *ngIf="overviewKeypoints$ | async as oKeypoints">
+            <div class="keypoint" *ngFor="let keypoint of oKeypoints; let i = index">
+              <mat-form-field slbFormField class="keypoint__input">
+                <mat-label>Keypoint</mat-label>
+                <input matInput autocomplete="off" [formControlName]="i" maxlength="800" />
+                <mat-error *ngIf="keypoint.errors?.required">Keypoint cannot be empty</mat-error>
+              </mat-form-field>
+              <a slb-icon-button title="Delete keypoint" class="keypoint__action" *ngIf="i !== 0" (click)="removeKeypoint('overview', i)">
+                <mat-icon data-slb-id="delete-keypoint-btn" svgIcon="delete"></mat-icon>
+              </a>
+            </div>
+
+            <a
+              slb-icon-button
+              *ngIf="!isPackagePublished"
+              title="Add a keypoint to the package overview"
+              class="keypoints__add"
+              (click)="addKeypoint('overview')"
+              [class.keypoints__add--disabled]="oKeypoints.length >= 5"
+            >
+              <mat-icon data-slb-id="add-keypoint-btn" svgIcon="plus"></mat-icon> Add keypoint
+            </a>
+          </div>
+        </section>
+
+        <hr class="package__breakpoint" />
+
+        <section class="package__section">
+          <label class="package__label">Feature and Contents<span>*</span></label>
+          <p class="package__intro">Provide up to 5 main features and offerings of your package that highlight the value</p>
+
+          <div class="keypoints" formArrayName="featureKeypoints" *ngIf="featureKeypoints$ | async as fKeypoints">
+            <div class="keypoint" *ngFor="let keypoint of fKeypoints; let i = index">
+              <mat-form-field slbFormField class="keypoint__input">
+                <mat-label>Keypoint</mat-label>
+                <input matInput autocomplete="off" [formControlName]="i" maxlength="800" />
+                <mat-error *ngIf="keypoint.errors?.required">Keypoint cannot be empty</mat-error>
+              </mat-form-field>
+              <a slb-icon-button title="Delete keypoint" class="keypoint__action" *ngIf="i !== 0" (click)="removeKeypoint('feature', i)">
+                <mat-icon data-slb-id="delete-keypoint-btn" svgIcon="delete"></mat-icon>
+              </a>
+            </div>
+
+            <a
+              slb-icon-button
+              *ngIf="!isPackagePublished"
+              title="Add a keypoint to the feature and contents"
+              class="keypoints__add"
+              (click)="addKeypoint('feature')"
+              [class.keypoints__add--disabled]="fKeypoints.length >= 5"
+            >
+              <mat-icon data-slb-id="add-keypoint-btn" svgIcon="plus"></mat-icon> Add keypoint
+            </a>
+          </div>
+        </section>
+
+        <hr class="package__breakpoint" />
+
+        <section class="package__section">
+          <label class="package__label">Supporting Documents</label>
+          <p class="package__intro">
+            Attach any supporting documents for the package such as brochures, marketing materials, etc and provide a title describing the
+            document
+          </p>
+          <apollo-document-upload-preview
+           (uploadedDocFileIds)="uploadedDocFileId($event)"
+           [multipleFiles]="true"
+           [isPublished]="isPackagePublished"
+           [existingDocFileList]="existingDocFileList"
+           [componentIdentifier]="'package-editor'"
+          ></apollo-document-upload-preview>
+        </section>
+      </div>
+    </section>
+
+    <footer class="package__footer">
+      <div>
+        <button
+          data-slb-id="save-draft-btn"
+          class="blue-btn"
+          slb-secondary-button
+          (click)="saveAsDraft()"
+          [ngClass]="{'blue-btn':!isPackagePublished}"
+          [ngClass]="{'grey-btn':isPackagePublished}"
+          [disabled]="isPackagePublished">Save Draft</button>
+        <span class="save-draft-msg" *ngIf="isProfileDetailsSaved">
+          Draft saved on {{ saveDetailsTimeStamp | date: 'YYYY-MM-dd HH:mm' }}
+        </span>
+      </div>
+      <div>
+        <button *ngIf="!isPackagePublished" data-slb-id="discard-btn" class="grey-btn" slb-secondary-button (click)="discard()">Discard</button>
+        <button *ngIf="isPackagePublished" data-slb-id="goback-btn" class="blue-btn" slb-secondary-button (click)="goBack()">Go back</button>
+      </div>
+    </footer>
+  </form>
+</section>

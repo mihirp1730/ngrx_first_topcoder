@@ -1,0 +1,48 @@
+<section data-slb-id="file-uploader" class="file-uploader" [class.file-uploader--disabled]="!canUpload">
+  <ng-container *ngIf="widgetStyle === 'button'">
+    <input data-slb-id="file-input" type="file" [multiple]="multipleFiles" [accept]="extensions" (change)="onFileSelected($event.target['files'])" #fileInput />
+    <button
+      slb-secondary-button
+      class="file-upload"
+      type="button"
+      (click)="fileInput.click()"
+      matTooltip="Upload files"
+      matTooltipPosition="right"
+      data-slb-id="upload-files"
+    >
+      <mat-icon svgIcon="upload"></mat-icon> Upload files
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="widgetStyle === 'link'">
+    <input data-slb-id="file-input" type="file" [multiple]="multipleFiles" [accept]="extensions" (change)="onFileSelected($event.target['files'])" #fileInput />
+    <a data-slb-id="upload-files" slb-icon-button color="primary" class="file-upload-link" (click)="fileInput.click()">
+      <mat-icon svgIcon="upload"></mat-icon> Upload files
+    </a>
+  </ng-container>
+  <ng-container *ngIf="widgetStyle === 'drag-drop'">
+    <div data-slb-id="document-upload-preview" class="document-dropzone">
+      <slb-dropzone
+        #dropzone
+        data-slb-id="dropzoneDocument"
+        [dropzoneTemplate]="dropzoneTemplate"
+        [multiple]="multipleFiles"
+        [disabled]="!canUpload"
+        [accept]="extensions"
+        [maxFileSize]="maxFileSizes"
+        (onFilesChange)="onSlbDropZoneFileSelected($event, dropzone)">
+        <ng-template #dropzoneTemplate>
+          <div class="icon-container">
+            <mat-icon svgIcon="cloud-upload"></mat-icon>
+          </div>
+          <div class="upload-validity">
+            <div>
+               Drop here or click
+            </div>
+          </div>
+        </ng-template>
+      </slb-dropzone>
+    </div>
+  </ng-container>
+  <div class="loader-container" *ngIf="showLoader"><mat-spinner data-slb-id="load-spinner"></mat-spinner></div>
+</section>

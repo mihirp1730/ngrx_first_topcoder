@@ -1,0 +1,106 @@
+@import 'libs/app/styles';
+
+.package-dashboard {
+  height: 100%;
+  overflow: hidden;
+  background-color: $color-grey-04;
+
+  &__toolbar {
+    display: flex;
+    width: 100%;
+    background-color: $color-grey-03;
+    justify-content: space-between;
+    border-bottom: 1px solid $color-grey-04;
+    border-top: 2px solid $color-grey-04;
+    z-index: 2;
+    box-shadow: 0px 5px 5px 0px $color-grey-01;
+    padding: 7px 20px;
+    align-items: center;
+    position: relative;
+  }
+
+  &__title {
+    @include font-size(15);
+    color: $color-white;
+    margin: 0;
+  }
+
+  &__closeBtn {
+    @include flex-center();
+    background-color: $color-grey-02;
+    border: 1px solid $color-grey-05;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 35px;
+    width: 35px;
+    -webkit-appearance: none;
+
+    mat-icon {
+      color: $color-white;
+
+      .slb-icon.badge-,
+      .slb-icon.badge- svg {
+        height: 17px;
+        width: 17px;
+      }
+    }
+
+    &:hover {
+      border-color: $color-white;
+    }
+  }
+
+  &__content {
+    margin: auto;
+    width: 100%;
+    height: calc(100% - 70px);
+  }
+
+  &__filters {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    apollo-packages-filter {
+      margin: auto;
+    }
+  }
+
+  &__cards {
+    width: 100%;
+    height: calc(100% - 100px);
+    overflow: hidden;
+    position: relative;
+
+    ::ng-deep .cdk-virtual-scroll-orientation-vertical {
+      .cdk-virtual-scroll-content-wrapper {
+        min-width: auto !important;
+        position: relative;
+        margin: 0 auto;
+      }
+
+      .cdk-virtual-scroll-viewport {
+        display: flex;
+        padding-bottom: 10px;
+      }
+    }
+
+    &_wrapper {
+      height: calc(100% - 83px);
+      overflow-y: scroll;
+      @include scroll(10px, $color-grey-01, $color-grey-06);
+
+      &::-webkit-scrollbar-track {
+        background-color: $color-grey-03;
+      }
+
+      &--scroll {
+        &::-webkit-scrollbar-track {
+          background-color: $color-grey-01;
+        }
+      }
+    }
+  }
+}

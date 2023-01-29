@@ -1,0 +1,163 @@
+<mat-card class="opportunity-card">
+  <img mat-card-image alt="{{ opportunityName }}" [src]="signedUrl" />
+  <mat-card-content>
+    <div class="flex-row caption">
+      <div class="name">
+        <div class="opportunity-caption" title="{{ opportunityName }}">
+          {{ opportunityName }}
+        </div>
+        <div class="chips">
+          <mat-chip-list [disabled]="true">
+            <mat-chip
+              [ngClass]="{
+                public: opportunityDetails?.opportunityType === opportunityTypeEnum.Public,
+                private: opportunityDetails?.opportunityType === opportunityTypeEnum.Private
+              }"
+            >
+              <div class="chip-content">
+                <mat-icon [svgIcon]="iconSelector(opportunityDetails?.opportunityType)"></mat-icon>
+                <span>{{ opportunityDetails?.opportunityType | titlecase }}</span>
+              </div>
+            </mat-chip>
+            <mat-chip
+              [ngClass]="{
+                draft: opportunityDetails?.opportunityStatus === opportunityStatusEnum.Draft,
+                published: opportunityDetails?.opportunityStatus === opportunityStatusEnum.Published,
+                unpublished: opportunityDetails?.opportunityStatus === opportunityStatusEnum.Unpublished,
+                expired: opportunityDetails?.opportunityStatus === opportunityStatusEnum.Expired,
+                publishing: opportunityDetails?.opportunityStatus === opportunityStatusEnum.Publishing
+              }"
+              >{{ opportunityDetails?.opportunityStatus }}</mat-chip
+            >
+          </mat-chip-list>
+        </div>
+      </div>
+      <div class="menu">
+        <button slb-icon-button aria-label="More" class="more" title="Menu" [matMenuTriggerFor]="opportunityCardMenu">
+          <mat-icon svgIcon="more"></mat-icon>
+        </button>
+        <mat-menu class="opp-menu" #opportunityCardMenu="matMenu">
+          <button data-slb-id="edit" disabled mat-menu-item><mat-icon svgIcon="preview" class="disabledIcon"></mat-icon>View</button>
+          <button
+            data-slb-id="view-request-and-queries"
+            [disabled]="opportunityDetails?.opportunityStatus === opportunityStatusEnum.Draft"
+            mat-menu-item
+            routerLink="/vendor/communication"
+          >
+            <mat-icon
+              svgIcon="chat"
+              [ngClass]="{ disabledIcon: opportunityDetails?.opportunityStatus === opportunityStatusEnum.Draft }"
+            ></mat-icon
+            >Messages
+          </button>
+          <button data-slb-id="editOpportunity" mat-menu-item (click)="editOpportunity()">
+            <mat-icon svgIcon="apollo:edit"></mat-icon>Edit
+          </button>
+          <button
+            data-slb-id="inviteAttendees"
+            mat-menu-item
+            [disabled]="opportunityDetails?.opportunityStatus !== opportunityStatusEnum.Published"
+            (click)="inviteAttendees()"
+          >
+            <mat-icon
+              svgIcon="apollo:inviteAttendee"
+              [ngClass]="{ disabledIcon: opportunityDetails?.opportunityStatus !== opportunityStatusEnum.Published }"
+            ></mat-icon
+            >Invite Attendees
+          </button>
+          <button
+            data-slb-id="unpublishOpportunity"
+            [disabled]="opportunityDetails?.opportunityStatus !== opportunityStatusEnum.Published"
+            mat-menu-item
+            (click)="unPublishOpportunity(opportunityDetails?.opportunityId)"
+          >
+            <mat-icon
+              svgIcon="apollo:unpublish"
+              [ngClass]="{ disabledIcon: opportunityDetails?.opportunityStatus !== opportunityStatusEnum.Published }"
+            ></mat-icon
+            >Unpublish
+          </button>
+          <button
+            data-slb-id="deleteOpportunity"
+            mat-menu-item
+            [disabled]="opportunityDetails?.opportunityStatus === opportunityStatusEnum.Published"
+            (click)="deleteOpportunity(opportunityDetails?.opportunityId)"
+          >
+            <mat-icon
+              svgIcon="delete"
+              [ngClass]="{ disabledIcon: opportunityDetails?.opportunityStatus === opportunityStatusEnum.Published }"
+            ></mat-icon
+            >Delete
+          </button>
+          <slb-notification></slb-notification>
+        </mat-menu>
+      </div>
+    </div>
+    <ul class="properties-container">
+      <li data-slb-id="data-asset-type-info">
+        <div class="label" matTooltip="Asset Type">
+          <mat-icon svgIcon="apollo:assetType"></mat-icon>
+        </div>
+        <div class="value">
+          {{ opportunityDetails?.assetType.join() || noValueAltText }}
+        </div>
+      </li>
+      <li data-slb-id="data-offer-info">
+        <div class="label" matTooltip="Offer Type">
+          <mat-icon svgIcon="apollo:offerType"></mat-icon>
+        </div>
+        <div class="value">
+          {{ opportunityDetails?.offerType.join() || noValueAltText }}
+        </div>
+      </li>
+      <li data-sld-id="data-countries-info">
+        <div class="label" matTooltip="Country">
+          <mat-icon svgIcon="geotag"></mat-icon>
+        </div>
+        <div class="value">
+          {{ opportunityDetails?.countries?.join() || noValueAltText }}
+        </div>
+      </li>
+      <li data-slb-id="data-date-range">
+        <div class="label" matTooltip="Duration">
+          <mat-icon svgIcon="apollo:dateTime"></mat-icon>
+        </div>
+        <div class="value">
+          <div *ngIf="opportunityDetails?.offerStartDate && opportunityDetails?.offerStartDate; else noDateTimeData">
+            <span>{{ opportunityDetails?.offerStartDate | date: 'dd-MMM-YYYY' }}</span> to
+            <span>{{ opportunityDetails?.offerEndDate | date: 'dd-MMM-YYYY' }}</span>
+          </div>
+          <ng-template #noDateTimeData>
+            {{ noValueAltText }}
+          </ng-template>
+        </div>
+      </li>
+    </ul>
+    <div *ngIf="dataObjects?.length && (dataObjects | dataObjectsCount: 0) > 0" class="data-objects">
+      <ng-template ngFor let-i="index" let-object [ngForOf]="dataObjects">
+        <div *ngIf="i < maxObjectsToShow && object?.count > 0" [matBadge]="object?.count">
+          <mat-icon
+            class="badge"
+            [matTooltip]="(object?.name === 'Opportunity' ? 'Asset' : object?.name) + ': ' + object?.count"
+            [svgIcon]="object?.entityIcon"
+          ></mat-icon>
+        </div>
+        <div class="see-more-wrapper" *ngIf="i === maxObjectsToShow && object?.count > 0" [matBadge]="dataObjects | dataObjectsCount: i">
+          <mat-icon class="badge" [slbPopoverTriggerFor]="tooltip" slbPopoverTrigger="hover" svgIcon="more"></mat-icon>
+        </div>
+      </ng-template>
+    </div>
+    <slb-popover #tooltip class="data-objects">
+      <ng-template ngFor let-i="index" let-object [ngForOf]="dataObjects">
+        <div class="data-objects-popover" *ngIf="i >= maxObjectsToShow && object?.count > 0">
+          {{ (object?.name === 'Opportunity' ? 'Asset' : object?.name) + ': ' + object?.count }}
+        </div>
+      </ng-template>
+    </slb-popover>
+    <div *ngIf="dataObjects?.length && (dataObjects | dataObjectsCount: 0) === 0" class="data-objects">
+      <div [class.disable-icon]="true" [matBadge]="0">
+        <mat-icon class="badge" matTooltip="Asset" [svgIcon]="'apollo:polygonset'" [class.disable-icon]="true"></mat-icon>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

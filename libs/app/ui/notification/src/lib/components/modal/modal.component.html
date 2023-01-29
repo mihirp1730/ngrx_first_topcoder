@@ -1,0 +1,34 @@
+<div data-slb-id="modal" class="modal-container">
+    <slb-modal-close-button data-slb-id="close" class="modal-container__close" [dialogRef]="dialogRef" buttonType="Icon"></slb-modal-close-button>
+    <div *ngIf="options.modalType === 'chat'; else regularHeader" mat-dialog-title class="modal-container__header-chat">
+        <div class="header">{{options.title}}</div>
+        <div class="subtitle">
+            <div class="value"><span class="label">Opportunity:</span> {{options.customData.chatModalData.opportunity}}</div>
+            <div class="value"><span class="label">Company:</span> {{options.customData.chatModalData.companyName}}</div>
+        </div>
+    </div>
+    <ng-template #regularHeader>
+        <div mat-dialog-title class="modal-container__header">
+            <div class="header">{{options.title}}</div>
+            <p class="subtitle"><span>{{options.label}}</span>{{options.subtitle}}</p>
+        </div>
+    </ng-template>
+    <div *ngIf="options.modalType === 'chat'; else regularContent" mat-dialog-content class="modal-container__content-container">
+        <slb-facet-text [(ngModel)]="value" [label]="options.label" [addNewItems]="true" [allowDuplicate]="false" [separatorKeyCodes]="separatorKeyCodes"
+            [placeholder]="options.customData.chatModalData.placeholder" [hint]="options.customData.chatModalData.hint">
+        </slb-facet-text>
+    </div>
+    <ng-template #regularContent>
+        <div mat-dialog-content class="modal-container__mat-dialog-content">
+            <div class="confirm-modal__content-container">
+                <div>{{options.content}}<br />
+                    <div class="subcontent">{{options.subContent}}</div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <div *ngIf="options.cancelButtonText || options.confirmButtonText" class="modal-container__action-buttons">
+        <button data-slb-id="cancel" slb-secondary-button *ngIf="options.cancelButtonText" (click)="closeModal()">{{options.cancelButtonText}}</button>
+        <button data-slb-id="confirm" class="modal-container__btn-confirm" (click)="confirmBtnHandler()" slb-button [disabled]="disableConfirm">{{options.confirmButtonText}}</button>
+    </div>
+</div>

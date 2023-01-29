@@ -1,0 +1,49 @@
+@import "libs/app/styles";
+
+:host {
+  display: block;
+}
+.container {
+  padding: 5px;
+
+  .document {
+    float: left;
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    width: 125px;
+
+    .image-preview {
+      background-color: $color-white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid $color-grey-08;
+      height: 170px;
+      cursor: pointer;
+
+      img {
+        // Use a 1px margin to show the preview's border.
+        margin: 1px;
+        // this will stretch the image preview, we need
+        // some examples of the images to better know
+        height: 100%;
+        width: 100%;
+      }
+    }
+    div.name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 18px 0px;
+    }
+    div.caption {
+      text-align: left;
+      font-size: 12px;
+      padding: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      height: 60px;
+    }
+  }
+}

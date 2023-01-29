@@ -1,0 +1,209 @@
+@use 'sass:math';
+// Font size
+
+$base-size: 16;
+
+// --- use: @include font-size(24)
+// --- compiles to rem with px fallback
+
+@mixin font-size($sizeValue) {
+  $remValue: math.div($sizeValue, $base-size);
+  $pxValue: $sizeValue;
+  font-size: $pxValue + px;
+  font-size: $remValue + rem;
+}
+
+// --- use: @include line-height(24)
+// --- compiles to rem with px fallback
+
+@mixin line-height($sizeValue) {
+  $remValue: math.div($sizeValue, $base-size);
+  $pxValue: $sizeValue;
+  line-height: $pxValue + px;
+  line-height: $remValue + rem;
+}
+
+// Transition CSS values
+
+@mixin transall($target: all, $speed: 250ms, $easing: ease-in-out, $delay: 0ms) {
+  -webkit-transition: $target $speed $easing $delay;
+  -moz-transition: $target $speed $easing $delay;
+  -o-transition: $target $speed $easing $delay;
+  transition: $target $speed $easing $delay;
+}
+
+// CSS3 transform
+
+@mixin transform($transforms) {
+  -webkit-transform: $transforms;
+  -moz-transform: $transforms;
+  -ms-transform: $transforms;
+  transform: $transforms;
+}
+
+@mixin transition($transition) {
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  -ms-transition: $transition;
+  transition: $transition;
+}
+
+@mixin transition-timing-function($transitionTiming) {
+  -webkit-transition-timing-function: $transitionTiming;
+  -moz-transition-timing-function: $transitionTiming;
+  -o-transition-timing-function: $transitionTiming;
+  transition-timing-function: $transitionTiming;
+}
+
+// Rotate
+@mixin rotate($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
+
+// Scale
+@mixin scale($scale) {
+  @include transform(scale($scale));
+}
+
+// Translate
+@mixin translate($x, $y) {
+  @include transform(translate($x, $y));
+}
+
+// Skew
+@mixin skew($x, $y) {
+  @include transform(skew(#{$x}deg, #{$y}deg));
+}
+
+// Transform Origin
+@mixin transform-origin($origin) {
+  -webkit-transform-origin: $origin;
+  -moz-transform-origin: $origin;
+  -ms-transform-origin: $origin;
+  transform-origin: $origin;
+}
+
+// Keyframes
+// mixin to apply keyframes with all relevant vendor prefixes to maximize browser support
+
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+
+  @-moz-keyframes #{$animation-name} {
+    @content;
+  }
+
+  @-ms-keyframes #{$animation-name} {
+    @content;
+  }
+
+  @-o-keyframes #{$animation-name} {
+    @content;
+  }
+
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+
+// Animation
+// mixin to apply animation with all relevant vendor prefixes to maximize browser support
+
+@mixin animation($str) {
+  -webkit-animation: #{$str};
+  -moz-animation: #{$str};
+  -ms-animation: #{$str};
+  -o-animation: #{$str};
+  animation: #{$str};
+}
+
+// User select
+// --- use @include user-select();
+
+@mixin user-select($val: none) {
+  -ms-user-select: $val; /* Internet Explorer/Edge */
+  -moz-user-select: $val; /* Firefox */
+  -khtml-user-select: $val; /* Konqueror HTML */
+  -webkit-user-select: $val; /* Safari */
+  -webkit-touch-callout: $val; /* iOS Safari */
+  user-select: $val;
+}
+
+// Scroll
+
+@mixin scroll($width, $track-color, $thumb-color) {
+  &::-webkit-scrollbar-track {
+    background-color: $track-color;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $thumb-color;
+  }
+
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+}
+
+// --------------- FLEX HELPERS --------------- //
+
+// --------------- FLEXBOX CENTER --------------- //
+// use: @include flex-center();
+// Using no argument will center both horizontally and vertically.
+// Adding the arguments 'horizontal' or 'vertical' will align center
+// in only the requested orientation e.g. @include flex-center(vertical);
+
+@mixin flex-center($direction: both) {
+
+  @if $direction == 'horizontal' {
+    display: flex;
+    justify-content: center;
+  } @else if $direction == 'vertical' {
+    align-items: center;
+    display: flex;
+  } @else {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+// --------------- BOX SHADOW --------------- //
+/// @param {Number} $depth - depth level (between 1 and 5) a depth of 0 will apply 'box-shadow: none;'
+/// @link http://www.google.com/design/spec/layout/layout-principles.html#layout-principles-dimensionality Google Design
+/// @requires {function} top-shadow
+/// @requires {function} bottom-shadow
+
+@mixin shadow($depth) {
+  @if $depth < 1 {
+    box-shadow: none;
+  } @else if $depth > 5 {
+    @warn "Invalid $depth `#{$depth}` for mixin `card`.";
+  } @else {
+    box-shadow: bottom-shadow($depth), top-shadow($depth);
+  }
+}
+
+/// Computes a top-shadow for a card effect.
+/// @param {Number} $depth - depth level
+/// @return {List}
+@function top-shadow($depth) {
+  $primary-offset: nth(1.5 3 10 14 19, $depth) * 1px;
+  $blur: nth(1.5 3 10 14 19, $depth) * 4px;
+  $color: rgba(black, nth(.12 .16 .19 .25 .30, $depth));
+
+  @return 0 $primary-offset $blur $color;
+}
+
+/// Computes a bottom-shadow for a card effect.
+/// @param {Number} $depth - depth level
+/// @return {List}
+@function bottom-shadow($depth) {
+  $primary-offset: nth(1.5 3 6 10 15, $depth) * 1px;
+  $blur: nth(1 3 3 5 6, $depth) * 4px;
+  $color: rgba(black, nth(.24 .23 .23 .22 .22, $depth));
+
+  @return 0 $primary-offset $blur $color;
+}

@@ -1,0 +1,133 @@
+<section class="package-creator">
+  <header class="page-header" *ngIf="step === 1">
+    <ng-container *ngIf="editMode$ | async; else createHeader">
+      <div class="breadcrum-container">
+        <span class="home-link" slb-tertiary-button>
+          <mat-icon data-slb-id="home-btn" svgIcon="home" matTooltip="Home" (click)="onGoHome()"></mat-icon>
+        </span>
+        <div class="bread-crumb-container">
+          |<span class="bread-crumb">Data Packages</span>|<span class="bread-crumb">Edit Package</span>|
+        </div>
+      </div>
+      <div class="heading">
+        <span class="back-link" slb-tertiary-button>
+          <mat-icon data-slb-id="go-back-btn" svgIcon="arrow-left-1" (click)="onGoHome()" matTooltip="Go back"></mat-icon>
+        </span>
+        <h2 class="title">Edit Package</h2>
+        <div *ngIf="isPackagePublished" class="published-package-text">This package has been already published. You can only edit deliverables.</div>
+      </div>
+    </ng-container>
+    <ng-template #createHeader>
+      <div class="breadcrum-container">
+        <span class="home-link" slb-tertiary-button>
+          <mat-icon data-slb-id="home-btn" svgIcon="home" matTooltip="Home" (click)="onGoHome()"></mat-icon>
+        </span>
+        <div class="bread-crumb-container">
+          |<span class="bread-crumb">Data Packages</span>|<span class="bread-crumb">Create New Package</span>|
+        </div>
+      </div>
+      <div class="heading">
+        <span class="back-link" slb-tertiary-button>
+          <mat-icon data-slb-id="go-back-btn" svgIcon="arrow-left-1" (click)="onGoHome()" matTooltip="Go back"></mat-icon>
+        </span>
+        <h2 class="title">Create New Package</h2>
+      </div>
+    </ng-template>
+  </header>
+
+  <div id="mapContainer" [hidden]="step !== 1">
+    <apollo-side-panel [header]="header" [content]="content" [fullHeight]="true">
+      <ng-template #header>
+        <div class="package-name-container">
+          <form [formGroup]="formGroup" class="form-package-name">
+            <mat-label [class.disabled-text]="isPackagePublished">Package name<span class="required">*</span></mat-label>
+            <mat-form-field slbFormField>
+              <input
+                matInput
+                id="packagename"
+                class="package-name-input"
+                type="text"
+                formControlName="packageName"
+                name="packageName"
+                required
+                placeholder="Type here"
+                data-slb-id="package-name"
+              />
+              <mat-hint class="info"> Maximum 100 characters allowed. </mat-hint>
+              <mat-error *ngIf="formGroup?.controls.packageName?.errors?.required">Package name is required.</mat-error>
+              <mat-error *ngIf="formGroup?.controls.packageName?.errors?.maxlength"
+                >Package name should not have more than 100 characters.</mat-error
+              >
+              <mat-error *ngIf="formGroup?.controls.packageName?.errors?.pattern"
+                >Package name should not start with special character or space.</mat-error
+              >
+            </mat-form-field>
+          </form>
+        </div>
+      </ng-template>
+      <ng-template #content>
+        <div class="details-btn-container">
+          <button data-slb-id="pkg-details-btn" slb-button class="pkg-details-btn" [disabled]="!isPackageSaved" (click)="goToPackageDetails()">
+            <span *ngIf="!isPackagePublished">Add</span>
+            <span *ngIf="isPackagePublished">See</span> Package Details
+          </button>
+        </div>
+        <apollo-package-map-and-deliverables
+          [isPackagePublished]="isPackagePublished"
+          [isPackageSaved]="isPackageSaved"
+          [packageId]="packageId$ | async"
+          [marketingRepresentations]="shapesGroup$ | async"
+          [dataTypesSelected]="dataTypes$ | async"
+          [deliverables]="deliverables$ | async"
+          (shapeUpload)="onShapeUpload($event)"
+          (dataTypesChange)="onDataTypesChange($event)"
+          (deliverableUpload)="onDeliverableUpload($event)"
+          (cancelUpload)="onCancelUpload($event)"
+          (closeDataType)="onCloseDataTypeSection($event)"
+        >
+        </apollo-package-map-and-deliverables>
+      </ng-template>
+    </apollo-side-panel>
+    <apollo-globe-loader [showLoaderOverlay]="showMapLoaderOverlay" [fadeOut]="gisMapLayersInitiated"></apollo-globe-loader>
+    <gis-canvas
+      *ngIf="gisSettings.token && gisSettings.deploymentUrl && gisSettings.config"
+      [sToken]="gisSettings.token"
+      [deploymentUrl]="gisSettings.deploymentUrl"
+      [gisSettingsConfig]="gisSettings.config"
+      [appKey]="gisSettings.appKey"
+      [slbDataPartitionId]="gisSettings.partition"
+    ></gis-canvas>
+
+    <footer class="package-creator__footer">
+      <div class="draft-container">
+        <button data-slb-id="save-draft-btn" slb-secondary-button class="btn-space" (click)="saveAsDraft()" [disabled]="formGroup.invalid || isPackagePublished">Save Draft</button>
+        <span class="save-draft-msg" *ngIf="isPackageSaved && savePackageTimeStamp">
+          Draft saved on {{ savePackageTimeStamp | date: 'YYYY-MM-dd HH:mm' }}</span
+        >
+      </div>
+      <div class="btn-group">
+        <span class="disabled-publish-msg" *ngIf="(containsDraftLayers$ | async)">Package includes unsupported data layer.</span>
+        <button
+          data-slb-id="publish-pkg-btn"
+          slb-button
+          class="button_publish"
+          (click)="onConfirmAndPublish()"
+          [disabled]="(isPublishDisabled$ | async) || isPackagePublished"
+        >
+          Publish
+        </button>
+      </div>
+    </footer>
+  </div>
+  <ng-container *ngIf="step === 2">
+    <apollo-package-editor
+      [packageId]="packageId$ | async"
+      [packageName]="packageName$ | async"
+      [packageDetail]="packageDetail$ | async"
+      [isPackagePublished]="isPackagePublished"
+      (backTo)="onGoBack()"
+      (savedValues)="onSaveProfile($event)"
+    ></apollo-package-editor>
+  </ng-container>
+</section>
+<div class="loader-container" *ngIf="showLoader"><mat-spinner data-slb-id="load-spinner"></mat-spinner></div>

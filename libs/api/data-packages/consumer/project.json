@@ -1,0 +1,23 @@
+{
+  "root": "libs/api/data-packages/consumer",
+  "sourceRoot": "libs/api/data-packages/consumer/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/api/data-packages/consumer/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/api/data-packages/consumer"],
+      "options": {
+        "jestConfig": "libs/api/data-packages/consumer/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

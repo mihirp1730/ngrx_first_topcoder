@@ -1,0 +1,8 @@
+<cdk-virtual-scroll-viewport *ngIf="dataSource" [itemSize]="itemSize" class="scroll">
+  <mat-spinner diameter="64" *ngIf="dataSource.loading$ | async"></mat-spinner>
+  <div class="scroll__row" *cdkVirtualFor="let rows of dataSource; trackBy: trackBy">
+    <ng-container *ngFor="let package of rows">
+      <ng-container *ngTemplateOutlet="cardTemplate; context: { package: package }"></ng-container>
+    </ng-container>
+  </div>
+</cdk-virtual-scroll-viewport>

@@ -1,0 +1,22 @@
+{
+  "root": "libs/server/opportunity/host",
+  "sourceRoot": "libs/server/opportunity/host/src",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/server/opportunity/host/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/server/opportunity/host"],
+      "options": {
+        "jestConfig": "libs/server/opportunity/host/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

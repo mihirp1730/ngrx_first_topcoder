@@ -1,0 +1,23 @@
+{
+  "projectType": "library",
+  "root": "libs/app/ui/summary-card-buttons",
+  "sourceRoot": "libs/app/ui/summary-card-buttons/src",
+  "prefix": "apollo",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/ui/summary-card-buttons"],
+      "options": {
+        "jestConfig": "libs/app/ui/summary-card-buttons/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/ui/summary-card-buttons/src/**/*.ts", "libs/app/ui/summary-card-buttons/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

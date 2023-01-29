@@ -1,0 +1,89 @@
+# If you are going to add new environment variable to this file, please remeber you have to also modife input in the envsubst command in the deploy.sh file
+swagger: "2.0"
+info:
+  version: 2.0.0
+  title: GAIA Light Content Server $CONTAINER_CLUSTER $GCLOUD_PROJECT
+  description: GAIA Light server for streaming vendor files.
+host: content-server-$CONTAINER_CLUSTER.endpoints.$GCLOUD_PROJECT.cloud.goog
+basePath: /api/content
+tags:
+  - name: Content
+    description: API for serving files to download.
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+x-google-endpoints:
+  - name: content-server-$CONTAINER_CLUSTER.endpoints.$GCLOUD_PROJECT.cloud.goog
+x-google-backend:
+  disable_auth: true
+
+# API
+paths:
+  /health:
+    get:
+      operationId: health
+      tags:
+        - health
+      summary: "health endpoint "
+      description: "health endpoint "
+      parameters:
+        - in: header
+          name: appKey
+          type: string
+          description: "App Key for the Application"
+          required: true
+      responses:
+        "200":
+          description: returns OK meaning that service is up and running
+        "404":
+          description: returns when "appKey" is not defined in headers. Must for this endpoint to function
+  "/download/{packageId}/{billingaccountid}/{dataitemid}":
+    get:
+      operationId: "downloadPackageFile"
+      parameters:
+        - in: path
+          name: packageId
+          type: string
+          required: true
+          description: The id of the package file to download
+        - in: path
+          name: billingaccountid
+          type: string
+          required: true
+          description: The billing account id of the package file to download
+        - in: path
+          name: dataitemid
+          type: string
+          required: true
+          description: The data item id of the package file to download
+      tags:
+        - Content
+      summary: "Returns file of package"
+      description: "Returns file of package"
+      responses:
+        "200":
+          description: "The file of a package."
+  "/opportunity/consumer/download/{fileName}":
+    get:
+      operationId: "getDownload"
+      parameters:
+        - in: path
+          name: fileName
+          type: string
+          required: true
+          description: The name of the opportunity file to download
+        - in: query
+          name: signedUrl
+          type: string
+          required: true
+          description: The signed URL of the file to download
+      tags:
+        - Content
+      summary: "Return the file of the opportunity"
+      description: "Return the file of the opportunity"
+      responses:
+        "200":
+          description: "The file of an opportunity."

@@ -1,0 +1,188 @@
+<div
+  class="wrapper"
+  [ngClass]="{
+    'default-view': isMapExpanded === false && isOpportunityExpanded === false && isModularChatOpen === false,
+    'default-view-with-modular-chat': isMapExpanded === false && isOpportunityExpanded === false && isModularChatOpen === true,
+    'full-map-view': isMapExpanded === true,
+    'full-opportunity-view': isOpportunityExpanded === true && isModularChatOpen === false,
+    'full-opportunity-view-with-modular-chat': isOpportunityExpanded === true && isModularChatOpen === true
+  }"
+>
+  <div class="header">
+    <apollo-opportunity-header (filterChange)="onAttributeFilterChange($event)"></apollo-opportunity-header>
+  </div>
+  <div class="opportunity-section">
+    <section class="opportunity" *ngIf="dataOpportunityWorkflow$ | async">
+      <div class="expand-opportunity">
+        <mat-icon svgIcon="reduce-screen" *ngIf="isOpportunityExpanded" (click)="toggleOpportunity()"></mat-icon>
+        <mat-icon svgIcon="fullscreen" *ngIf="!isOpportunityExpanded" (click)="toggleOpportunity()"></mat-icon>
+      </div>
+      <div class="catalogue">
+        <apollo-opportunity-catalogue
+          [isOpportunityExpanded]="isOpportunityExpanded"
+          [isMapExpanded]="isMapExpanded"
+        ></apollo-opportunity-catalogue>
+      </div>
+      <div class="map-extent-toggle" *ngIf="!isOpportunityExpanded && (selectedOpportunityOnPanel$ | async) === null">
+        <apollo-results-use-extents-toggle></apollo-results-use-extents-toggle>
+      </div>
+    </section>
+    <section class="modular-chat" *ngIf="isModularChatOpen && opportunityDetails">
+      <apollo-communication-modular-chat [opportunityDetails]="opportunityDetails"></apollo-communication-modular-chat>
+    </section>
+    <section data-slb-id="map-wrapper" class="map-wrapper">
+      <apollo-globe-loader [showLoaderOverlay]="showMapLoaderOverlay" [fadeOut]="gisMapLayersInitiated"></apollo-globe-loader>
+      <div class="expand-map" (click)="toggleMap()" *ngIf="dataOpportunityWorkflow$ | async">
+        <mat-icon svgIcon="arrow-left-2" *ngIf="!isMapExpanded"></mat-icon>
+        <mat-icon svgIcon="arrow-right-2" *ngIf="isMapExpanded"></mat-icon>
+      </div>
+
+      <apollo-side-panel
+        *ngIf="!showMapLoaderOverlay && (dataOpportunityWorkflow$ | async) === false"
+        [header]="header"
+        [content]="content"
+        [fullHeight]="showSidepanel$ | async"
+        [class.hide]="selectedOpportunityId$ | async"
+      >
+        <ng-template #header>
+          <apollo-search-bar
+            *ngIf="showSearchBar$ | async"
+            [showClearSearch]="hasResults"
+            [filterCount]="0"
+            (searchInfo)="onSearchInfo($event)"
+            (clearInfo)="onClearInfo()"
+            (showLayers)="onShowLayers()"
+            (toggleMenu)="onToggleMenu()"
+            [searchValue]="searchTerm$ | async"
+          ></apollo-search-bar>
+        </ng-template>
+        <ng-template #content>
+          <!-- FYI: we must always have the gis-layer-panel rendered and/or hidden.
+               If we do not always have it rendered (i.e. ngSwitch) then the filters
+               will not automatically load after browser refreshes. -->
+
+          <gis-layer-panel
+            [hidden]="(currentSidepanel$ | async) !== sidePanelViews.LAYERS"
+            data-slb-id="layer-panel"
+            [(layers)]="gisHandlerService.gisLayerService.gisLayers"
+            [showBackButton]="hasResults"
+            (toggleLayerVisibility)="onToggleLayerVisibility($event)"
+            (filterChange)="onFilterChange($event, false)"
+            (toolBarAction)="onToolBarAction($event)"
+          ></gis-layer-panel>
+          <ng-container [ngSwitch]="currentSidepanel$ | async">
+            <ng-container *ngSwitchCase="sidePanelViews.RESULTS">
+              <div data-slb-id="results-tabs-container" class="results-tabs-container">
+                <span>{{ resultPanelService.totalMessage$ | async }}</span>
+                <ng-container *ngIf="resultPanelService.showingDataLayers$ | async">
+                  <button *ngIf="dataPackageWorkflow$ | async" data-slb-id="data-layers" slb-button (click)="showDataLayers()">
+                    Data Layers
+                  </button>
+                  <button *ngIf="dataPackageWorkflow$ | async" data-slb-id="packages" slb-secondary-button (click)="showPackages()">
+                    Packages
+                  </button>
+                </ng-container>
+                <ng-container *ngIf="resultPanelService.showingPackages$ | async">
+                  <button data-slb-id="data-layers" slb-secondary-button (click)="showDataLayers()">Data Layers</button>
+                  <button data-slb-id="packages" slb-button (click)="showPackages()">Packages</button>
+                </ng-container>
+              </div>
+              <gis-search-result-panel
+                #gisSearchResultPanel
+                data-slb-id="search-result-panel"
+                [actionButtonTemplate]="customActionButtonTemplate"
+                [hidden]="(resultPanelService.showingDataLayers$ | async) === false"
+                [searchresults]="gisHandlerService.gisData"
+                (BackToPreviousResults)="onBackToPreviousResults()"
+                (onButtonClick)="onButtonClick($event)"
+                (detailRecordId)="onDetailRecordId($event)"
+              >
+                <ng-template #customActionButtonTemplate let-result="result">
+                  <apollo-results-lock-icon [result]="result" [isGuest]="isGuest$ | async"></apollo-results-lock-icon>
+                </ng-template>
+              </gis-search-result-panel>
+              <apollo-packages-panel-list
+                [hidden]="(resultPanelService.showingPackages$ | async) === false"
+                [packagesIds]="resultPanelService.packagesIds$ | async"
+                (packageDetail)="gotoPackageDetailsFromPkgs($event)"
+              ></apollo-packages-panel-list>
+              <apollo-results-use-extents-toggle></apollo-results-use-extents-toggle>
+            </ng-container>
+            <ng-container *ngSwitchCase="sidePanelViews.DETAIL">
+              <gis-result-detail-panel
+                data-slb-id="result-detail-panel"
+                [searchDetailHeaderTemplate]="customHeader"
+                [searchDetailRecord]="gisHandlerService.gisDataDetail"
+                [searchDetailExtensionTemplate]="footer"
+                (onButtonClick)="onButtonClick($event)"
+                (BackToPreviousResults)="onBackToPreviousDetail($event)"
+              >
+                <ng-template #customHeader let-result="searchDetailItem">
+                  <apollo-item-header [result]="result"></apollo-item-header>
+                </ng-template>
+                <ng-template #footer>
+                  <section class="footer-actions">
+                    <button
+                      data-slb-id="see-package-details"
+                      slb-button
+                      (click)="gotoPackageDetailsFromDataLayer()"
+                      matTooltip="See package details"
+                      matTooltipPosition="right"
+                      data-slb-id="lasso-tools-polygon-selection"
+                    >
+                      See details
+                    </button>
+                  </section>
+                </ng-template>
+              </gis-result-detail-panel>
+            </ng-container>
+            <ng-container *ngSwitchCase="sidePanelViews.MENU">
+              <apollo-menu [user]="user" [options]="menuOptions" (authRedirection)="redirectToLogin()"></apollo-menu>
+            </ng-container>
+          </ng-container>
+        </ng-template>
+      </apollo-side-panel>
+      <apollo-resizable-container [siblingElement]="canvasElement?.element" *ngIf="selectedOpportunityId$ | async as selectedOpportunityId">
+        <apollo-opportunity-details [opportunityId]="selectedOpportunityId" (opportunityDetailsBack)="onCloseOpportunityDetails()">
+        </apollo-opportunity-details>
+      </apollo-resizable-container>
+      <gis-canvas
+        #canvasEl
+        data-slb-id="canvas"
+        *ngIf="gisSettings.token && gisSettings.deploymentUrl && gisSettings.config"
+        [sToken]="gisSettings.token"
+        [deploymentUrl]="gisSettings.deploymentUrl"
+        [gisSettingsConfig]="gisSettings.config"
+        [appKey]="gisSettings.appKey"
+        [slbDataPartitionId]="gisSettings.partition"
+      ></gis-canvas>
+
+      <apollo-global-filters
+        *ngIf="(dataOpportunityWorkflow$ | async) === false"
+        [(layers)]="gisHandlerService.gisLayerService.gisLayers"
+        (filterChange)="onFilterChange($event, false)"
+      ></apollo-global-filters>
+      <button
+        class="clear-lasso"
+        (click)="clearLassoSelection()"
+        matTooltip="Clear selection"
+        matTooltipPosition="left"
+        [disabled]="(lassoSelectionArea$ | async) === ''"
+      >
+        <mat-icon svgIcon="clear"></mat-icon>
+      </button>
+      <ng-container *ngIf="!showMapLoaderOverlay && !isOpportunityExpanded">
+        <apollo-lasso-tools
+          (zoomToWorldView)="onZoomToWorldView()"
+          (lassoSelection)="onLassoSelection($event)"
+          (basemap)="toggleBasemap()"
+          [class.hide]="profileSelected$ | async"
+          [isDataFlow]="dataOpportunityWorkflow$ | async"
+        ></apollo-lasso-tools>
+        <apollo-draggable-modal *ngIf="showBasemap$ | async" class="basemap" boundry="map-wrapper" (closeModal)="toggleBasemap()">
+          <gis-base-map></gis-base-map>
+        </apollo-draggable-modal>
+      </ng-container>
+    </section>
+  </div>
+</div>

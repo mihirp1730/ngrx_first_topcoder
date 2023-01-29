@@ -1,0 +1,11 @@
+<div *ngIf="result" class="search-result-header-container">
+  <div *ngIf="result.entityIcon" class="icon" [attr.title]="result.displayName">
+    <mat-icon [svgIcon]="result.entityIcon"></mat-icon>
+  </div>
+  <div class="title">
+    <h2 [attr.title]="result.name">{{result.name}}</h2>
+  </div>
+  <span [attr.title]="dataVendor?.name" class="header-vendor">
+    {{dataVendor?.name}}
+  </span>
+</div>

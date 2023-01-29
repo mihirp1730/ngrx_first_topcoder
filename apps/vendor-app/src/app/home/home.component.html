@@ -1,0 +1,20 @@
+<section>
+  <header class="package-header" *ngIf="!isNewPackageLoaded">
+    <h3 class="title">Data Packages</h3>
+    <div *ngIf="!isDisabled" >
+      <button data-slb-id="manage-subscriptions-btn" slb-secondary-button routerLink="/vendor/package/subscription/manage">
+        Manage Subscriptions
+      </button>
+      <button data-slb-id="subscription-requests-btn" slb-secondary-button routerLink="/vendor/package/requests">
+        Subscription Requests
+      </button>
+      <button data-slb-id="create-pkg-btn" slb-button class="create-package-btn" (click)="createNewPackage()">
+        <mat-icon svgIcon="plus"></mat-icon>
+        <span>Create New Package</span>
+      </button>
+    </div>
+  </header>
+  <div class="content">
+    <apollo-vendor-dashboard (disableButtons)="disableButtons($event)"></apollo-vendor-dashboard>
+  </div>
+</section>

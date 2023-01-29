@@ -1,0 +1,15 @@
+{{$definitionName := getenv "BUILD_DEFINITIONNAME" -}}
+{{$sourceBranchName := getenv "BUILD_SOURCEBRANCHNAME" -}}
+{{$buildNumber := getenv "BUILD_BUILDNUMBER" -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{$definitionName}}environments$DEPLOYMENTID
+  labels:
+    BUILD_DEFINITIONNAME: "{{$definitionName}}"
+    BUILD_SOURCEBRANCHNAME: "{{$sourceBranchName}}"
+    BUILD_BUILDNUMBER: "{{$buildNumber}}"
+    RELEASE_NAME: "$RELEASE_NAME"
+    RELEASE_REQUESTEDFOR: "$REQUESTED_FOR"
+data:
+  environment.json: "$DEPLOYMENT_ENVIRONMENT_CONTENT"

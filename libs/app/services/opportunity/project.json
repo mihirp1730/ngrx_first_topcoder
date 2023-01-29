@@ -1,0 +1,24 @@
+{
+  "projectType": "library",
+  "root": "libs/app/services/opportunity",
+  "sourceRoot": "libs/app/services/opportunity/src",
+  "prefix": "apollo",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/services/opportunity/src/**/*.ts", "libs/app/services/opportunity/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/services/opportunity"],
+      "options": {
+        "jestConfig": "libs/app/services/opportunity/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

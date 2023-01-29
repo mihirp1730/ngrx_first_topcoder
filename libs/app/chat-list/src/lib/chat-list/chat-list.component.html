@@ -1,0 +1,17 @@
+<div class="chat-list-container">
+    <header class="header">
+        <div>{{ chatList?.length }} Conversations</div>
+        <button class="header__filter-icon" disabled>
+            <mat-icon svgIcon="sort-descending"></mat-icon>
+        </button>
+    </header>
+    <cdk-virtual-scroll-viewport data-slb-id="chat-list" class="scroll-viewport" [itemSize]="50" minBufferPx="1000" maxBufferPx="2000">
+        <apollo-chat-item 
+            *cdkVirtualFor="let chatItem of chatList; templateCacheSize: 0" 
+            [chatItem]="chatItem"
+            [isActive]="chatItem.id === selectedChatId"
+            (click)="openChat(chatItem.id)" 
+            data-slb-id="chat-item-{{chatItem.id}}">
+        </apollo-chat-item>
+    </cdk-virtual-scroll-viewport>
+</div>

@@ -1,0 +1,36 @@
+{
+  "projectType": "library",
+  "root": "libs/app/upload-widget",
+  "sourceRoot": "libs/app/upload-widget/src",
+  "prefix": "apollo",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "options": {
+        "tsConfig": "libs/app/upload-widget/tsconfig.lib.json",
+        "project": "libs/app/upload-widget/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/app/upload-widget/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/upload-widget/src/**/*.ts", "libs/app/upload-widget/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/upload-widget"],
+      "options": {
+        "jestConfig": "libs/app/upload-widget/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

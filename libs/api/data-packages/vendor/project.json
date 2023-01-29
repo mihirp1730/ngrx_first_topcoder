@@ -1,0 +1,23 @@
+{
+  "root": "libs/api/data-packages/vendor",
+  "sourceRoot": "libs/api/data-packages/vendor/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/api/data-packages/vendor/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/api/data-packages/vendor"],
+      "options": {
+        "jestConfig": "libs/api/data-packages/vendor/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

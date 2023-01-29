@@ -1,0 +1,101 @@
+#  If you are going to add new environment variable to this file, please remeber you have to also modife input in the envsubst command in the deploy.sh file
+swagger: "2.0"
+info:
+  version: 2.0.0
+  title: GAIA Corporate Data Storage Server $CONTAINER_CLUSTER $GCLOUD_PROJECT
+  description: GAIA Corporate Data Storage server for providing interfaces to other backend services.
+host: storage-server-$CONTAINER_CLUSTER.endpoints.$GCLOUD_PROJECT.cloud.goog
+basePath: /api/storage
+tags:
+  - name: Storage
+    description: API for providing access to backend services.
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+x-google-endpoints:
+  - name: storage-server-$CONTAINER_CLUSTER.endpoints.$GCLOUD_PROJECT.cloud.goog
+x-google-backend:
+  disable_auth: true
+
+# API
+paths:
+  "/health":
+    get:
+      operationId: health
+      tags:
+        - health
+      summary: "health endpoint "
+      description: "health endpoint "
+      parameters:
+        - in: header
+          name: appKey
+          type: string
+          description: "App Key for the Application"
+          required: true
+      responses:
+        "200":
+          description: returns OK meaning that service is up and running
+        "404":
+          description: returns when "appKey" is not defined in headers. Must for this endpoint to function
+  "/store":
+    post:
+      operationId: "saveItems"
+      tags:
+        - Storage
+      summary: "Save multiple items in storage server."
+      description: "Save multiple items in storage server."
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          default: Bearer {token}
+        - in: query
+          name: data-partition
+          type: string
+          description: Data partition to save the items to
+        - in: body
+          name: request
+          description: Save items storage request
+          schema:
+            "$ref": "#/definitions/SaveStorageRequest"
+      responses:
+        "200":
+          description: "Successfully stored items."
+    get:
+      operationId: "getItems"
+      tags:
+        - Storage
+      summary: "Get multiple items from storage server."
+      description: "Get multiple items from storage server."
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          default: Bearer {token}
+        - in: query
+          name: keys
+          type: array
+          items:
+            type: string
+          description: Item keys to search for
+        - in: query
+          name: data-partition
+          type: string
+          description: Data partition to look for
+      responses:
+        "200":
+          description: "Successfully stored items."
+definitions:
+  SaveStorageRequest:
+    properties:
+      items:
+        type: object
+        description: Dictionary of items to save
+      includePartition:
+        type: boolean
+        description: Whether or not to sae items by partition

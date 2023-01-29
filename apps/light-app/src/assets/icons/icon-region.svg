@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Host-Opportunity-Card-Updated-v2" transform="translate(-401.000000, -756.000000)">
+            <g id="icon-region" transform="translate(401.000000, 756.000000)">
+                <path d="M0,0 L20,0 L20,20 L0,20 L0,0 Z" id="geotag-(Background)"></path>
+                <path d="M10,0 C12.7614236,0 15,2.23857617 15,5 L15,11 L10.0032511,20 L5,11 L5,5 C5,2.23857617 7.23857617,0 10,0 Z M10,1.5 C8.06700337,1.5 6.5,3.06700337 6.5,5 L6.5,10.6110897 L10.0023985,16.9113111 L13.5,10.6115322 L13.5,5 C13.5,3.06700337 11.9329966,1.5 10,1.5 Z M10,3 C11.1045696,3 12,3.89543045 12,5 C12,6.10456955 11.1045696,7 10,7 C8.89543045,7 8,6.10456955 8,5 C8,3.89543045 8.89543045,3 10,3 Z" id="geotag" fill="#5E6670"></path>
+            </g>
+        </g>
+    </g>
+</svg>

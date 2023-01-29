@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="New-Request" transform="translate(-511.000000, -615.000000)">
+            <g id="edit-1" transform="translate(511.000000, 615.000000)">
+                <path d="M0,0 L16,0 L16,16 L0,16 L0,0 Z" id="edit-1-(Background)"></path>
+                <path d="M7.91992188,0 L7.91992188,1.2 L1.2,1.2 L1.2,14.8 L14.8,14.8 L14.8,8 L16,8 L16,16 L0,16 L0,0 L7.91992188,0 Z M12.9602536,0 L16.0000973,3.1203126 L6.80009756,12.2406254 L3.68017578,12.2406254 L3.68017578,9.20000029 L12.9602536,0 Z M11.2000488,3.359375 L4.88012695,9.67968719 L6.32036133,11.0406246 L12.6398926,4.72031243 L11.2000488,3.359375 Z M12.9601563,1.75976562 L12.1601562,2.55976555 L13.5203125,3.92070293 L14.3203125,3.120703 L12.9601563,1.75976562 Z" fill="#5E6670"></path>
+            </g>
+        </g>
+    </g>
+</svg>

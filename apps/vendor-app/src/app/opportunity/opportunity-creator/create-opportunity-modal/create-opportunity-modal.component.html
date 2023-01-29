@@ -1,0 +1,79 @@
+<ng-template #content let-modal>
+  <div class="opportunity-create-modal">
+    <div class="opportunity-modal-title">
+      <span mat-dialog-title>Create Opportunity</span>
+    </div>
+    <form class="details" [formGroup]="opportunityDetails" [apolloFormPatcher]="initialFormData$ | async">
+      <div mat-dialog-content>
+        <div class="header-sub-title">What kind of Opportunity you want to create</div>
+
+        <div class="info">(Information entered in this section will be visible to users based on the opportunity type selected)</div>
+        <mat-label>Opportunity Visibility</mat-label>
+        <mat-radio-group
+          slbFormField
+          ngDefaultControl
+          formControlName="opportunityType"
+          name="opportunityType"
+          [disabled]="(selectOpportunity$ | async)?.opportunityStatus === opportunityStatusEnum.Published"
+        >
+          <div class="flex-row">
+            <div class="option-wrapper">
+              <mat-radio-button [value]="opportunityTypeEnum.Public">Public</mat-radio-button>
+
+              <mat-icon
+                matTooltip="Discoverable on the map, even without logging in. Information you choose will be openly visible. Details will require access requests."
+                [matTooltipPosition]="'right'"
+                svgIcon="apollo:info"
+              ></mat-icon>
+            </div>
+            <div class="option-wrapper hidden">
+              <mat-radio-button [value]="opportunityTypeEnum.Partial">Partially Public</mat-radio-button>
+            </div>
+            <div class="option-wrapper">
+              <mat-radio-button [value]="opportunityTypeEnum.Private">Private</mat-radio-button>
+
+              <mat-icon
+                matTooltip="Not discoverable on the map regardless of user's login status. Users need to be invited to gain access to any information."
+                [matTooltipPosition]="'right'"
+                svgIcon="apollo:info"
+              ></mat-icon>
+            </div>
+          </div>
+        </mat-radio-group>
+        <div class="name-input">
+          <mat-form-field slbFormField>
+            <mat-label>Opportunity Name</mat-label>
+            <input
+              matInput
+              id="opportunityname"
+              class="input-dropdown"
+              type="text"
+              formControlName="opportunityName"
+              name="opportunityName"
+              required
+              placeholder="Enter the opportunity name"
+              [maxlength]="nameMaxLength"
+            />
+            <mat-hint class="info"> Maximum {{ nameMaxLength }} characters allowed. </mat-hint>
+            <mat-error *ngIf="opportunityDetails.get('opportunityName').invalid">Opportunity name is required. </mat-error>
+            <mat-error *ngIf="opportunityDetails?.controls.opportunityName?.errors?.maxlength"
+              >Opportunity name should not have more than {{ nameMaxLength }} characters.</mat-error
+            >
+            <mat-error *ngIf="opportunityDetails?.controls.opportunityName?.errors?.pattern"
+              >Opportunity name should not start with special character or space.</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-dialog-actions align="end">
+        <button class="cancel-btn" slb-secondary-button mat-dialog-close (click)="cancel()">Cancel</button>
+        <button class="create-btn" slb-button (click)="createOpportunity()">
+          {{ !editMode ? 'Create' : 'Save' }}
+        </button>
+      </mat-dialog-actions>
+    </form>
+  </div>
+</ng-template>
+<a class="edit-opp" slb-icon-button (click)="openModal()">
+  <mat-icon svgIcon="edit-1"></mat-icon>
+</a>

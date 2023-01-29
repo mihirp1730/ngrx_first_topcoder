@@ -1,0 +1,21 @@
+<div class="participants-container">
+    <div class="header">
+        <div>Participants ({{participants.length}})</div>
+        <div class="header__add-icon">
+            <mat-icon svgIcon="add" (click)="openModal()"></mat-icon>
+        </div>
+    </div>
+    <form [formGroup]="formGroup" class="input-container">
+        <mat-form-field slbFormField>
+            <input matInput type="text" formControlName="emailId" email name="emailId" placeholder="Search" />
+        </mat-form-field>
+    </form>
+    <cdk-virtual-scroll-viewport 
+        data-slb-id="participants-list" 
+        class="scroll-viewport" [itemSize]="10"
+        minBufferPx="1000" maxBufferPx="2000">
+        <ul>
+            <li class="list" *cdkVirtualFor="let participant of participants; templateCacheSize: 0">{{participant}}</li>
+        </ul>
+    </cdk-virtual-scroll-viewport>
+</div>

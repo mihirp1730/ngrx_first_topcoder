@@ -1,0 +1,46 @@
+@import '../../../../../styles';
+
+.slb-icon-cell {
+  padding: 2px 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  white-space: nowrap;
+  cursor: pointer;
+  vertical-align: center;
+  margin-left: 2px;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.flex-child {
+  flex: 1;
+}
+
+.flex-child:first-child {
+  margin-right: 4px;
+}
+
+.view-subscription-btn {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 0 16px;
+  font-weight: normal !important;
+
+  .icon-label-view {
+    padding-left: 4px;
+    justify-content: center;
+  }
+
+  .icon-label-view-title {
+    justify-content: center;
+  }
+}
+
+.hide-me {
+  display: none;
+}

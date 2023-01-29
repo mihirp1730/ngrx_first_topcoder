@@ -1,0 +1,63 @@
+@import 'libs/app/styles';
+
+.vendor-dashboard {
+  margin: 20px;
+  .filter-container {
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: flex-end;
+
+    slb-pagination-control {
+      padding-top: 16px;
+    }
+
+    apollo-vendor-dashboard-filter {
+      margin-right: auto;
+    }
+  }
+  .cards-container {
+    .mat-grid-list {
+     .mat-grid-tile-content {
+       display: unset;
+     }
+    }
+  }
+  .no-package-msg, .network-error-msg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 82vh;
+    .container {
+      text-align: center;
+      color: $color-grey-10;
+      >.mat-icon {
+        height: 60px;
+        width: 60px;
+        color: $color-grey-06;
+      }
+      .content {
+        margin-bottom: 40px;
+        .heading {
+          text-transform: unset;
+        }
+        .message {
+          color: $color-grey-08;
+          width: 17.5rem;
+          display: block;
+          margin: auto;
+        }
+      }
+      .action-btn:not(.mat-button-disabled) {
+        border: 1px solid $color-vox-blue;
+        color: #1683fb;
+        .dls-button-wrapper {
+          color: $color-vox-blue;
+        }
+        .mat-icon {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+  }
+}

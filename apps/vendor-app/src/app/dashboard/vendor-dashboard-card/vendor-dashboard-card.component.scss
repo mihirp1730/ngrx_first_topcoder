@@ -1,0 +1,106 @@
+@import 'libs/app/styles';
+
+.package-card {
+  height: calc(100% - 1px);
+  padding: 0 !important;
+  .mat-card-header {
+    padding: 4px 20px 16px 20px;
+    border-bottom: 1px solid $color-grey-05;
+    margin-bottom: 16px;
+    .mat-card-header-text {
+      width: 100%;
+    }
+    .mat-card-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .package-name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 1rem;
+        text-transform: initial;
+      }
+    }
+    .mat-card-subtitle {
+      .chip {
+        height: 24px;
+        border-radius: 12px;
+        color: $color-white;
+        font-size: 0.75rem;
+        display: flex;
+        justify-content: space-between;
+        padding: 4px 10px;
+        margin-top: 3px;
+        line-height: 15px;
+        text-transform: capitalize;
+        float: left;
+        .mat-icon {
+          height: 12px;
+          width: 12px;
+          margin-right: 10px;
+        }
+      }
+      .chip.draft {
+        background-color: $color-grey-11;
+      }
+      .chip.unpublished {
+        background-color: $color-almond-brown;
+      }
+      .chip.published {
+        background-color: $color-alert-green;
+        .mat-icon {
+          width: 14px;
+          height: 14px;
+        }
+      }
+      .chip.publishing {
+        background-color: $color-alert-amber;
+      }
+    }
+  }
+  .mat-card-image {
+    background: $color-grey-02;
+    height: 164px;
+    margin: 0 16px 16px;
+    object-fit: contain;
+    width: 93%;
+  }
+  .mat-card-content {
+    padding: 0 20px;
+    margin-top: 0;
+    .properties-container {
+      font-size: 0.75rem;
+      list-style: none;
+      padding: 0;
+      li {
+        display: flex;
+        .label {
+          width: 35%;
+          color: $color-grey-08;
+        }
+        .value.no-data {
+          color: $color-grey-06;
+        }
+        .value {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 65%;
+        }
+      }
+    }
+  }
+
+  .loader-container.loading-media {
+    height: 35%;
+    position: absolute;
+    width: 93%;
+    background: rgba(0, 0, 0, 0);
+    display: flex;
+    color: #99a6b5;
+    padding-top: 100px;
+    left: 3%;
+    top: 24%;
+  }
+}

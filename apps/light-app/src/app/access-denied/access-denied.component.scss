@@ -1,0 +1,33 @@
+@import "libs/app/styles";
+
+.access-denied-container {
+    height: 94vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .access-denied {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .title {
+        font-weight: 500;
+        color: $color-grey-10;
+        line-height: 20px;
+        margin-bottom: 20px;
+        font-size: 16px;
+    }
+    .message {
+        color: $color-grey-08;
+    }
+    .message.contact-support {
+        margin-top: 20px;
+    }
+    .mat-icon {
+        height: 60px;
+        width: 60px;
+        fill: $color-grey-06;
+        margin-bottom: 20px;
+    }
+}

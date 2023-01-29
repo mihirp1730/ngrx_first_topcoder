@@ -1,0 +1,23 @@
+.confirm-modal {
+  &__title-content {
+    h4 {
+      margin-top: 0;
+    }
+  }
+  &__mat-dialog-content {
+    padding-bottom: 0 !important;
+  }
+  &__content-container {
+    margin: 20px 0 40px 0;
+    width: 32rem;
+  }
+  &__action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+
+  }
+  &__button-yes {
+    margin-left: 10px;
+  }
+}

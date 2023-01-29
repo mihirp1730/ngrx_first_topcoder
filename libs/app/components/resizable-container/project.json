@@ -1,0 +1,23 @@
+{
+  "projectType": "library",
+  "root": "libs/app/components/resizable-container",
+  "sourceRoot": "libs/app/components/resizable-container/src",
+  "prefix": "apollo",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/components/resizable-container"],
+      "options": {
+        "jestConfig": "libs/app/components/resizable-container/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/components/resizable-container/src/**/*.ts", "libs/app/components/resizable-container/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

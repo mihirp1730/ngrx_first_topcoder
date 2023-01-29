@@ -1,0 +1,29 @@
+<section class="opportunity-dashboard-container">
+    <header class="page-header">
+        <div class="heading">
+            <h2 class="title">Opportunity Catalog</h2>
+            <button class="new-opportunity" data-slb-id="new-opportunity-btn" slb-button
+                routerLink="/map">
+                Back to Map
+            </button>
+        </div>
+    </header>
+    <div class="loader-container" *ngIf="showLoader$ | async; else opportunities">
+        <mat-spinner data-slb-id="load-spinner"></mat-spinner>
+    </div>
+    <ng-template #opportunities>
+        <div class="cards-container" *ngIf="(opportunityList$ | async)?.length > 0; else noOpportunities">
+            <apollo-opportunity-dashboard-card *ngFor="let opportunityDetails of (opportunityList$ | async)"
+                [opportunityDetails]="opportunityDetails">
+            </apollo-opportunity-dashboard-card>
+        </div>
+        <ng-template #noOpportunities>
+            <div class="container-no-opportunity" data-slb-id="no-opportunity-message">
+                <div class="content">
+                    <h6 class="heading">No opportunities created</h6>
+                    <span class="message">The opportunities that you create will be shown here.</span>
+                </div>
+            </div>
+        </ng-template>
+    </ng-template>
+</section>

@@ -1,0 +1,36 @@
+{
+  "projectType": "library",
+  "root": "libs/app/ui/data-grid",
+  "sourceRoot": "libs/app/ui/data-grid/src",
+  "prefix": "apollo",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "options": {
+        "tsConfig": "libs/app/ui/data-grid/tsconfig.lib.json",
+        "project": "libs/app/ui/data-grid/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/app/ui/data-grid/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/ui/data-grid/src/**/*.ts", "libs/app/ui/data-grid/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/ui/data-grid"],
+      "options": {
+        "jestConfig": "libs/app/ui/data-grid/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

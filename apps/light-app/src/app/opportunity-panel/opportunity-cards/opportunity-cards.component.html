@@ -1,0 +1,60 @@
+<div class="card" (click)="selectOpportunity()" [apolloHighlight]="_cardInfo?.opportunityId">
+    <div class="thumbnail">
+        <img [src]="signedUrl || imgPlaceHolderSrc" />
+    </div>
+    <div class="opportunity-details" >
+        <div class="opportunity-name">
+            <h4 [matTooltip]="_cardInfo?.opportunityName | titlecase">{{_cardInfo?.opportunityName}}</h4>
+        </div>
+        <div class="opportunity-attributes">
+            <div class="attributes">
+                <mat-icon svgIcon="cloud-neutron" matTooltip="Asset Type"></mat-icon>
+                <span>
+                    {{_cardInfo?.assetType || noValueAltText}}
+                </span>
+            </div>
+            <div class="attributes">
+                <mat-icon svgIcon="feedback" matTooltip="Offer Type"></mat-icon>
+                <span>
+                    {{_cardInfo?.offerType || noValueAltText}}
+                </span>
+            </div>
+            <div class="attributes">
+                <mat-icon svgIcon="logistics" matTooltip="Delivery Type"></mat-icon>
+                <span>
+                    {{_cardInfo?.deliveryType || noValueAltText}}
+                </span>
+            </div>
+            <div class="attributes">
+                <mat-icon svgIcon="report" matTooltip="Contract Type"></mat-icon>
+                <span>
+                    {{_cardInfo?.contractType || noValueAltText}}
+                </span>
+            </div>
+        </div>
+        <div class="opportunity-data-objects">
+            <div class="left" (click)="zoomToExtent($event)">
+                <mat-icon svgIcon="data-marker" matTooltip="Zoom to extent"></mat-icon>
+            </div>
+            <div class="right">
+                <div *ngIf="_cardInfo?.dataObjects?.length" class="data-objects">
+                    <ng-template ngFor let-i="index" let-object [ngForOf]="_cardInfo?.dataObjects">
+                      <div *ngIf="i < maxObjectsToShow && object?.count > 0" [matBadge]="object?.count">
+                        <mat-icon class="badge" [matTooltip]="object?.name +': '+object?.count" [svgIcon]="object?.entityIcon"></mat-icon>
+                      </div>
+                      <div class="see-more-wrapper" *ngIf="i === maxObjectsToShow && object?.count > 0" [matBadge]="totalCount || getTotalCount(i)">
+                        <mat-icon class="badge" [slbPopoverTriggerFor]="tooltip" slbPopoverTrigger="hover" svgIcon="more"></mat-icon>
+                      </div>
+                    </ng-template>
+                  </div>
+                  <slb-popover #tooltip class="data-object">
+                    <ng-template ngFor let-i="index" let-object [ngForOf]="_cardInfo?.dataObjects">
+                      <div class="data-objects-popover" *ngIf="i >= maxObjectsToShow && object?.count > 0">
+                        {{object?.name +': '+ object?.count}}
+                      </div>
+                    </ng-template>
+                  </slb-popover>
+            </div>
+        </div>
+    </div>
+</div>

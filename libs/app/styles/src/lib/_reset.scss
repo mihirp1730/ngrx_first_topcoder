@@ -1,0 +1,17 @@
+@import './mixins';
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: 'Roboto', 'Franklin Gothic Medium', Tahoma, sans-serif;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  @include font-size(16);
+}

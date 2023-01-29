@@ -1,0 +1,132 @@
+{
+  "projectType": "application",
+  "root": "apps/vendor-app",
+  "sourceRoot": "apps/vendor-app/src",
+  "prefix": "apollo",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/apps/vendor-app",
+        "index": "apps/vendor-app/src/index.html",
+        "main": "apps/vendor-app/src/main.ts",
+        "polyfills": "apps/vendor-app/src/polyfills.ts",
+        "tsConfig": "apps/vendor-app/tsconfig.app.json",
+        "aot": true,
+        "assets": [
+          "apps/vendor-app/src/favicon.ico",
+          "apps/vendor-app/src/assets",
+          "apps/vendor-app/src/environments/environment.json",
+          {
+            "glob": "**/*",
+            "input": "./node_modules/@slb-dls/angular-material/assets/icons",
+            "output": "assets/icons"
+          }
+        ],
+        "styles": [
+          {
+            "input": "node_modules/@slb-dls/angular-material/assets/styles/dls-mat-light-theme.css",
+            "bundleName": "dls-mat-light-theme",
+            "inject": false
+          },
+          {
+            "input": "node_modules/@slb-dls/angular-material/assets/styles/dls-mat-dark-theme.css",
+            "bundleName": "dls-mat-dark-theme",
+            "inject": false
+          },
+          "node_modules/@ag-grid-community/core/dist/styles/ag-grid.min.css",
+          "node_modules/@slb-dls/angular-material/assets/styles/ag-grid-community/dls-ag-grid-all-in-one.css",
+          "node_modules/quill/dist/quill.core.css",
+          "node_modules/quill/dist/quill.snow.css",
+          "apps/vendor-app/src/styles.scss"
+        ],
+        "scripts": [],
+        "webWorkerTsConfig": "apps/vendor-app/tsconfig.worker.json"
+      },
+      "configurations": {
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/vendor-app/src/environments/environment.ts",
+              "with": "apps/vendor-app/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "10mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb",
+              "maximumError": "10kb"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "browserTarget": "vendor-app:build",
+        "liveReload": false,
+        "proxyConfig": "apps/vendor-app/proxy.config.json",
+        "ssl": true
+      },
+      "configurations": {
+        "development": {
+          "browserTarget": "vendor-app:build:development"
+        },
+        "production": {
+          "browserTarget": "vendor-app:build:production"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "serve-local": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["nx run auth-server:serve", "nx run vendor-app:serve", "nx run gateway-server:serve"]
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "vendor-app:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/vendor-app/src/**/*.ts", "apps/vendor-app/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/vendor-app"],
+      "options": {
+        "jestConfig": "apps/vendor-app/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["app-styles"]
+}

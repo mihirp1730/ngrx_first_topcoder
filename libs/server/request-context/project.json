@@ -1,0 +1,22 @@
+{
+  "root": "libs/server/request-context",
+  "sourceRoot": "libs/server/request-context/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/server/request-context/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/server/request-context"],
+      "options": {
+        "jestConfig": "libs/server/request-context/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

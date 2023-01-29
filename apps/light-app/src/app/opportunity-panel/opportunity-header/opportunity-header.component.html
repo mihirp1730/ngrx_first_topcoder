@@ -1,0 +1,21 @@
+<div class="header" *ngIf="isMapLoaded$ |async">
+    <slb-search
+    [searchItems]="opportunityNameList"
+    [showAutocomplete]="true"
+    [searchStartLength]="2"
+    [searchPlaceholder]="'Search opportunities'"
+    (searching)="onSearch($event)"
+    (cleared)="clearSearch()"
+    (change)="searchTermChange($event)"
+    ></slb-search>
+    <div class="filters">
+        <apollo-layer-filter (isfilterChanged)="detectDataObjectFilterChanged($event)">
+        </apollo-layer-filter>
+        <apollo-global-filters
+             [(layers)]="gisHandlerService.gisLayerService.gisLayers"
+             (filterChange)="onFilterChange()"
+             [dataObjectFilter]="dataObjectFilterChanged"
+             (clearDataObjectFilter)="clearDataObjectFilter()"
+          ></apollo-global-filters>
+    </div>
+</div>

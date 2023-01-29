@@ -1,0 +1,24 @@
+{
+  "projectType": "library",
+  "root": "libs/app/services/data-subscription",
+  "sourceRoot": "libs/app/services/data-subscription/src",
+  "prefix": "apollo",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/services/data-subscription/src/**/*.ts", "libs/app/services/data-subscription/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/services/data-subscription"],
+      "options": {
+        "jestConfig": "libs/app/services/data-subscription/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,44 @@
+@import 'libs/app/styles';
+
+.participants-container {
+  height: 435px;
+  width: 300px;
+  padding: 18px;
+
+  .header {
+    display: flex;
+    flex-direction: row;
+
+    &__add-icon {
+      margin-left: auto;
+      margin-right: 0;
+
+      mat-icon {
+        color: $color-vox-blue;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .input-container {
+    width: 100%;
+
+    ::ng-deep .mat-form-field-wrapper {
+      width: 264px;
+    }
+  }
+
+  .scroll-viewport {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+
+    ul {
+      padding-inline-start: 0;
+    }
+
+    .list {
+      list-style-type: none;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "projectType": "library",
+  "root": "libs/app/ref",
+  "sourceRoot": "libs/app/ref/src",
+  "prefix": "apollo",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/ref/src/**/*.ts", "libs/app/ref/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/ref"],
+      "options": {
+        "jestConfig": "libs/app/ref/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

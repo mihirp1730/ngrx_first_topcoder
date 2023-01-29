@@ -1,0 +1,142 @@
+<article class="create-subscription">
+    <header class="create-subscription__header">
+        <button data-slb-id="go-back-btn" class="create-subscription__back" slb-icon-button routerLink="/vendor/package/requests" matTooltip="Go back"
+            matTooltipPosition="above" data-slb-id="go-back-from-package-detail">
+            <mat-icon svgIcon="arrow-left-2"></mat-icon>
+        </button>
+        <div>
+            <div class="bread-crumb">Subscription Requests | Create Subscription |</div>
+            <h2 class="create-subscription__title">Create Subscription</h2>
+        </div>
+    </header>
+
+    <form [formGroup]="formGroup">
+        <div class="create-subscription__customer-container">
+            <div class="create-subscription__customer-title">Customer Details <span>*</span></div>
+            <section class="customer-container-details">
+                <div class="create-subscription__key-name">
+                    Name
+                </div>
+                <div class="create-subscription__key-value">
+                    <input class="create-subscription__input-transaction" formControlName="name" placeholder="Type here"/>
+                </div>
+            </section>
+            <section class="customer-container-details">
+                <div class="create-subscription__key-name">
+                    Company
+                </div>
+                <div class="create-subscription__key-value">
+                    <input class="create-subscription__input-transaction" formControlName="companyName" disabled placeholder="Type here"/>
+                </div>
+            </section>
+        </div>
+
+        <div class="create-subscription__subscription-container">
+            <div class="create-subscription__customer-title">Subscription Details <span>*</span></div>
+            <section class="customer-container-details">
+                <div class="create-subscription__key-name">
+                    Linked Request ID
+                </div>
+                <div class="create-subscription__key-value">
+                    {{requestPackage?.subscriptionRequestId}}
+                </div>
+            </section>
+            <section class="customer-container-details">
+                <div class="create-subscription__key-name">
+                    Package Name
+                </div>
+                <div class="create-subscription__key-value">
+                    {{package?.name}}
+                </div>
+            </section>
+            <section class="customer-container-details">
+                <div class="create-subscription__key-name">
+                    Download Access
+                </div>
+                <!-- replace information with API response -->
+                <div class="create-subscription__key-value">
+                    Unlimited Downloads
+                </div>
+            </section>
+            <section class="customer-container-details-price">
+                <div class="create-subscription__key-name">
+                    Subscription Price
+                </div>
+                <div class="create-subscription__key-value input-alignment">
+                    <input
+                        class="create-subscription__input-price"
+                        slbCurrencyInput
+                        formControlName="price"
+                        maxlength="14"
+                        [options]="priceInputConfig"
+                        (ngModelChange)="validatePrice()"/>
+                    <span>USD</span>
+                    <mat-error *ngIf="formGroup?.controls.price?.errors">Invalid value</mat-error>
+                </div>
+            </section>
+            <section class="customer-container-details-duration">
+                <div class="create-subscription__key-name">
+                    Subscription Duration
+                </div>
+                <div class="create-subscription__key-value input-alignment">
+                    <input
+                        class="create-subscription__input-duration"
+                        formControlName="durationTerm" (ngModelChange)="detectChanges()"
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                        maxlength="4"/>
+                    <span>Months</span>
+                </div>
+            </section>
+            <section class="customer-container-details-start">
+                <div class="create-subscription__key-name">
+                    Start Date and Time
+                </div>
+                <div class="create-subscription__key-value input-alignment">
+                    <slb-date-time-picker
+                    [(value)]="startDate"
+                    [min]="minDate"
+                    (valueChange)="onSelectedStartDate($event)">
+                    </slb-date-time-picker>
+                </div>
+            </section>
+            <section class="customer-container-details-end">
+                <div class="create-subscription__key-name">
+                    End Date and Time
+                </div>
+                <div *ngIf="unavailableEndDate; else available" class="create-subscription__key-value">
+                    NA
+                </div>
+                <ng-template #available>
+                    <div class="create-subscription__key-value">
+                        {{endDate | date: 'YYYY-MM-dd, HH:mm'}}
+                    </div>
+                </ng-template>
+            </section>
+        </div>
+
+        <div class="create-subscription__transaction-container">
+            <div class="create-subscription__customer-title">Transaction Details <span>*</span></div>
+            <section class="customer-container-details">
+                <div class="create-subscription__key-name">
+                    Transaction ID
+                </div>
+                <div class="create-subscription__key-value">
+                    <input
+                        class="create-subscription__input-transaction"
+                        formControlName="transactionId"
+                        placeholder="Please add PO#/Contract Number"
+                        oninput="this.value=this.value.replace(/[\W_]+/g,'');"
+                        maxlength="40"/>
+                </div>
+            </section>
+        </div>
+
+        <footer class="create-subscription__footer-container">
+            <button data-slb-id="cancel-create-subscription-btn" slb-secondary class="create-subscription-btn button-secondary" (click)="onCancel()">Cancel</button>
+            <button data-slb-id="create-subscription-btn" slb-button class="create-subscription-btn button-primary" (click)="onCreateSubscription()" [disabled]="!formGroup.valid || invalidPrice || unavailableEndDate">Create Subscription</button>
+        </footer>
+    </form>
+</article>
+<div class="loader-container" *ngIf="showLoader">
+  <mat-spinner data-slb-id="load-spinner"></mat-spinner>
+</div>

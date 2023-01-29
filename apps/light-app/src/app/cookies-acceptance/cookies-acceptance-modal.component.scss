@@ -1,0 +1,8 @@
+@import 'libs/app/styles';
+.cookies-acceptance-modal {
+    width: 600px;
+    .action-buttons {
+        display: flex;
+        justify-content: right;
+    }
+}

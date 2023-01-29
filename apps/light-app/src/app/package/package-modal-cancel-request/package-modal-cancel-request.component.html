@@ -1,0 +1,15 @@
+<div data-slb-id="package-modal-cancel-request" class="modal-cancel-request">
+  <div mat-dialog-title class="title-content">
+    <h4>
+      Package Request
+    </h4>
+    <slb-modal-close-button data-slb-id="close" [dialogRef]="dialogRef" buttonType="Icon"></slb-modal-close-button>
+  </div>
+  <div mat-dialog-content class="modal-content">
+    <p class="modal-message">Are you sure that you want to cancel the package request?</p>
+    <div class="btn-container">
+      <button data-slb-id="cancel" slb-secondary-button class="package-request-btn" (click)="cancel()">Cancel</button>
+      <button data-slb-id="confirm" slb-secondary-button class="package-request-btn">Confirm</button>
+    </div>
+  </div>
+</div>

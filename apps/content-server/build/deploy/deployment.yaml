@@ -1,0 +1,94 @@
+{{$definitionName := getenv "BUILD_DEFINITIONNAME" -}}
+{{$sourceBranchName := getenv "BUILD_SOURCEBRANCHNAME" -}}
+{{$buildNumber := getenv "BUILD_BUILDNUMBER" -}}
+{{$gcloudProject := getenv "GCLOUD_PROJECT" -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{$definitionName}}$DEPLOYMENTID
+  annotations:
+    release-description: "$RELEASE_DESCRIPTION"
+  labels:
+    BUILD_DEFINITIONNAME: "{{$definitionName}}"
+    BUILD_SOURCEBRANCHNAME: "{{$sourceBranchName}}"
+    BUILD_BUILDNUMBER: "{{$buildNumber}}"
+    RELEASE_NAME: "$RELEASE_NAME"
+    RELEASE_REQUESTEDFOR: "$REQUESTED_FOR"
+spec:
+  replicas: $REPLICAS
+  selector:
+    matchLabels:
+      app: {{$definitionName}}$DEPLOYMENTID
+  template:
+    metadata:
+      labels:
+        ssr: EAR-AA-20129
+        project-id: $GCLOUD_PROJECT
+        cluster-name: $CONTAINER_CLUSTER
+        app: {{$definitionName}}$DEPLOYMENTID
+        version: "{{$buildNumber}}"
+        BUILD_DEFINITIONNAME: "{{$definitionName}}"
+        BUILD_SOURCEBRANCHNAME: "{{$sourceBranchName}}"
+        BUILD_BUILDNUMBER: "{{$buildNumber}}"
+    spec:
+      serviceAccountName: $GCLOUD_PROJECT-k8sa-svc
+      containers:
+      - name: esp
+        ports:
+        - containerPort: 8081
+          name: http-esp
+        image: gcr.io/endpoints-release/endpoints-runtime:$ESP_IMAGE_VERSION
+        args: [
+          "--http_port", "8081",
+          "--backend", "127.0.0.1:8080",
+          "--service", "content-server-$CONTAINER_CLUSTER.endpoints.$GCLOUD_PROJECT.cloud.goog",
+          "--rollout_strategy", "managed",
+        ]
+      - image: gcr.io/{{$gcloudProject}}/{{$definitionName}}:{{$sourceBranchName}}-{{$buildNumber}}
+        name: {{$definitionName}}
+        ports:
+        - name: http-content
+          containerPort: 8080
+        env:
+        - name: CONTENT_SERVER_DEPLOY
+          value: "true"
+        - name: CONTENT_SERVER_ENDPOINT
+          value: "/api/content/"
+        - name: CONTENT_SERVER_PORT
+          value: "8080"
+        - name: CONTENT_SERVER_NAME
+          value: "content-server"
+        - name: AUTH_CLIENT_ID
+          value: "$AUTH_CLIENT_ID"
+        - name: AUTH_JWK_URI
+          value: "$AUTH_JWK_URI"
+        - name: VALIDATION_CACHE_TIMEOUT_SEC
+          value: "$VALIDATION_CACHE_TIMEOUT_SEC"
+        - name: VALIDATION_NUMBERS_OF_RETRIES
+          value: "$VALIDATION_NUMBERS_OF_RETRIES"
+        - name: VALIDATION_RETRY_INTERVAL
+          value: "$VALIDATION_RETRY_INTERVAL"
+        - name: TRAFFIC_MANAGER_VALIDATION_ENDPOINT
+          value: "http://light-auth-server$DEPLOYMENTID:8080/api/auth/traffic-validate"
+        - name: TRAFFIC_MANAGER_VALIDATION_CACHE_KEY
+          value: "$TRAFFIC_MANAGER_VALIDATION_CACHE_KEY"
+        - name: CONTENT_SERVER_CSRF_PROTECTION
+          value: "$ENABLE_CSRF_PROTECTION"
+        - name: TRAFFIC_MANAGER_IS_ENABLED
+          value: "$APP_TRAFFIC_MANAGER_IS_ENABLED"
+        - name: CONSUMER_SUBSCRIPTION_SERVICE
+          value: "$CONSUMER_SUBSCRIPTION_SERVICE"
+        - name: CONSUMER_SUBSCRIPTION_SERVICE_CLUSTER
+          value: "$CONSUMER_SUBSCRIPTION_SERVICE_CLUSTER"
+        - name: OSDU_FILE_MANAGER_CLUSTER
+          value: "$OSDU_FILE_MANAGER_CLUSTER"
+        - name: OSDU_FILE_MANAGER_URL
+          value: "$OSDU_FILE_MANAGER_URL"
+        - name: METRICS_INTERVAL
+          value: "$METRICS_INTERVAL"
+        - name: METRICS_PORT
+          value: "$METRICS_PORT"
+        - name: SPAN_PROCESSOR_HOST
+          value: "$SPAN_PROCESSOR_HOST"
+        - name: SPAN_PROCESSOR_PORT
+          value: "$SPAN_PROCESSOR_PORT"

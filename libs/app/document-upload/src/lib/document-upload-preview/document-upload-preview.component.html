@@ -1,0 +1,46 @@
+<section data-slb-id="file-uploader" class="file-uploader">
+  <ng-container *ngIf="widgetStyle === 'drag-drop'">
+    <div data-slb-id="document-upload-preview" class="document-dropzone">
+          <div class="info-container">
+            <div *ngFor="let infoMsg of options?.infoMessages">
+              {{ infoMsg }}
+            </div>
+          </div>
+          <slb-dropzone
+            #dropzone
+            data-slb-id="dropzoneDocument"
+            [ngClass]="{'drop-zone-area-error' : uploaderError}"
+            [dropzoneTemplate]="dropzoneTemplate"
+            [multiple]="multipleFiles"
+            [disabled]="!canUpload"
+            [hidden]="isPublished"
+            [accept]="extensions"
+            [maxFileSize]="maxFileSize"
+            (onFilesChange)="onFileSelected($event, dropzone)">
+            <ng-template #dropzoneTemplate>
+              <div class="icon-container">
+                <mat-icon svgIcon="cloud-upload"></mat-icon>
+              </div>
+              <div class="upload-validity">
+                <div>
+                   Drop here or click
+                </div>
+              </div>
+            </ng-template>
+          </slb-dropzone>
+          <div>
+            <div class="preview-container" *ngIf="files.length > 0 else noPreview ">
+              <ng-container *ngFor="let file of files">
+                  <apollo-document-preview *ngIf="file" [file]="file" [isPublished]="isPackagePublished" (removeDocument) = "removeDocument($event)" (captionEdit) = "captionEdited($event)"></apollo-document-preview><!--- loop through each preview item-->
+              </ng-container>
+            </div>  
+            <ng-template #noPreview>
+                <div class="no-preview-container">
+                  {{options?.noPreviewText}}
+                </div>
+              </ng-template>    
+          </div>
+      </div>
+  </ng-container>
+  <div class="loader-container" *ngIf="showLoader"><mat-spinner data-slb-id="load-spinner"></mat-spinner></div>
+</section>

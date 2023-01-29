@@ -1,0 +1,39 @@
+{
+  "projectType": "library",
+  "root": "libs/app/draggable-modal",
+  "sourceRoot": "libs/app/draggable-modal/src",
+  "prefix": "apollo",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["dist/libs/app/draggable-modal"],
+      "options": {
+        "project": "libs/app/draggable-modal/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/app/draggable-modal/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/app/draggable-modal/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/draggable-modal"],
+      "options": {
+        "jestConfig": "libs/app/draggable-modal/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/draggable-modal/src/**/*.ts", "libs/app/draggable-modal/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

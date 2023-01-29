@@ -1,0 +1,16 @@
+<div class="opportunity-container" [ngClass]="{ isOpportunityExpanded: isOpportunityExpanded === true }">
+    <apollo-opportunity-card-wrapper
+      *ngIf="(selectedOpportunityId$ | async) === null"
+      [isOpportunityExpanded]="isOpportunityExpanded"
+      [isMapExpanded]="isMapExpanded"
+    ></apollo-opportunity-card-wrapper>
+  <div class="details" *ngIf="selectedOpportunityId$ | async as selectedOpportunityId">
+    <apollo-opportunity-details
+      [opportunityId]="selectedOpportunityId"
+      (closeOpportunityDetails)="onCloseOpportunityDetails()"
+      (opportunityDetailsBack)="onCloseOpportunityDetails()"
+      [isOpportunityExpanded]="isOpportunityExpanded"
+    >
+    </apollo-opportunity-details>
+  </div>
+</div>

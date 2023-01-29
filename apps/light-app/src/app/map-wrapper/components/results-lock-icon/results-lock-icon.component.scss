@@ -1,0 +1,10 @@
+@import "libs/app/styles";
+
+:host {
+  display: block;
+}
+mat-icon {
+  color: $color-text-warning;
+  // Override any styles from consumers (gis-canvas components)
+  margin: 0 !important;
+}

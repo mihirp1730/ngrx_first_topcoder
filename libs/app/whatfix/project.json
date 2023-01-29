@@ -1,0 +1,24 @@
+{
+  "projectType": "library",
+  "root": "libs/app/whatfix",
+  "sourceRoot": "libs/app/whatfix/src",
+  "prefix": "apollo",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/whatfix/src/**/*.ts", "libs/app/whatfix/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/whatfix"],
+      "options": {
+        "jestConfig": "libs/app/whatfix/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

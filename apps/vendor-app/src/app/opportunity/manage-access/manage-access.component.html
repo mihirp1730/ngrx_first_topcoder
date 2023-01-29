@@ -1,0 +1,137 @@
+<section class="manage-access">
+  <div class="title">
+    <h2>Manage Access</h2>
+  </div>
+  <div class="filters">
+    <form class="details">
+      <slb-search [formControl]="userName" [label]="'Search by Username'" [searchPlaceholder]="'Search'"></slb-search>
+      <slb-dropdown [options]="companyNames" [formControl]="companyName" [label]="'Company'"></slb-dropdown>
+      <slb-dropdown [options]="opportunityNames" [formControl]="opportunityName" [label]="'Opportunity'"></slb-dropdown>
+      <div class="clear-all">
+        <button
+          slb-tertiary-button
+          title="Clear All Filters"
+          color="primary"
+          [disabled]="!(userName.value || companyName?.value?.value || opportunityName?.value?.value)"
+          (click)="reset()"
+        >
+          <mat-icon svgIcon="clear"></mat-icon>
+          <span>Clear All</span>
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="action-btn">
+    <button slb-button class="user-btn" (click)="addUserModal()">Add Users</button>
+  </div>
+  <table
+    aria-label="Vendor can add or edit the individual user's access based on Access Type for an opportunity"
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+  >
+    <ng-container matColumnDef="username">
+      <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header>User Name</th>
+      <td mat-cell *matCellDef="let item">{{ item.firstName }} {{ item.lastName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="company">
+      <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header>Company</th>
+      <td mat-cell *matCellDef="let item" title="{{ item.companyName }}">
+        {{ item.companyName }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="opportunity">
+      <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header>Opportunity</th>
+      <td mat-cell *matCellDef="let item" title="{{ item.opportunityName }}">
+        {{ item.opportunityName }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="confidentialInfo">
+      <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header>Details</th>
+      <td mat-cell *matCellDef="let item" class="approved-icon-container">
+        <ng-container *ngIf="item.isConfInfo">
+          <mat-icon
+            class="approved-icon"
+            *ngIf="item.confiInfoStatus === accessDetailStatus.Approved"
+            matTooltip="Approved"
+            svgIcon="approved"
+          ></mat-icon>
+          <mat-icon
+            class="revoked-expired-icon"
+            *ngIf="item.confiInfoStatus === accessDetailStatus.Revoked"
+            matTooltip="Revoked"
+            svgIcon="error"
+          ></mat-icon>
+          <mat-icon
+            class="revoked-expired-icon"
+            *ngIf="item.confiInfoStatus === accessDetailStatus.Expired"
+            matTooltip="Expired"
+            svgIcon="warning"
+          ></mat-icon>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="VDR">
+      <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header>VDR</th>
+      <td mat-cell *matCellDef="let item" class="approved-icon-container">
+        <ng-container *ngIf="item.isVDR">
+          <mat-icon
+            class="approved-icon"
+            *ngIf="item.vdrStatus === accessDetailStatus.Approved"
+            matTooltip="Approved"
+            svgIcon="approved"
+          ></mat-icon>
+          <mat-icon
+            class="revoked-expired-icon"
+            *ngIf="item.vdrStatus === accessDetailStatus.Revoked"
+            matTooltip="Revoked"
+            svgIcon="error"
+          ></mat-icon>
+          <mat-icon
+            class="revoked-expired-icon"
+            *ngIf="item.vdrStatus === accessDetailStatus.Expired"
+            matTooltip="Expired"
+            svgIcon="warning"
+          ></mat-icon>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+      <td mat-cell *matCellDef="let item">
+        <button [disabled]="isOpportunityDisabled(item)" slb-tertiary-button class="manage-access-btn" (click)="manageAccess(item)">
+          Manage Access
+        </button>
+        <ng-container *ngIf="item.opportunityStatus?.toUpperCase() === opportunityStatus.Expired.toUpperCase()">
+          <mat-icon matTooltip="The opportunity validity has expired and access management is disabled" svgIcon="warning"></mat-icon>
+        </ng-container>
+        <ng-container *ngIf="item.opportunityStatus?.toUpperCase() === opportunityStatus.Unpublished.toUpperCase()">
+          <mat-icon
+            matTooltip="The opportunity has been unpublished, access management is disabled till it is published again"
+            svgIcon="notification-block"
+          ></mat-icon>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns" [ngClass]="{ 'mat-row--disabled': isOpportunityDisabled(row) }"></tr>
+  </table>
+  <div class="paginator">
+    <slb-pagination-control
+      [showPageCounter]="true"
+      [showFirstLastButtons]="true"
+      [pageSizeOptions]="pageSizeOptions"
+      [pageSize]="pageSize"
+      [length]="length"
+    ></slb-pagination-control>
+  </div>
+  <div data-slb-id="load-spinner" class="loader-container" *ngIf="showLoader$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+</section>

@@ -1,0 +1,45 @@
+.reject-request-modal {
+  width: 600px;
+  .content {
+    display: flex;
+    .request-info {
+      width: 45%;
+      margin-right: 20px;
+      margin-bottom: 20px;
+    }
+    hr {
+      margin: 0 5%;
+    }
+    .request-details {
+      width: 60%;
+      > ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .comment-section {
+        margin-top: 30px;
+        .mat-input-element {
+          height: 100px;
+          width: 250px;
+        }
+      }
+    }
+  }
+  .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    > button {
+      margin-left: 5%;
+      width: 20%;
+    }
+
+    .rejectbtn {
+      border: 1px solid red;
+      ::ng-deep .mat-button-wrapper {
+        color: red;
+      }
+    }
+  }
+}

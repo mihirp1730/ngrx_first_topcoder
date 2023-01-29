@@ -1,0 +1,23 @@
+.file-uploader {
+  input[type='file'] {
+    display: none;
+  }
+
+  &--disabled {
+    .file-upload-link {
+      cursor: not-allowed;
+    }
+  }
+
+  button mat-icon {
+    margin-right: 5px;
+  }
+}
+
+.file-upload-link {
+  cursor: pointer;
+  margin-top: 5px;
+  mat-icon {
+    margin-right: 5px;
+  }
+}

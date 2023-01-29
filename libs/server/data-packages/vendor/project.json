@@ -1,0 +1,32 @@
+{
+  "root": "libs/server/data-packages/vendor",
+  "sourceRoot": "libs/server/data-packages/vendor/src",
+  "projectType": "library",
+  "targets": {
+    "build-proto": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "npm run proto-loader-gen-types -- --longs=String --enums=String --defaults --oneofs --grpcLib=@grpc/grpc-js --outDir=libs/server/data-packages/vendor/src/lib/proto libs/server/data-packages/vendor/src/assets/proto/data-package-resource.proto"
+        ],
+        "parallel": false
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/server/data-packages/vendor/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/server/data-packages/vendor"],
+      "options": {
+        "jestConfig": "libs/server/data-packages/vendor/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

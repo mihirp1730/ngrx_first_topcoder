@@ -1,0 +1,51 @@
+<div class="title">Request Package</div>
+<div class="container">
+
+  <form [formGroup]="subRequestFormGroup" data-slb-id="subRequestFormGroup">
+
+    <div class="container__title">
+      Name<span class="container__subtitle">{{ (userAuth$|async)?.name }}</span>
+    </div>
+
+    <div class="container__title">
+      Company Name<span class="required">*</span>
+    </div>
+    <mat-form-field slbFormField>
+      <input
+        matInput
+        data-slb-id="companyName"
+        class="package-company-name"
+        type="text"
+        formControlName="company"
+      />
+    </mat-form-field>
+
+    <section class="create-comment-container" data-slb-id="create-comment-container">
+      <div class="container__title">Message<span class="required">*</span></div>
+      <div class="slb-text-input" data-slb-id="slb-text-input">
+        <mat-form-field slbFormField>
+          <textarea
+            [attr.disabled]="selectedPackageRequesting$|async"
+            matInput
+            data-slb-id="comment"
+            class="package-comments-area"
+            formControlName="comment"
+            placeholder="Start typing"
+            rows="5"
+          ></textarea>
+        </mat-form-field>
+      </div>
+      <div class="btn-container">
+        <button slb-button
+                data-slb-id="submit"
+                class="package-request-btn"
+                [disabled]="!subRequestFormGroup.valid || (selectedPackageRequesting$|async)"
+                (click)="onRequestPackage()">
+          Request Package
+          <mat-spinner *ngIf="selectedPackageRequesting$|async" class="spinner" diameter="20"></mat-spinner>
+        </button>
+      </div>
+    </section>
+  </form>
+
+</div>

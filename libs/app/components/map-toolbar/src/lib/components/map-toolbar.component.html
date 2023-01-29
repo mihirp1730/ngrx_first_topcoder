@@ -1,0 +1,9 @@
+<div class="map-toolbar__container">
+    <gis-top-toolbar
+        (actionType)="onToolbarAction($event)"
+        [toolbarVisibilityConfig]="toolbarVisibilityConfig">
+    </gis-top-toolbar>
+</div>
+<ng-template #customToolbar>
+    <mat-icon svgIcon="apollo:earth" (click)="onToolbarAction({action: 'zoomToWorld'})"></mat-icon>
+</ng-template>

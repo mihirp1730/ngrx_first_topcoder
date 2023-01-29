@@ -1,0 +1,32 @@
+<section data-slb-id="package-filters" class="package-filters">
+  <div class="left-content">
+    <div class="stage-filter" *ngFor="let filter of filters">
+      <mat-form-field data-slb-id="stage-filter-{{filter?.id}}" slbFormField>
+        <mat-label>{{ filter.label }}</mat-label>
+        <mat-select data-slb-id="select" disableOptionCentering [value]="filter.value ? filter.value : 'All'"
+          (selectionChange)="onFilterSelectionChange(filter.id, $event.value)">
+          <mat-option *ngFor="let filterValue of filter.values" [value]="filterValue.value ? filterValue.value : 'All'"
+            data-slb-id="option-{{filterValue?.value}}">
+            {{ filterValue.label }} ({{ filterValue.count }})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="search-filter">
+      <slb-search-expanding  data-slb-id="search-filter" [searchPlaceholder]="'Search'" [showAutocomplete]="false" (change)="onSearch($event)">
+      </slb-search-expanding>
+    </div>
+  </div>
+  <div class="right-content">
+    <div data-slb-id="sort-filter" class="sort-filter">
+      <mat-form-field slbFormField>
+        <mat-label>Sort by</mat-label>
+        <mat-select data-slb-id="select" disableOptionCentering placeholder="Sort by" (selectionChange)="onSort($event)" value="name-asc">
+          <mat-option *ngFor="let item of sortBy" [value]="item.field + '-' + item.order" data-slb-id="option-{{item?.field}}">
+            {{ item.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</section>

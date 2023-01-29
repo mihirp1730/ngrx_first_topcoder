@@ -1,0 +1,73 @@
+{
+  "gisCanvas": {
+    "gisMap": {
+      "callout": {
+        "disabled": true
+      },
+      "init": {
+        "center": {
+          "lat": 29.749615,
+          "lng": -95.47337
+        },
+        "handleClick": true,
+        "zoom": 4
+      },
+      "layersConfiguration": ["THIS ARRAY GETS REPLACED BY THE SETTINGS SERVICE 'loadMapLayerSettings' METHOD"],
+      "highlightResult": true,
+      "highlightDisabled": false
+    },
+    "gisSidebar": {
+      "disabled": true,
+      "draggable": true,
+      "init": {
+        "open": false
+      }
+    },
+    "gisToptoolbar": {
+      "disabled": true,
+      "collapse": true
+    },
+    "toolbarVisibilityConfig": {
+      "hideQuerypanel": true
+    },
+    "gisResultDetailPanel": false,
+    "gisResultPanel": {
+      "disabled": true,
+      "recordsPerLayer": 500
+    },
+    "gisLegends": false,
+    "gisGroupExternalLayers": false,
+    "gisGroupLayer": false,
+    "gisDatalist": false,
+    "defaultFilters": {
+      "disabled": false,
+      "filterWithSearch": true,
+      "filterWithSelectDeselectAll": false
+    },
+    "gisHistogram": false,
+    "gisFilterSummary": true
+  },
+  "zoomToRadius": {
+    "0": 100000,
+    "1": 90000,
+    "2": 70000,
+    "3": 60000,
+    "4": 50000,
+    "5": 35000,
+    "6": 15000,
+    "7": 8700,
+    "8": 4000,
+    "9": 2000,
+    "10": 1200,
+    "11": 550,
+    "12": 300,
+    "13": 150,
+    "14": 70,
+    "15": 35,
+    "16": 24,
+    "17": 10,
+    "18": 5,
+    "19": 2,
+    "20": 1
+  }
+}

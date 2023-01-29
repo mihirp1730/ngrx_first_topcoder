@@ -1,0 +1,12 @@
+<section class="request-dashboard">
+  <header class="request-dashboard__toolbar">
+    <h3 class="request-dashboard__title">Subscription Requests</h3>
+    <button data-slb-id="close-btn" slb-icon-button id="request-dashboard__close" routerLink="/vendor/datapackage">
+      <mat-icon svgIcon="close"></mat-icon>
+    </button>
+  </header>
+  <div class="request-dashboard__content">
+    <apollo-data-grid [items]="requests" [columnDefinition]="columnDefinition"></apollo-data-grid>
+  </div>
+</section>
+<div data-slb-id="load-spinner" class="loader-container" *ngIf="showLoader"><mat-spinner></mat-spinner></div>

@@ -1,0 +1,12 @@
+<div class="title">Approved Subscription</div>
+<div class="paragraph">Your request for this package has been approved and will be active on {{ (startTime$|async) | date: 'YYYY-MM-dd HH:mm' }}</div>
+<div class="container">
+
+  <section class="create-comment-container" data-slb-id="create-comment-container">
+    <div class="btn-container">
+      <button data-slb-id="download" slb-button class="package-request-btn" disabled="true">Download</button>
+      <button data-slb-id="subscriptions" slb-button class="package-request-btn" routerLink="/subscriptions">My Subscriptions</button>
+    </div>
+  </section>
+
+</div>

@@ -1,0 +1,109 @@
+<mat-card class="package-card">
+  <mat-card-header>
+    <mat-card-title>
+      <span title="{{packageDetails?.name}}" class="package-name">{{packageDetails?.name}}</span>
+      <div>
+        <button slb-icon-button aria-label="More" title="Menus"
+          [disabled]="packageDetails?.status.toLowerCase() === 'publishing' ||
+            packageDetails?.status.toLowerCase() === 'unpublishing'"
+          [matMenuTriggerFor]="cardMenu">
+          <mat-icon svgIcon="more"></mat-icon>
+        </button>
+        <mat-menu #cardMenu="matMenu">
+          <!-- Adding container to separate out the menus for draft, published and other status -->
+          <ng-container [ngSwitch]="packageDetails?.status.toLowerCase()">
+            <ng-container *ngSwitchCase="'draft'">
+              <button data-slb-id="edit" mat-menu-item (click)="editPackage()">
+                {{labels.edit}}
+              </button>
+              <button data-slb-id="delete" mat-menu-item (click)="deleteDraft()">
+                  {{labels.delete}}
+              </button>
+            </ng-container>
+            <ng-container *ngSwitchCase="'published'">
+              <button data-slb-id="edit" mat-menu-item (click)="editPackage()">
+                {{labels.edit}}
+              </button>
+              <button data-slb-id="unpublish" mat-menu-item (click)="unpublishPackage()">
+                {{labels.unPublish}}
+              </button>
+            </ng-container>
+            <ng-container *ngSwitchCase="'unpublished'">
+              <button data-slb-id="edit" mat-menu-item (click)="editPackage()">
+                {{labels.edit}}
+              </button>
+              <button data-slb-id="delete" mat-menu-item (click)="deleteDraft()">
+                {{labels.delete}}
+              </button>
+            </ng-container>
+          </ng-container>
+        </mat-menu>
+      </div>
+    </mat-card-title>
+    <mat-card-subtitle>
+      <ng-container [ngSwitch]="packageDetails?.status.toLowerCase()">
+        <div class="chip draft" *ngSwitchCase="'draft'">
+          <mat-icon svgIcon="document"></mat-icon>
+          <span>{{packageDetails?.status}}</span>
+        </div>
+        <div class="chip unpublished" *ngSwitchCase="'unpublished'">
+          <mat-icon svgIcon="info"></mat-icon>
+          <span>{{packageDetails?.status}}</span>
+        </div>
+        <div class="chip published" *ngSwitchCase="'published'">
+          <mat-icon svgIcon="approved"></mat-icon>
+          <span>{{packageDetails?.status}}</span>
+        </div>
+        <div class="chip publishing" *ngSwitchCase="'publishing'">
+          <mat-icon svgIcon="in-progress"></mat-icon>
+          <span>{{packageDetails?.status}}</span>
+        </div>
+        <div class="chip publishing" *ngSwitchCase="'unpublishing'">
+          <mat-icon svgIcon="in-progress"></mat-icon>
+          <span>{{packageDetails?.status}}</span>
+        </div>
+      </ng-container>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image [src]="mediaUrl" [alt]="packageDetails?.name" />
+  <mat-card-content>
+    <ul class="properties-container">
+      <li data-slb-id="dataType">
+        <div class="label">{{labels.dataType}}</div>
+        <div class="value"
+          [title]="(packageDetails?.dataType.length > 0) ? (packageDetails?.dataType.join(', ')) : labels.naText"
+          [ngClass]="{'no-data' : (packageDetails?.dataType?.length === 0)}">
+          {{(packageDetails?.dataType.length > 0 )? (packageDetails?.dataType.join(', ')) : labels.naText}}
+        </div>
+      </li>
+      <li data-slb-id="region">
+        <div class="label">{{labels.region}}</div>
+        <div class="value"
+          [title]="(packageDetails?.region.length > 0) ? (packageDetails?.region.join(', ')) : labels.naText"
+          [ngClass]="{'no-data' : (packageDetails?.region?.length === 0)}">
+          {{(packageDetails?.region.length > 0) ? (packageDetails?.region.join(', ')) : labels.naText}}</div>
+      </li>
+      <li data-slb-id="createdOn">
+        <div class="label">{{labels.createdOn}}</div>
+        <div class="value" [ngClass]="{'no-data' : !packageDetails?.createdOn}">{{ packageDetails?.createdOn ?
+          (packageDetails?.createdOn | date :'YYYY-MM-dd HH:mm') : labels.naText }}</div>
+      </li>
+      <li data-slb-id="createdBy">
+        <div class="label">{{labels.createdBy}}</div>
+        <div class="value" [title]="packageDetails?.createdBy" [ngClass]="{'no-data' : !packageDetails?.createdBy}">{{packageDetails?.createdBy ?
+          packageDetails?.createdBy : labels.naText}}</div>
+      </li>
+      <li data-slb-id="lastUpdatedOn">
+        <div class="label">{{labels.lastUpdatedOn}}</div>
+        <div class="value" [ngClass]="{'no-data' : !packageDetails?.lastUpdatedOn}">{{packageDetails?.lastUpdatedOn ?
+          (packageDetails?.lastUpdatedOn | date : 'YYYY-MM-dd HH:mm') : labels.naText}}</div>
+      </li>
+      <li data-slb-id="lastUpdatedBy">
+        <div class="label">{{labels.lastUpdatedBy}}</div>
+        <div class="value" [title]="packageDetails?.lastUpdatedBy" [ngClass]="{'no-data' : !packageDetails?.lastUpdatedBy}">{{packageDetails?.lastUpdatedBy ?
+          packageDetails?.lastUpdatedBy : labels.naText}}</div>
+      </li>
+    </ul>
+  </mat-card-content>
+  <div class="loader-container loading-media" *ngIf="showLoadingMsg">Loading Media...</div>
+</mat-card>

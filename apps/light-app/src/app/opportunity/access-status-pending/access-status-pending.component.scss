@@ -1,0 +1,53 @@
+@import 'libs/app/styles';
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.container {
+  .title-row {
+    font-weight: 600;
+    padding: 2px 5px;
+    margin-bottom: 5px;
+    text-align: left;
+  }
+
+  ::ng-deep .mat-icon {
+    height: 32px !important;
+    width: 32px !important;
+    color: $color-black;
+  }
+  
+  .row.content {
+    margin-top: 15px;
+  }
+  
+  .details-column {
+    margin-left: 20px;
+    margin-top: -10px;
+  }
+
+  .column div {
+    font-size: 12px;
+    text-align: left;
+  }
+
+  .pending-with {
+    margin-left: 20px !important;
+    text-align: center !important
+  }
+
+  .column div:first-child {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+}

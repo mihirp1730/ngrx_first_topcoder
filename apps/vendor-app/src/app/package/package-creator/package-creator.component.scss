@@ -1,0 +1,247 @@
+@import 'libs/app/styles';
+
+.package-creator {
+  position: relative;
+  height: calc(100% - 1px);
+
+  .page-header {
+    background-color: $color-grey-02;
+    border-bottom: 1px solid $color-grey-05;
+    padding: 15px 20px;
+
+    .breadcrum-container {
+      display: flex;
+
+      .home-link {
+        padding: 0 5px 0 0;
+
+        .mat-icon {
+          color: $color-grey-07;
+          margin-right: 7px;
+          cursor: pointer;
+          height: 16px;
+          width: 16px;
+        }
+      }
+
+      .bread-crumb-container {
+        color: $color-grey-07;
+
+        .bread-crumb {
+          margin: 0 12px 0 12px;
+        }
+      }
+    }
+
+    .heading {
+      display: flex;
+      justify-content: space-between;
+
+      .back-link {
+        padding: 0 5px 0 0;
+        margin: 5px 16px 0 0;
+
+        .mat-icon {
+          color: $color-grey-07;
+          cursor: pointer;
+          height: 16px;
+          width: 16px;
+        }
+      }
+
+      .title {
+        @include font-size(24);
+        margin: 0;
+        flex:auto;
+      }
+
+      .published-package-text {
+        color: $color-grey-07;
+        align-self: flex-end;
+      }
+    }
+  }
+
+  &__footer {
+    background-color: $color-grey-02;
+    border-top: 1px solid $color-grey-05;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 20px;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .draft-container {
+      .btn-space {
+        margin-right: 20px;
+        border: 1px solid $color-vox-blue;
+        background-color: $color-grey-02;
+
+        .mat-button-wrapper.dls-button-wrapper,
+        .package-creator__footer .draft-container .dls-secondary-button.mat-stroked-button .mat-button-wrapper.dls-button-wrapper {
+          color: $color-vox-blue;
+        }
+      }
+    }
+
+    .save-draft-msg {
+      color: $color-grey-07;
+    }
+
+    .disabled-publish-msg {
+      padding-right: 10px;
+      color: $color-grey-07;
+    }
+
+    .button_publish:disabled {
+      border: 1px solid $color-grey-05;
+    }
+  }
+
+  apollo-side-panel {
+    aside.side-panel--full-height {
+      height: calc(100% - 142px); // Subtract footer + header height
+      box-shadow: 0px 2px 4px 0 $color-grey-05;
+      background-color: $color-grey-02;
+      overflow-y: auto;
+      overflow-x: hidden;
+      .side-panel__content {
+        height: calc(100% - 112px) !important; // Subtract side-panel__header height
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+
+  .package-name-container {
+    padding: 20px 40px 6px 20px;
+
+    .info {
+      font-size: 12px;
+      color: $color-grey-06;
+    }
+    .required {
+      color: $color-alert-red;
+    }
+    .form-package-name {
+      .mat-form-field {
+        width: 285px;
+
+        .mat-form-field-label-wrapper {
+          display: none;
+        }
+      }
+
+      .disabled-text {
+        color: $color-grey-06;
+      }
+    }
+  }
+
+  .details-btn-container {
+    padding: 20px 20px;
+
+    .pkg-details-btn {
+      width: 220px;
+      span {
+        vertical-align: baseline;
+      }
+    }
+    .pkg-details-btn:not(.mat-button-disabled) {
+      border-color: $color-voss-blue !important;
+      span {
+        color: $color-white !important;
+        vertical-align: baseline;
+      }
+    }
+  }
+
+  .delivery-container {
+    padding: 20px 20px 20px 40px;
+    border: 1px solid $color-grey-05;
+    border-left: 0;
+    border-right: 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    .warning-msg {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      .mat-icon {
+        height: 18px;
+        width: 18px;
+        line-height: 18px;
+        margin-right: 3px;
+      }
+    }
+
+    .content.disabled,
+    .arrow-icon.disabled {
+      color: $color-grey-05;
+    }
+
+    .arrow-icon {
+      padding-left: 25px;
+      height: 30px;
+
+      .mat-icon {
+        height: 30px;
+        width: 30px;
+      }
+    }
+  }
+
+  .delivery-container.disabled {
+    cursor: default;
+
+    .content,
+    .arrow-icon {
+      color: $color-grey-05;
+    }
+  }
+
+  #mapContainer {
+    height: calc(100% - 87px) !important;
+  }
+
+  gis-canvas {
+    .gisMapCanvas {
+      gis-zoom-buttons {
+        position: absolute;
+        bottom: 90px;
+        right: 5px;
+        z-index: 2;
+      }
+      gis-map {
+        z-index: 1;
+        .gis-map-div {
+          position: absolute;
+          right: 0;
+          height: calc(100% - 57px) !important;
+        }
+      }
+    }
+  }
+
+  .gisCommonSpinner {
+    display: none;
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  .required {
+    color: $color-candy;
+  }
+}

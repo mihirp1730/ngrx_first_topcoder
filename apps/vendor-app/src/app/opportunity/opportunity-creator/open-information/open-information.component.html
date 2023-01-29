@@ -1,0 +1,47 @@
+<section class="opportunity-open-information">
+  <p class="info tab-sub-heading">Information entered in this section will be visible to users based on the opportunity type selected</p>
+  <form class="open-info-form" [formGroup]="openInformationDetails" [apolloFormPatcher]="initialFormData$ | async">
+    <div class="text-editor">
+      <label class="label">Asset Description<span class="required">*</span></label>
+      <quill-editor
+        class="editor"
+        placeholder="Type here"
+        [modules]="editorModules"
+        formControlName="overview"
+        [required]="true"
+        [sanitize]="true"
+        ngDefaultControl
+      >
+      </quill-editor>
+      <mat-error *ngIf="openInformationDetails?.controls.overview?.errors?.invalidText && openInformationDetails?.controls.overview.dirty"
+        >Please enter valid text.</mat-error
+      >
+    </div>
+
+    <div class="media-upload">
+      <label class="label">Image<span class="required">*</span></label>
+      <apollo-media-upload-preview
+        [options]="mediaUploadOptions"
+        (uploadedMediaFileIds)="uploadedMediaFileIds($event)"
+        [existingMediaFileList]="existingMediaFileList$ | async"
+        [componentIdentifier]="'open-info'"
+        formControlName="media"
+        ngDefaultControl
+      >
+      </apollo-media-upload-preview>
+    </div>
+
+    <div class="doc-upload">
+      <label class="label">Documents</label>
+      <apollo-document-upload-preview
+        [options]="documentUploadOptions"
+        [multipleFiles]="true"
+        (uploadedDocFileIds)="uploadDocFileIds($event)"
+        [componentIdentifier]="'open-info'"
+        [existingDocFileList]="existingDocFileList$ | async"
+        ngDefaultControl
+      >
+      </apollo-document-upload-preview>
+    </div>
+  </form>
+</section>

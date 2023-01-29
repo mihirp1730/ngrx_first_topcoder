@@ -1,0 +1,95 @@
+@import 'libs/app/styles';
+
+.globe-loader {
+  @include transall();
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: $color-vox-blue;
+  z-index: 15;
+
+  &--fade-out {
+    @include scale(1.25);
+    @include transall();
+    opacity: 0;
+  }
+
+  &__scene {
+    position: relative;
+    height: 150px;
+    width: 150px;
+  }
+
+  &__circle {
+    @include animation(globeRotate 25s 0ms infinite linear);
+    height: 80%;
+    margin: 10% auto;
+    position: relative;
+    transform-style: preserve-3d;
+    width: 80%;
+  }
+
+  &__ring {
+    @include animation(globeOpacity 0.75s forwards ease-in-out);
+    border-radius: 50%;
+    border: 2px solid $color-white;
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    &:nth-child(1) {
+      transform: rotateY(4deg);
+    }
+
+    &:nth-child(2) {
+      transform: rotateY(30deg);
+    }
+
+    &:nth-child(3) {
+      transform: rotateY(56deg);
+    }
+
+    &:nth-child(4) {
+      transform: rotateY(82deg);
+    }
+
+    &:nth-child(5) {
+      transform: rotateY(108deg);
+    }
+
+    &:nth-child(6) {
+      transform: rotateY(134deg);
+    }
+
+    &:nth-child(7) {
+      transform: rotateY(160deg);
+    }
+  }
+
+  &__title {
+    text-transform: none;
+  }
+}
+
+// Animations
+
+@include keyframes(globeRotate) {
+  to {
+    @include transform(rotateY(-360deg));
+  }
+}
+
+@include keyframes(globeOpacity) {
+  to {
+    opacity: 1;
+  }
+}

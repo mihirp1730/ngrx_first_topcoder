@@ -1,0 +1,20 @@
+<div class="chat-item-container" [ngClass]="{'border-container':isActive}">
+    <div class="avatar">
+        <mat-icon svgIcon="apollo:profile"></mat-icon>
+    </div>
+    <div class="chat-info">
+        <div class="chatinfo-section">
+            <div class="chat-info__topic">{{ chatItem?.createdBy }}</div>
+            <div>Company</div>
+        </div>
+        <div class="chatinfo-section">
+            <div class="chat-info__topic">{{ chatItem?.topic }}</div>
+            <span *ngIf="chatItem?.lastModifiedDate">{{ getDate(chatItem?.lastModifiedDate) | date:'dd-MMM-YYYY, HH:mm': '+offset' }}</span>
+        </div>
+    </div>
+    <div class="chat-messages">
+        <div class="chat-messages__count" *ngIf="chatItem?.newMessages > 0">
+            {{ chatItem?.newMessages }}
+        </div>
+    </div>
+</div>

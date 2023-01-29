@@ -1,0 +1,8 @@
+<section data-slb-id="loading" *ngIf="showLoaderOverlay" class="globe-loader" [class.globe-loader--fade-out]="fadeOut">
+  <div class="globe-loader__scene">
+    <div class="globe-loader__circle">
+      <span class="globe-loader__ring" *ngFor="let ring of [].constructor(7)"></span>
+    </div>
+  </div>
+  <h4 class="globe-loader__title">Loading the map...</h4>
+</section>

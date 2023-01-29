@@ -1,0 +1,115 @@
+@import 'libs/app/styles';
+
+.chat-window {
+  border: 1px solid $color-grey-07;
+  background-color: $color-white;
+  .header {
+    padding: 20px;
+    border-bottom: 1px solid $color-grey-07;
+    display: flex;
+    flex-direction: row;
+
+    &__from-user-info {
+      display: flex;
+      width: 13%;
+      justify-content: flex-start;
+      .avatar {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+
+        mat-icon {
+          height: 50px;
+          width: 50px;
+        }
+      }
+
+      .info {
+        @include font-size(14);
+        color: $color-grey-01;
+        margin-left: 10px;
+        padding: 5px;
+        display: block;
+
+        &__name {
+          font-weight: bold;
+        }
+      }
+    }
+
+    &__participants {
+      @include font-size(14);
+      font-weight: 500;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-left: auto;
+      margin-right: 0;
+      cursor: pointer;
+
+      mat-icon {
+        margin-left: 10px;
+      }
+    }
+  }
+  .content {
+    padding: 20px;
+
+    .message-container {
+      .chat-scroll-viewport {
+        height: 60vh;
+        width: 100%;
+      }
+      .chat-message {
+        float: left;
+        clear: both;
+        width: 100%;
+        margin-bottom: 14px;
+        .user-info {
+          align-items: flex-start;
+          display: flex;
+          font-weight: 400;
+          width: 100%;
+          .avatar {
+            margin-right: 5px;
+          }
+        }
+        .msg-date {
+          font-size: 0.75rem;
+          display: flex;
+          justify-content: flex-end;
+        }
+        .message {
+          padding: 10px;
+          border-radius: 4px;
+        }
+        .chat-message-received {
+          width: 25%;
+          .user-info {
+            color: $color-dazzaling-blue;
+          }
+          .message {
+            background-color: $color-dazzaling-blue;
+            color: $color-white;
+          }
+        }
+        .chat-message-send {
+          float: right;
+          width: 25%;
+          .user-info {
+            color: $color-light-blue;
+          }
+          .message {
+            background-color: $color-light-blue;
+            color: $color-white;
+          }
+        }
+      }
+    }
+    .chat-input {
+      .input-form-field {
+        width: 100%;
+      }
+    }
+  }
+}

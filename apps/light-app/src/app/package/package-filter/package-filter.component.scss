@@ -1,0 +1,43 @@
+@import 'libs/app/styles';
+
+.package-filters {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  mat-form-field.mat-form-field {
+    display: inline;
+    flex: 1 1 auto;
+  }
+
+  .left-content,
+  .right-content {
+    align-items: center;
+    display: flex;
+  }
+
+  .right-content {
+    flex-direction: end;
+  }
+
+  div.search-filter {
+    padding-top: 13px;
+    display: flex;
+  }
+
+  .stage-filter,
+  .sort-filter {
+    min-width: 200px;
+    flex: 1 1 auto;
+
+  }
+
+  .stage-filter {
+    margin-right: 1rem;
+    display: flex;
+    justify-content: space-between;
+
+  }
+
+}

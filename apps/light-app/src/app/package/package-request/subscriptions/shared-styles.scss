@@ -1,0 +1,67 @@
+@import 'libs/app/styles';
+
+.title {
+  @include font-size(16);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 20px;
+  color: $color-white;
+  margin-bottom: 20px;
+}
+
+.paragraph {
+  @include font-size(12);
+  letter-spacing: 0;
+  line-height: 15px;
+  font-weight: normal;
+  color: $color-white;
+  margin-bottom: 12px;
+  padding: 10px 0;
+}
+
+.container {
+  &__title {
+    @include font-size(12);
+    letter-spacing: 0;
+    line-height: 15px;
+    font-weight: normal;
+    color: $color-grey-07;
+  }
+
+  &__subtitle {
+    @include font-size(14);
+    display: block;
+    margin-top: 6px;
+    margin-bottom: 12px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 18px;
+    color: $color-white;
+  }
+
+  .create-comment-container {
+    display: flex;
+    flex-direction: column;
+
+    .btn-container {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        white-space: normal;
+        margin-left: 10px;
+      }
+      button[disabled] {
+        cursor: not-allowed;
+        background-color: $color-grey-04;
+        border: 1px solid $color-grey-05;
+      }
+    }
+  }
+
+  .spinner {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+}

@@ -1,0 +1,100 @@
+{
+  "name": "package",
+  "displayName": "Packages",
+  "displaySequence": 1,
+  "displayInMap": false,
+  "searchable": false,
+  "selectable": false,
+  "displayIcon": "shoppingcart.svg",
+  "displayTitleAttribute": "name",
+  "displaySubtitle": "vendor",
+  "entityIcon": "apollo:packages",
+  "entityType": "Packages",
+  "mapLargeTable": "slb/dd_light_xchange",
+  "attributes": [
+    {
+      "name": "_id_",
+      "displayName": "",
+      "type": "String",
+      "isFilterable": false,
+      "filterType": "Aggregate",
+      "displayInSearchResults": false,
+      "displayInSearchDetails": false,
+      "identity": true,
+      "displaySequence": 0,
+      "mapLargeAttribute": "record_id"
+    },
+    {
+      "name": "Name",
+      "displayName": "Package name",
+      "type": "String",
+      "isFilterable": false,
+      "filterType": "Aggregate",
+      "displayInSearchResults": false,
+      "displayInSearchDetails": false,
+      "identity": false,
+      "displaySequence": 1,
+      "mapLargeAttribute": "name"
+    },
+    {
+      "name": "DataType",
+      "displayName": "Data type",
+      "type": "String",
+      "isFilterable": true,
+      "filterType": "Aggregate",
+      "displayInSearchResults": true,
+      "displayInSearchDetails": true,
+      "identity": false,
+      "displaySequence": 2,
+      "mapLargeAttribute": "dataType"
+    },
+    {
+      "name": "Vendor",
+      "displayName": "Vendor",
+      "type": "String",
+      "isFilterable": true,
+      "filterType": "Aggregate",
+      "displayInSearchResults": true,
+      "displayInSearchDetails": true,
+      "identity": false,
+      "displaySequence": 3,
+      "mapLargeAttribute": "createdBy"
+    },
+    {
+      "name": "Region",
+      "displayName": "Region",
+      "type": "String",
+      "isFilterable": true,
+      "filterType": "Aggregate",
+      "displayInSearchResults": true,
+      "displayInSearchDetails": true,
+      "identity": false,
+      "displaySequence": 4,
+      "mapLargeAttribute": "region"
+    },
+    {
+      "name": "CreationDate",
+      "displayName": "Creation date",
+      "type": "DateTime",
+      "isFilterable": false,
+      "filterType": "Range",
+      "displayInSearchResults": true,
+      "displayInSearchDetails": true,
+      "identity": false,
+      "displaySequence": 5,
+      "mapLargeAttribute": "createdDate"
+    },
+    {
+      "name": "Shape",
+      "displayName": "Shape",
+      "type": "geo.poly",
+      "isFilterable": false,
+      "filterType": "",
+      "displayInSearchResults": false,
+      "displayInSearchDetails": false,
+      "identity": false,
+      "displaySequence": 100,
+      "mapLargeAttribute": "dd_light_xchange"
+    }
+  ]
+}

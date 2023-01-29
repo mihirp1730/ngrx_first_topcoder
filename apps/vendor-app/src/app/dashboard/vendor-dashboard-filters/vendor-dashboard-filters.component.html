@@ -1,0 +1,42 @@
+<section class="package-filters">
+  <form class="filter-form" [formGroup]="filtersForm">
+    <mat-form-field slbFormField>
+      <mat-label>Status</mat-label>
+      <mat-select #selectStatus multiple formControlName="status" disableOptionCentering [value]="0" placeholder="Select">
+        <mat-option #allSelectStatus (click)="toggleAllSelection('Status')" [value]="0">All</mat-option>
+        <mat-option (click)="togglePerOne('Status')" *ngFor="let filterValue of statusFilter" [value]="filterValue.value || 'All'">
+          {{ filterValue.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field slbFormField>
+      <mat-label>Data type</mat-label>
+      <mat-select
+        #dataTypesSelect
+        formControlName="dataType"
+        placeholder="Select"
+        multiple>
+        <mat-option #allDataTypesSelect [value]="0" (click)="toggleAllSelection('DataType')">All</mat-option>
+        <mat-option
+          (click)="togglePerOne('DataType')"
+          *ngFor="let dataType of dataTypes$ | async"
+          [value]="dataType">
+          {{ dataType }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field slbFormField>
+      <mat-label>Region</mat-label>
+      <mat-select #selectRegion formControlName="regions" placeholder="Select" disableOptionCentering multiple>
+        <mat-option
+          id="allSelectRegion"
+          #allSelectRegion
+          (click)="toggleAllSelection('Region')"
+          [value]="0">All</mat-option>
+        <mat-option (click)="togglePerOne('Region')" *ngFor="let filterValue of regionFilter$ | async" [value]="filterValue.value || 'All'">
+          {{ filterValue.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</section>

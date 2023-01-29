@@ -1,0 +1,58 @@
+@import 'libs/app/styles';
+
+:host {
+  display: flex;
+  width: 100vw;
+  background-color: $color-baby-blue;
+}
+
+.call-to-action {
+  $block: &;
+
+  padding: 80px 0;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  &__container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &--background {
+    #{$block}__description {
+      color: $color-white;
+    }
+  }
+
+  &__title {
+    font-size: clamp(2rem, 5vw, 3.1rem);
+    line-height: normal;
+    margin-bottom: 35px;
+    color: $color-prussian-blue;
+  }
+
+  &__description {
+    font-size: clamp(1.2rem, 5vw, 2.1rem);
+    line-height: normal;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 60px;
+    color: $color-prussian-blue;
+
+    &--italic {
+      font-style: italic;
+    }
+  }
+
+  &__button--disabled {
+    background-color: $color-grey-07 !important;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+}

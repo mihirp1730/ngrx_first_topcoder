@@ -1,0 +1,15 @@
+<section
+  class="call-to-action"
+  [class.call-to-action--background]="settings.background"
+  [style.background-image]="'url(' + settings.background + ')'"
+>
+  <div class="call-to-action__container">
+    <h4 *ngIf="settings.title" class="call-to-action__title">{{ settings.title }}</h4>
+    <p
+      class="call-to-action__description"
+      [class.call-to-action__description--italic]="settings.italicStyle"
+      [innerHTML]="settings.description"
+    ></p>
+    <a slb-button [href]="settings.link" [class.call-to-action__button--disabled]="!settings.link">{{ settings.buttonText }}</a>
+  </div>
+</section>

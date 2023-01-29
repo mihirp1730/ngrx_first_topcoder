@@ -1,0 +1,24 @@
+<div class="modular-chat-container">
+  <div class="modular-chat-content">
+    <div class="message-header">
+      <div class="msg">Message</div>
+      <div>
+        <button data-slb-id="close" slb-icon-button (click)="closeModularChatPanel()">
+          <mat-icon svgIcon="close"></mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="chat-window-container">
+      <apollo-chat-window
+        [sender]="sender$ | async"
+        [chatMessages]="messages$ | async"
+        (sendMessage)="sendMessage($event)"
+        [showHeader]="showHeader"
+      >
+      </apollo-chat-window>
+      <div class="loader-container" *ngIf="(loadingChats$ | async) || (isLoadingWhileGettingMessages$ | async)">
+        <mat-spinner data-slb-id="load-subscription-spinner"></mat-spinner>
+      </div>
+    </div>
+  </div>
+</div>

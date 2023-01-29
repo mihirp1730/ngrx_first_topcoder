@@ -1,0 +1,23 @@
+{
+  "root": "libs/server/feature-flag",
+  "sourceRoot": "libs/server/feature-flag/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/server/feature-flag/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/server/feature-flag"],
+      "options": {
+        "jestConfig": "libs/server/feature-flag/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

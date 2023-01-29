@@ -1,0 +1,13 @@
+@import 'libs/app/styles';
+
+.summary-card-buttons {
+  &__container {
+    display: flex;
+  
+  }
+}
+
+apollo-async-icon {
+  cursor: pointer;
+  margin-right: 10px;
+}

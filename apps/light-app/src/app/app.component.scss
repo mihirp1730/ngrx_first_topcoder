@@ -1,0 +1,58 @@
+@import 'libs/app/styles';
+
+body {
+  z-index: 0;
+}
+
+::ng-deep .material-theme-dark {
+  margin: 0;
+}
+
+::ng-deep .material-theme-light {
+  margin: 0;
+}
+
+::ng-deep .dls-popover-content {
+  background-color: $color-white !important;
+  color: $color-black !important;
+}
+
+slb-framework-toolbar {
+  margin-right: 5px;
+  .slb-btn-lnk {
+    margin-right: 5px;
+    border: 1px solid $color-vox-blue;
+    background-color: $color-grey-02;
+
+    ::ng-deep .dls-button-wrapper {
+      color: $color-white !important;
+      font-weight: 500;
+    }
+
+    mat-icon {
+      margin-right: 10px;
+    }
+  }
+
+  .dls-logout {
+    margin-right: 10px;
+  }
+}
+
+.dls-navigation-framework {
+  .active {
+    color: $color-white;
+  }
+  .dls-navigation-item span {
+    padding-top: 0px;
+  }
+  .mat-badge-medium.mat-badge-above .mat-badge-content {
+    background-color: $color-viz-green;
+  }
+  .dls-navigation-item.privacy-link {
+    position: absolute;
+    font-size: small;
+    bottom: 0;
+    left: 8px;
+  }
+}

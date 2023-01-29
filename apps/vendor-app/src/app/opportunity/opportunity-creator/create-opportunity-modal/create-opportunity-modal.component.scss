@@ -1,0 +1,87 @@
+@import 'libs/app/styles';
+
+.opportunity-create-modal {
+  width: 35vw;
+}
+.header-sub-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+.details {
+  .info {
+    margin-bottom: 0.3rem;
+    @include font-size(12);
+  }
+  .opportunity-type-chip {
+    margin-right: 14px;
+
+    .public,
+    .public:hover {
+      background-color: $color-lime-green;
+    }
+    .partial,
+    .partial:hover {
+      background-color: $color-cruising-blue;
+    }
+    .private,
+    .private:hover {
+      background-color: $color-terracota-orange;
+    }
+  }
+  .mat-form-field {
+    width: 70%;
+    .mat-form-field-label-wrapper {
+      .mat-form-field-label {
+        color: $color-grey-06 !important;
+      }
+    }
+    .mat-form-field-flex {
+      color: $color-grey-06 !important;
+      background-color: $color-white;
+    }
+  }
+
+  mat-radio-group {
+    display: block;
+    margin-top: 5px;
+  }
+  .flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    margin-right: -10px;
+    div.option-wrapper {
+      padding: 0.3rem;
+      margin-right: 5px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      ::ng-deep .mat-icon {
+        fill: $color-vox-blue;
+        margin-left: 0.2rem;
+      }
+    }
+    .option-wrapper.hidden {
+      display: none;
+    }
+  }
+
+  .opportunity-details {
+    display: flex;
+    flex-direction: column;
+
+    .name-input {
+      margin-bottom: 20px;
+
+      .mat-form-field {
+        width: 500px;
+      }
+    }
+  }
+  .button-container {
+    float: right;
+    .create-btn {
+      margin-left: 1rem;
+    }
+  }
+}

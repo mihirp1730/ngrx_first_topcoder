@@ -1,0 +1,33 @@
+@import 'libs/app/styles';
+
+.opportunity-filters {
+  .filter-form {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+    .filters-container {
+      display: flex;
+      justify-content: start;
+      width: 100%;
+      margin-left: 40px;
+    }
+    mat-form-field.mat-form-field {
+      margin-right: 15px;
+      min-width: 200px;
+      .mat-form-field-flex {
+        background-color: $color-white;
+        color: $color-grey-01;
+        .mat-input-element, .mat-select-value {
+          color: $color-grey-01;
+        }
+      }
+    }
+    .clear-all {
+      display: flex;
+      align-items: center;
+      .dls-tertiary-button {
+        padding: 0;
+      }
+    }
+  }
+}

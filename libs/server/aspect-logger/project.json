@@ -1,0 +1,22 @@
+{
+  "root": "libs/server/aspect-logger",
+  "sourceRoot": "libs/server/aspect-logger/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/server/aspect-logger/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/server/aspect-logger"],
+      "options": {
+        "jestConfig": "libs/server/aspect-logger/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

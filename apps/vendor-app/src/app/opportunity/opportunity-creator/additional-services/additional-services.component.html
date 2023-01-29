@@ -1,0 +1,30 @@
+<form class="additionalServicesFields" [formGroup]="additionalServicesDetails" [apolloFormPatcher]="initialFormData$ | async">
+  <p class="info tab-sub-heading">User will gain access to the VDR information upon approval</p>
+
+  <div class="attribute form-field">
+    <mat-label class="label">VDR Link</mat-label>
+    <div class="vdr-link">
+      <mat-form-field slbFormField class="opportunity-field">
+        <input matInput type="text" placeholder="Type here" formControlName="vdrLink" />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="attribute form-field">
+    <mat-label class="label">Account Name</mat-label>
+    <div class="account-name">
+      <mat-form-field slbFormField class="opportunity-field">
+        <input matInput type="text" placeholder="Type here" formControlName="accountName" />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="attribute form-field">
+    <mat-label class="label">Department Name</mat-label>
+    <div class="department-name">
+      <mat-form-field slbFormField class="opportunity-field">
+        <input matInput type="text" placeholder="Type here" formControlName="departmentName" />
+      </mat-form-field>
+    </div>
+  </div>
+</form>

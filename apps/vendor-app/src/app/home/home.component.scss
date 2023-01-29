@@ -1,0 +1,28 @@
+@import 'libs/app/styles';
+
+.package-header {
+  background-color: $color-grey-02;
+  border-bottom: 1px solid $color-grey-05;
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 4px 0 0 0;
+
+  & > div button {
+    margin-left: 5px;
+  }
+  .create-package-btn {
+    .mat-icon {
+      height: 16px;
+    }
+  }
+}
+
+.title {
+  margin: 0;
+  letter-spacing: 0.48px;
+  line-height: 32px;
+  font-weight: 400;
+}

@@ -1,0 +1,24 @@
+{
+  "projectType": "library",
+  "root": "libs/app/secure-environment",
+  "sourceRoot": "libs/app/secure-environment/src",
+  "prefix": "apollo",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/secure-environment/src/**/*.ts", "libs/app/secure-environment/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/secure-environment"],
+      "options": {
+        "jestConfig": "libs/app/secure-environment/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

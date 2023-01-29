@@ -1,0 +1,46 @@
+<div
+  class="opportunity-container"
+  *ngIf="(showLoader$ | async) === false && (isMapLoaded$ | async) === true"
+  [ngClass]="{ isOpportunityExpanded: isOpportunityExpanded === true }"
+>
+  <div class="cards" *ngFor="let card of getOpportunities$ | async; let i = index">
+    <apollo-opportunity-cards
+      *ngIf="i + 1 === (getOpportunities$ | async).length"
+      #theLastList
+      [cardInfo]="card"
+    ></apollo-opportunity-cards>
+    <apollo-opportunity-cards *ngIf="i + 1 !== (getOpportunities$ | async).length" [cardInfo]="card"></apollo-opportunity-cards>
+  </div>
+  <div class="loader pagination" *ngIf="(isNextPageLoading$ | async) === true">
+    <mat-spinner data-slb-id="load-spinner" [diameter]="32"></mat-spinner>
+  </div>
+</div>
+<div>
+  <div
+    class="loader"
+    *ngIf="
+      (getOpportunities$ | async) === null ||
+      (getOpportunities$ | async) === undefined ||
+      (showLoader$ | async) === true ||
+      (isMapLoaded$ | async) === false
+    "
+  >
+    <mat-spinner data-slb-id="load-spinner" [diameter]="64"></mat-spinner>
+  </div>
+  <div *ngIf="allOpportunities$ | async as opportunity">
+    <div class="loader" *ngIf="!opportunity.length">
+      <h4><i>No Opportunity found</i></h4>
+    </div>
+  </div>
+  <div *ngIf="allOpportunities$ | async as allOpportunity">
+    <div *ngIf="getOpportunities$ | async as opportunity">
+      <div class="loader" *ngIf="!opportunity.length && allOpportunity.length">
+        <h4><i>No Opportunity found</i></h4>
+        <span>Please
+           <button slb-tertiary-button type="button" class="clear-btn" (click)="clearLassoSelection()">clear your selection</button>
+           or modify your search criteria
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

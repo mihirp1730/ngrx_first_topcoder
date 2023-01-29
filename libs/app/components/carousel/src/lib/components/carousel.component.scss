@@ -1,0 +1,18 @@
+@import 'libs/app/styles';
+
+.carousel {
+  &__container {
+    background-color: $color-grey-10;
+    padding: 10px 15px;
+    width: 100%;
+
+  }
+
+  &__slider { 
+    background-color: $color-grey-08 !important;
+    height: 200px;
+    width: 100%;
+
+  }
+
+}

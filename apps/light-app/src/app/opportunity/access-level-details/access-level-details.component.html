@@ -1,0 +1,18 @@
+<!---VDR Access-->
+<ng-container *ngIf="!(pendingStatus || approvedStatus)">
+  <apollo-access-status-locked [accessType]="vdr"></apollo-access-status-locked>
+</ng-container>
+
+<ng-container *ngIf="(approvedStatus | uppercase) !== approved && (pendingStatus | uppercase) === pending">
+  <apollo-access-status-pending [vdrRequestInfo]="vdrRequestInfo" [accessType]="vdr">
+  </apollo-access-status-pending>
+</ng-container>
+
+<ng-container *ngIf="(approvedStatus | uppercase) === approved">
+  <apollo-access-status-approved
+    [opportunityVdrDetails]="opportunityVdrDetails"
+    [vdrSubscriptionInfo]="vdrSubscriptionInfo"
+    [accessType]="vdr"
+  >
+  </apollo-access-status-approved>
+</ng-container>

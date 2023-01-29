@@ -1,0 +1,68 @@
+<div class="invite-attendees-modal">
+  <div mat-dialog-title class="invite-attendees-modal__title-content">
+    <h4>{{ title }}</h4>
+    <h6>{{opportunityName}}</h6>
+  </div>
+  <form [formGroup]="attendeesForm">
+    <div mat-dialog-content class="mat-dialog-content invite-attendees-modal__mat-dialog-content">
+      <div class="invite-attendees-modal__content-container">
+          <div class="invite-attendees-modal__facet-text">
+            <mat-form-field slbFormField class="attendees-form-field">
+              <mat-label>
+                Attendee's Emails
+              </mat-label>
+              <input matInput formControlName="attendeeEmail" placeholder="Enter E-mail address"/>
+          </mat-form-field>
+          <div class="invite-attendees-modal__checkbox">
+            <mat-label class="label">Choose access type:</mat-label>
+            <ul>
+              <li *ngFor="let inviteOption of inviteOptions; let i=index" formArrayName="accessLevels">
+                <mat-checkbox
+                  [value]="inviteOption.value"
+                  (change)="onCheckboxChange($event)"
+                >
+                  {{inviteOption.name}}
+                </mat-checkbox>
+              </li>
+            </ul>
+          </div>
+          <div class="invite-attendees-modal__date">
+            <mat-label class="label">Select Start and End Date:</mat-label>
+            <div class="field">
+              <slb-date-picker-range class="calendar" placeholder="Select Date Range" 
+                (rangeSelected)="dateSelected($event)" [minValue]="minDate"
+                closeCalendarOnRangeSelected="true" disableTextInput="true">
+              </slb-date-picker-range>
+            </div>
+          </div>
+          <div class="invite-attendees-modal__formField">
+            <mat-form-field slbFormField class="attendees-form-field">
+              <mat-label>
+                Message to Attendees
+              </mat-label>
+              <textarea
+                matInput
+                class="message-attendees"
+                name="attendeesMessage"
+                placeholder="Type here"
+                rows="6"
+                formControlName="inviteeMessage"
+              ></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="invite-attendees-modal__action-buttons">
+          <slb-modal-close-button class="__close-btn"
+            *ngIf="displayObject"
+            [dialogRef]="dialogRef"
+            buttonType="Secondary"
+            [buttonText]="cancelButtonText"
+          ></slb-modal-close-button>
+          <button data-slb-id="invite-attendees-modal-btn" class="invite-attendees-modal__button-yes" (click)="sendInvite()" slb-button>
+            {{ confirmButtonText }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

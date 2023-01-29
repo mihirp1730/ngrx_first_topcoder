@@ -1,0 +1,24 @@
+{
+  "projectType": "library",
+  "root": "libs/app/google-analytics",
+  "sourceRoot": "libs/app/google-analytics/src",
+  "prefix": "apollo",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/google-analytics/src/**/*.ts", "libs/app/google-analytics/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/google-analytics"],
+      "options": {
+        "jestConfig": "libs/app/google-analytics/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

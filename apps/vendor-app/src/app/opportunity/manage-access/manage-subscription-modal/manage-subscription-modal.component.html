@@ -1,0 +1,130 @@
+<div class="manage-subscription-modal">
+  <form [formGroup]="manageSubscriptionForm">
+    <div class="title">
+      <h4>Manage Access</h4>
+    </div>
+    <div class="body">
+      <div class="content">
+        <div class="subscription-info">
+          <h6 class="info-title">Opportunity Name</h6>
+          <div class="opportunity-name" title="{{ opportunitySubscription?.opportunityName }}">
+            {{ opportunitySubscription?.opportunityName }}
+          </div>
+
+          <h6 class="info-title">User Name</h6>
+          <span title="{{ opportunitySubscription?.firstName }} {{ opportunitySubscription?.lastName }}">
+            {{ opportunitySubscription?.firstName }} {{ opportunitySubscription?.lastName }}
+          </span>
+
+          <h6 class="info-title">Company Name</h6>
+          <span title="{{ opportunitySubscription.companyName }}">{{ opportunitySubscription.companyName }}</span>
+        </div>
+        <hr />
+        <div class="subscription-details">
+          <h6>Approved access</h6>
+          <div class="approved-access" formGroupName="confidentialInfo">
+            <div class="heading">
+              <span>Details</span>
+              <mat-slide-toggle formControlName="isChecked" (change)="toggleChange($event, 'confidentialInfo')"> </mat-slide-toggle>
+            </div>
+            <div class="date-picker">
+              <slb-date-picker-range
+                label="Select Date Range"
+                [dateControl]="confidentialDateControl"
+                [dateRange]="confidentialDateRange"
+                [disabled]="confidentialInfoDateRangeDisabled"
+                (rangeSelected)="dateSelected($event, 'confidentialInfo')"
+                disableTextInput="true"
+                placeholder="Select Date Range"
+                closeCalendarOnRangeSelected="true"
+                [minValue]="getAccessStartDate(confidentialDateRange?.startDate)"
+                [maxValue]="opportunityMaxDate"
+              >
+              </slb-date-picker-range>
+              <mat-hint *ngIf="opportunityMaxDate">Opportunity expires on {{ opportunityMaxDate | date: 'dd-MMM-YYYY' }}</mat-hint>
+              <mat-error
+                *ngIf="confidentialDateControl.touched && manageSubscriptionForm.get('confidentialInfo.dateRange')?.errors?.required"
+              >
+                Date is required</mat-error
+              >
+              <mat-error *ngIf="manageSubscriptionForm.get('confidentialInfo.dateRange')?.hasError('invalidSelection')">
+                Please select valid date range</mat-error
+              >
+              <mat-error *ngIf="manageSubscriptionForm.get('confidentialInfo.dateRange')?.hasError('invalidDateRange')">
+                Start and End Date cannot be same</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  manageSubscriptionForm.get('confidentialInfo.dateRange')?.touched &&
+                  manageSubscriptionForm.get('confidentialInfo.dateRange')?.hasError('slbDatePickerRangeOutOfBoundaries')
+                "
+              >
+                Please select valid date range</mat-error
+              >
+            </div>
+          </div>
+          <div class="approved-access" formGroupName="vdrInfo">
+            <div class="heading">
+              <span>VDR</span>
+              <mat-slide-toggle formControlName="isChecked" (change)="toggleChange($event, 'vdrInfo')"> </mat-slide-toggle>
+            </div>
+            <div class="date-picker">
+              <slb-date-picker-range
+                label="Select Date Range"
+                [dateControl]="vdrDateControl"
+                [dateRange]="vdrDateRange"
+                (rangeSelected)="dateSelected($event, 'vdrInfo')"
+                disableTextInput="true"
+                [disabled]="vdrInfoDateRangeDisabled"
+                placeholder="Select Date Range"
+                closeCalendarOnRangeSelected="true"
+                [minValue]="getAccessStartDate(vdrDateRange?.startDate)"
+                [maxValue]="opportunityMaxDate"
+              >
+              </slb-date-picker-range>
+              <mat-hint *ngIf="opportunityMaxDate">Opportunity expires on {{ opportunityMaxDate | date: 'dd-MMM-YYYY' }}</mat-hint>
+              <mat-error *ngIf="vdrDateControl.touched && manageSubscriptionForm.get('vdrInfo.dateRange')?.errors?.required">
+                Date is required</mat-error
+              >
+              <mat-error *ngIf="manageSubscriptionForm.get('vdrInfo.dateRange')?.hasError('invalidSelection')">
+                Please select valid date range</mat-error
+              >
+              <mat-error *ngIf="manageSubscriptionForm.get('vdrInfo.dateRange')?.hasError('invalidDateRange')">
+                Start and End Date cannot be same</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  manageSubscriptionForm.get('vdrInfo.dateRange')?.touched &&
+                  manageSubscriptionForm.get('vdrInfo.dateRange')?.hasError('slbDatePickerRangeOutOfBoundaries')
+                "
+              >
+                Please select valid date range</mat-error
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <mat-form-field slbFormField class="comment-form-field">
+        <mat-label> Reason for updating Subscription(s) </mat-label>
+        <textarea
+          matInput
+          name="statusChangeComment"
+          placeholder="Type here"
+          rows="6"
+          required
+          formControlName="statusChangeComment"
+        ></textarea>
+        <mat-error *ngIf="manageSubscriptionForm.get('statusChangeComment')?.errors?.required"> Reason is required</mat-error>
+        <mat-error *ngIf="manageSubscriptionForm.get('statusChangeComment')?.errors?.pattern"> Please enter valid reason.</mat-error>
+      </mat-form-field>
+      <hr />
+    </div>
+    <div class="action-buttons">
+      <div class="request-access-modal__loader-container" *ngIf="showLoader$ | async">
+        <mat-spinner data-slb-id="load-spinner" [diameter]="32"></mat-spinner>
+      </div>
+      <button slb-secondary-button (click)="closeModal()">Cancel</button>
+      <button slb-button (click)="save()" [disabled]="isSaveDisabled">Save</button>
+    </div>
+  </form>
+</div>

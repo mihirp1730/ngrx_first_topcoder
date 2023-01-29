@@ -1,0 +1,14 @@
+<section class="drag-modal" cdkDrag [cdkDragBoundary]="'.' + boundry" >
+  <header class="drag-modal__header" cdkDragHandle>
+    <div class="drag-icon">
+      <mat-icon svgIcon="drag"></mat-icon>
+      <mat-icon svgIcon="drag"></mat-icon>
+    </div>
+    <button class="drag-close" slb-icon-button title="Close modal" (click)="closeModalHandler()">
+      <mat-icon svgIcon="close"></mat-icon>
+    </button>
+  </header>
+  <div class="drag-modal__body">
+    <ng-content></ng-content>
+  </div>
+</section>

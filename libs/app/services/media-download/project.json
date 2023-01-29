@@ -1,0 +1,24 @@
+{
+  "projectType": "library",
+  "root": "libs/app/services/media-download",
+  "sourceRoot": "libs/app/services/media-download/src",
+  "prefix": "apollo",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/services/media-download"],
+      "options": {
+        "jestConfig": "libs/app/services/media-download/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/services/media-download/src/**/*.ts", "libs/app/services/media-download/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": []
+}

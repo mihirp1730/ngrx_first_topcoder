@@ -1,0 +1,118 @@
+{{$definitionName := getenv "BUILD_DEFINITIONNAME" -}}
+{{$sourceBranchName := getenv "BUILD_SOURCEBRANCHNAME" -}}
+{{$buildNumber := getenv "BUILD_BUILDNUMBER" -}}
+{{$gcloudProject := getenv "GCLOUD_PROJECT" -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{$definitionName}}$DEPLOYMENTID
+  annotations:
+    release-description: "$RELEASE_DESCRIPTION"
+  labels:
+    BUILD_DEFINITIONNAME: "{{$definitionName}}"
+    BUILD_SOURCEBRANCHNAME: "{{$sourceBranchName}}"
+    BUILD_BUILDNUMBER: "{{$buildNumber}}"
+    RELEASE_NAME: "$RELEASE_NAME"
+    RELEASE_REQUESTEDFOR: "$REQUESTED_FOR"
+spec:
+  replicas: $REPLICAS
+  selector:
+    matchLabels:
+      app: {{$definitionName}}$DEPLOYMENTID
+  template:
+    metadata:
+      labels:
+        ssr: EAR-AA-20129
+        project-id: $GCLOUD_PROJECT
+        cluster-name: $CONTAINER_CLUSTER
+        app: {{$definitionName}}$DEPLOYMENTID
+        version: "{{$buildNumber}}"
+        BUILD_DEFINITIONNAME: "{{$definitionName}}"
+        BUILD_SOURCEBRANCHNAME: "{{$sourceBranchName}}"
+        BUILD_BUILDNUMBER: "{{$buildNumber}}"
+    spec:
+      serviceAccountName: $GCLOUD_PROJECT-k8sa-svc
+      containers:
+      - name: esp
+        ports:
+        - containerPort: 8081
+          name: http-esp
+        image: gcr.io/endpoints-release/endpoints-runtime:$ESP_IMAGE_VERSION
+        args: [
+          "--http_port", "8081",
+          "--backend", "127.0.0.1:8080",
+          "--service", "auth-server-$CONTAINER_CLUSTER.endpoints.$GCLOUD_PROJECT.cloud.goog",
+          "--rollout_strategy", "managed",
+        ]
+      - image: gcr.io/{{$gcloudProject}}/{{$definitionName}}:{{$sourceBranchName}}-{{$buildNumber}}
+        name: {{$definitionName}}
+        ports:
+        - name: http-auth
+          containerPort: 8080
+        env:
+        - name: AUTH_PROXY_DOCKER
+          value: "true"
+        - name: AUTH_PROXY_LISTEN_PORT
+          value: "8080"
+        - name: AUTH_PROXY_CORRECT_ACCOUNT_NAME
+          value: "$AUTHORIZED_ACCOUNT_NAME"
+        - name: AUTH_PROXY_TOKEN_HOST
+          value: "$SERVICE_ID_TOKEN_ENDPOINT"
+        - name: AUTH_PROXY_AUTHORIZATION_CACHE_EXPIRATION_SEC
+          value: "$AUTHORIZATION_CACHE_EXPIRATION_SEC"
+        - name: AUTH_PROXY_CCM_SERVICE_HOST
+          value: "$CCM_ENDPOINT"
+        - name: AUTH_PROXY_CCM_APP_KEY
+          valueFrom:
+            secretKeyRef:
+              name: {{$definitionName}}$DEPLOYMENTID
+              key: ccmAppKey
+        - name: AUTH_PROXY_CCM_APP_CODE
+          value: "$CCM_APP_CODE"
+        - name: AUTH_PROXY_CCM_PART_NUMBER
+          value: "$CCM_PART_NUMBER"
+        - name: AUTH_PROXY_CSRF_PROTECTION
+          value: "$ENABLE_CSRF_PROTECTION"
+        - name: AUTH_PROXY_CSRF_SECURE
+          value: "true"
+        - name: AUTH_PROXY_TRAFFIC_MANAGER_ISSUER
+          value: "$TRAFFIC_MANAGER_ISSUER"
+        - name: AUTH_PROXY_TRAFFIC_MANAGER_JWKS_URI
+          value: "$TRAFFIC_MANAGER_JWKS_URI"
+        - name: AUTH_PROXY_SAUTH_URL
+          value: "$AUTH_PROXY_SAUTH_URL"
+        - name: AUTH_PROXY_REDIRECT_URI
+          value: "$AUTH_PROXY_REDIRECT_URI"
+        - name: AUTH_PROXY_CLIENT_ID
+          value: "$AUTH_PROXY_CLIENT_ID"
+        - name: TOKEN_EXCHANGE_AUDIENCES
+          value: "$TOKEN_EXCHANGE_AUDIENCES"
+        - name: AUTH_PROXY_CLIENT_SECRET
+          value: "$AUTH_PROXY_CLIENT_SECRET"
+        - name: AUTH_PROXY_TOKEN_SERVICE_URL
+          value: "$TOKEN_SERVICE_URL"
+        - name: AUTH_POST_LOGOUT_REDIRECT_URL
+          value: "$AUTH_POST_LOGOUT_REDIRECT_URL"
+        - name: AUTH_PROXY_REGION_IDENTIFIER
+          value: "$REGION_IDENTIFIER"
+        - name: AUTH_PROXY_GUEST_CLIENT_ID
+          value: "$AUTH_PROXY_GUEST_CLIENT_ID"
+        - name: AUTH_PROXY_GUEST_CLIENT_SECRET
+          value: "$AUTH_PROXY_GUEST_CLIENT_SECRET"
+        - name: AUTH_TIMEOUT_INTERVAL
+          value: "$AUTH_TIMEOUT_INTERVAL"
+        - name: ENABLE_GUEST_LOGIN
+          value: "$ENABLE_GUEST_LOGIN"
+        - name: AUTH_SERVER_NAME
+          value: "Auth-Proxy-Server"
+        - name: GIS_CLIENT_ID
+          value: "$GIS_CLIENT_ID"
+        - name: METRICS_INTERVAL
+          value: "$METRICS_INTERVAL"        
+        - name: METRICS_PORT
+          value: "$METRICS_PORT"
+        - name: SPAN_PROCESSOR_HOST
+          value: "$SPAN_PROCESSOR_HOST"        
+        - name: SPAN_PROCESSOR_PORT
+          value: "$SPAN_PROCESSOR_PORT"
+        - name: SPLITIO_NODEJS_KEY

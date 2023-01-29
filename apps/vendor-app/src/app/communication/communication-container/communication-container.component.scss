@@ -1,0 +1,47 @@
+@import 'libs/app/styles';
+
+.communication-container {
+  .page-header {
+    border-bottom: 1px solid $color-white;
+    padding: 15px 20px;
+    background-color: $color-white;
+
+    .heading {
+      display: flex;
+      justify-content: start;
+
+      .title {
+        @include font-size(24);
+        margin: 0;
+      }
+
+      .input-container {
+        margin-left: 30px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        .start-chat-btn {
+          margin: 4px 10px;
+        }
+      }
+    }
+  }
+
+  .container {
+    display: flex;
+    justify-content: start;
+
+    .chat-list {
+      width: 23%;
+      min-width: 230px;
+      border: 1px solid $color-grey-08;
+    }
+
+    .chat-window {
+      border: 1px solid $color-grey-08;
+      padding: 20px;
+      width: 80%;
+    }
+  }
+}

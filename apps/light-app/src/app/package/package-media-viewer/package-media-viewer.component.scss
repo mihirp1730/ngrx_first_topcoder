@@ -1,0 +1,22 @@
+.media-carousel {
+  .carousel-item-img img {
+    height: 100%;
+    width: 90%;
+    object-fit: contain;
+  }
+
+  .dls-carousel-prev-wrap {
+    left: -22px !important;
+  }
+
+  .carousel-item-wrapper,
+  .carousel-item-img {
+    height: 410px;
+  }
+  .caption {
+    width: 84%;
+    margin: 0 auto;
+    padding-top: 10px;
+    font-size: 16px;
+  }
+}

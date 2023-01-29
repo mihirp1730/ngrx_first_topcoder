@@ -1,0 +1,24 @@
+{
+  "projectType": "library",
+  "root": "libs/app/traffic-manager",
+  "sourceRoot": "libs/app/traffic-manager/src",
+  "prefix": "apollo",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/traffic-manager/src/**/*.ts", "libs/app/traffic-manager/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/traffic-manager"],
+      "options": {
+        "jestConfig": "libs/app/traffic-manager/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

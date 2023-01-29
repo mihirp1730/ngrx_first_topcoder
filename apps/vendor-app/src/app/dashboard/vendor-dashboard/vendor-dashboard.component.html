@@ -1,0 +1,60 @@
+<div class="vendor-dashboard">
+  <nav class="filter-container">
+    <apollo-vendor-dashboard-filter (filterChange)="populateDataPackageCards()" *ngIf="!isNetworkError"></apollo-vendor-dashboard-filter>
+    <slb-pagination-control [hidden]="isNetworkError"
+      showFirstLastButtons="true"
+      #paginator
+      [length]="dataPackageCount"
+      [pageSize]="cardsPerPage"
+      [pageSizeOptions]="pageSizeOptions"
+    >
+    </slb-pagination-control>
+  </nav>
+  <ng-container *ngIf="dataPackages?.length > 0">    
+    <div class="cards-container">
+      <mat-grid-list cols="4" gutterSize="16" rowHeight="420px">
+        <mat-grid-tile
+          *ngFor="
+            let dataPackageDetails of dataPackages
+              | slice: paginator.pageIndex * paginator.pageSize:(paginator.pageIndex + 1) * paginator.pageSize
+          "
+        >
+          <apollo-vendor-dashboard-card
+            [packageDetails]="dataPackageDetails"
+            (deletePackage)="deletePackage($event)"
+            (unpublishPackageEvent)="unpublishPackage($event)"
+          ></apollo-vendor-dashboard-card>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </ng-container>
+  <div data-slb-id="no-package-message" class="no-package-msg" *ngIf="dataPackages?.length === 0 && !showLoader">
+    <div class="container">
+      <mat-icon svgIcon="3d-seismic"></mat-icon>
+      <div class="content">
+        <h6 class="heading">{{ labels.noPackagesCreated }}</h6>
+        <span class="message">{{ labels.noPackagesMsg }}</span>
+      </div>
+      <a [routerLink]="['/vendor/package/create']" slb-secondary-button class="action-btn">
+        <mat-icon svgIcon="plus"></mat-icon>
+        <span>{{ labels.createPackage }}</span>
+      </a>
+    </div>
+  </div>
+  <div data-slb-id="network-error-message" class="network-error-msg" *ngIf="!dataPackages && !showLoader && isNetworkError">
+    <div class="container">
+      <mat-icon svgIcon="apollo:union"></mat-icon>
+      <div class="content">
+        <h6 class="heading">{{ labels.accesDenied }}</h6>
+        <span class="message">{{ labels.accessDeniedMsg }}</span>
+      </div>
+      <a [routerLink]="['/']" disabled slb-secondary-button class="action-btn">
+        <mat-icon svgIcon="email"></mat-icon>
+        <span>{{ labels.contactUs }}</span>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="loader-container" *ngIf="showLoader">
+  <mat-spinner></mat-spinner>
+</div>

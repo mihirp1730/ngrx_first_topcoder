@@ -1,0 +1,104 @@
+#  If you are going to add new environment variable to this file, please remeber you have to also modife input in the envsubst command in the deploy.sh file
+swagger: "2.0"
+info:
+  version: 2.0.0
+  title: Auth proxy $CONTAINER_CLUSTER $GCLOUD_PROJECT
+  description: GAIA Light server for validating requests before exactution.
+host: auth-server-$CONTAINER_CLUSTER.endpoints.$GCLOUD_PROJECT.cloud.goog
+tags:
+  - name: authorization
+    description: API for validating authorization.
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+x-google-endpoints:
+  - name: auth-server-$CONTAINER_CLUSTER.endpoints.$GCLOUD_PROJECT.cloud.goog
+
+################################################################################
+#                                  Security                                    #
+################################################################################
+security:
+  - sauth_token: []
+    traffic_manager_token: []
+
+securityDefinitions:
+  sauth_token:
+    authorizationUrl: ""
+    flow: "implicit"
+    type: "oauth2"
+    x-google-issuer: "$AUTH_ISSUER"
+    x-google-jwks_uri: "$AUTH_JWK_URI"
+    x-google-audiences: "$AUTH_CLIENT_ID"
+
+paths:
+  /api/auth/health:
+    get:
+      operationId: health
+      tags:
+        - health
+      summary: "health endpoint "
+      description: "health endpoint "
+      parameters:
+        - in: header
+          name: appKey
+          type: string
+          description: "App Key for the Application"
+          required: true
+      responses:
+        "200":
+          description: returns OK meaning that service is up and running
+        "404":
+          description: returns when "appKey" is not defined in headers. Must for this endpoint to function
+  /api/auth/traffic-validate:
+    post:
+      operationId: "traffic validate"
+      tags:
+        - authorization
+      summary: "traffic validate "
+      description: "traffic validate "
+      responses:
+        "200":
+          description: returns traffic validate
+  /api/auth/callback:
+    get:
+      operationId: "callback"
+      tags:
+        - authorization
+      summary: "callback "
+      description: "callback "
+      responses:
+        "302":
+          description: redirect to webapp URL
+  /api/auth/login:
+    get:
+      operationId: "login"
+      tags:
+        - authorization
+      summary: "login "
+      description: "login "
+      responses:
+        "302":
+          description: redirect to sauth login URL
+  /api/auth/token:
+    get:
+      operationId: "token"
+      tags:
+        - authorization
+      summary: "token "
+      description: "token "
+      responses:
+        "200":
+          description: return sauth token
+  /api/auth/logout:
+    get:
+      operationId: "logout"
+      tags:
+        - authorization
+      summary: "logout "
+      description: "logout "
+      responses:
+        "302":
+          description: redirect to sauth logout URL

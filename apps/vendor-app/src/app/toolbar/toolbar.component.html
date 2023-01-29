@@ -1,0 +1,5 @@
+<div class="toolbar-container">
+  <a slb-secondary-button href={{requestUrl}}><mat-icon svgIcon="expand-1"></mat-icon>Asset Portal</a>
+  <delfi-gui-support #DelfiGuiSupport [urls]="supportConfig"> </delfi-gui-support>
+  <delfi-gui-user-profile (contextChanges)="onContextChanges()" (signOutEvent)="signout()"> </delfi-gui-user-profile>
+</div>

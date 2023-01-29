@@ -1,0 +1,165 @@
+@import 'libs/app/styles';
+
+.details {
+  .info {
+    @include font-size(12);
+    color: $color-grey-06;
+  }
+
+  .opportunity-type-chip {
+    margin-right: 14px;
+
+    .public,
+    .public:hover {
+      background-color: $color-lime-green;
+    }
+    .partial,
+    .partial:hover {
+      background-color: $color-cruising-blue;
+    }
+    .private,
+    .private:hover {
+      background-color: $color-terracota-orange;
+    }
+  }
+
+  .mat-expansion-panel {
+    margin: 20px 20px 20px 2px;
+  }
+
+  .mat-form-field {
+    width: 285px;
+    .mat-form-field-label-wrapper {
+      .mat-form-field-label {
+        color: $color-grey-06 !important;
+      }
+    }
+    .mat-form-field-flex {
+      color: $color-grey-06 !important;
+      background-color: $color-white;
+    }
+  }
+
+  mat-radio-group {
+    display: block;
+    margin-top: 5px;
+  }
+  .flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    margin-right: -10px;
+    div.option-wrapper {
+      padding: 10px 20px 20px 0px;
+      margin-right: 5px;
+      margin-bottom: 20px;
+      sup mat-icon {
+        width: 12px !important;
+      }
+    }
+    .option-wrapper.hidden {
+      display: none;
+    }
+  }
+
+  .opportunity-details {
+    display: flex;
+    flex-direction: column;
+
+    .name-input {
+      margin-bottom: 20px;
+
+      .mat-form-field {
+        width: 500px;
+      }
+    }
+
+    .opportunity-description {
+      display: flex;
+      .attribute {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        width: 500px;
+      }
+      .required {
+        color: $color-candy;
+      }
+      .attribute.form-field {
+        align-items: stretch;
+
+        .label {
+          margin-top: 10px;
+        }
+        .field {
+          width: 285px;
+
+          ::ng-deep .mat-form-field {
+            width: 285px;
+          }
+          ::ng-deep .mat-form-field-flex {
+            background-color: $color-white;
+          }
+        }
+        .date-disabled {
+          ::ng-deep .mat-form-field-flex {
+            background-color: $color-grey-09;
+            pointer-events: none;
+          }
+        }
+        .date-picker {
+          ::ng-deep slb-date-picker-range {
+            mat-error {
+              display: none !important;
+            }
+          }
+          .mat-error {
+            margin-top: -18px;
+            margin-bottom: 4px;
+            font-size: 10px;
+            white-space: nowrap;
+          }
+          .info {
+            margin-top: -20px;
+            margin-bottom: 20px;
+            white-space: nowrap;
+          }
+        }
+        .date-duration {
+          width: 285px;
+          display: flex;
+          justify-content: space-around;
+          ::ng-deep .mat-form-field {
+            width: 240px;
+          }
+          span {
+            flex-grow: 1;
+            margin-left: 10px;
+          }
+        }
+      }
+      .primary-info-selection {
+        margin-right: 50px;
+      }
+      .sub-inputs {
+        display: flex;
+        flex-basis: 320px;
+      }
+      .sub-info-selection {
+        padding-top: 67px;
+        .attribute {
+          width: 520px;
+        }
+        .unit {
+          margin-left: 10px;
+        }
+        .field {
+          width: 285px;
+        }
+      }
+    }
+  }
+  .info.tab-sub-heading {
+    width: 688px;
+  }
+}

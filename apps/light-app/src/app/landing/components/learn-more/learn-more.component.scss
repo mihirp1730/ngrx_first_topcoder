@@ -1,0 +1,77 @@
+@import 'libs/app/styles';
+
+:host {
+  display: flex;
+  width: 100vw;
+  background-color: $color-background;
+}
+
+.learn-more {
+  width: 100%;
+  max-width: 1200px;
+  margin: 90px auto 80px;
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    @include font-size(50);
+    text-align: center;
+    line-height: normal;
+    margin-top: 0;
+    margin-bottom: 90px;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    column-gap: 140px;
+    row-gap: 30px;
+
+    @media screen and (max-width: 768px) {
+      grid-template-columns: 1fr;
+      grid-gap: 20px;
+    }
+  }
+
+  &__section {
+    h3 {
+      @include font-size(36);
+      font-weight: bold;
+      line-height: normal;
+      color: $color-grey-09;
+      margin-top: 0;
+      margin-bottom: 35px;
+    }
+
+    h4 {
+      @include font-size(32);
+      font-weight: bold;
+      line-height: normal;
+      color: $color-grey-09;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    p {
+      @include font-size(24);
+      line-height: normal;
+      color: $color-grey-09;
+      margin-top: 0;
+      margin-bottom: 30px;
+    }
+
+    img {
+      width: 100%;
+    }
+
+    &--invert {
+      p {
+        margin-bottom: 8px;
+      }
+    }
+  }
+  .learn-more-sub-link {
+    cursor: pointer;
+    text-decoration: none;
+  }
+}

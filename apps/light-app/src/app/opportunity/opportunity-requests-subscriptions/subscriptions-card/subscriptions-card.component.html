@@ -1,0 +1,96 @@
+<mat-card class="opportunity-subscription-card" [ngClass]="{ 'opportunity-subscription-card--disabled': isOpportunityDisabled() }">
+  <mat-card-content>
+    <div class="flex-row caption">
+      <div class="name">
+        <div class="opportunity-subscription-caption" title="{{ opportunitySubscriptionDetails?.opportunityName }}">
+          <ng-container *ngIf="!isOpportunityDisabled()">
+            <a target="_blank" class="opportunity-url" (click)="viewDetailsPage(opportunitySubscriptionDetails?.opportunityId)">
+              {{ opportunitySubscriptionDetails?.opportunityName }}
+            </a>
+          </ng-container>
+          <ng-container *ngIf="isOpportunityDisabled()">{{ opportunitySubscriptionDetails?.opportunityName }}</ng-container>
+        </div>
+        <div class="logo-container">
+          <img *ngIf="signedUrl" [alt]="" [src]="signedUrl" />
+        </div>
+      </div>
+      <div class="menu">
+        <button slb-icon-button aria-label="More" class="more" title="Menu" [matMenuTriggerFor]="subscriptionCardMenu">
+          <mat-icon svgIcon="more"></mat-icon>
+        </button>
+        <ng-container
+          *ngIf="opportunitySubscriptionDetails?.opportunityStatus?.toUpperCase() === opportunityStatusEnum.Expired.toUpperCase()"
+        >
+          <mat-icon class="oppor-expired-icon" matTooltip="The opportunity validity has expired" svgIcon="warning"></mat-icon>
+        </ng-container>
+        <ng-container
+          *ngIf="opportunitySubscriptionDetails?.opportunityStatus?.toUpperCase() === opportunityStatusEnum.Unpublished.toUpperCase()"
+        >
+          <mat-icon
+            class="oppor-ubpublished-icon"
+            matTooltip="The opportunity has been unpublished, the subscription is put on hold till it is published again"
+            svgIcon="notification-block"
+          ></mat-icon>
+        </ng-container>
+        <mat-menu class="opp-menu" #subscriptionCardMenu="matMenu">
+          <button
+            data-slb-id="message-host"
+            mat-menu-item
+            [disabled]="
+              opportunitySubscriptionDetails?.opportunityStatus?.toUpperCase() !== opportunityStatusEnum?.Published?.toUpperCase()
+            "
+          >
+            <mat-icon svgIcon="chat"></mat-icon>Message Host
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+    <ul class="properties-container">
+      <li data-slb-id="data-access-type-info" *ngFor="let accessDetail of opportunitySubscriptionDetails?.accessDetails">
+        <div class="label">
+          <ng-container *ngIf="accessDetail?.accessLevel === 'CONFIDENTIAL_INFORMATION'"
+            ><span title="{{ accessLevelsNameEnum.CI }}"> {{ accessLevelsNameEnum.CI }}</span></ng-container
+          >
+          <ng-container *ngIf="accessDetail?.accessLevel !== 'CONFIDENTIAL_INFORMATION'"
+            ><span title="{{ accessDetail.accessLevel }}"> {{ accessDetail?.accessLevel }}</span></ng-container
+          >
+        </div>
+        <div class="value">
+          <span class="approved-icon-container" *ngIf="accessDetail?.status !== opportunitySubscriptionStatusEnum.NotAvailable">
+            <mat-icon
+              title="Approved"
+              svgIcon="approved"
+              *ngIf="accessDetail?.status === opportunitySubscriptionStatusEnum.Approved"
+            ></mat-icon>
+            <mat-icon
+              class="expired-icon"
+              title="Expired"
+              svgIcon="warning"
+              *ngIf="accessDetail?.status === opportunitySubscriptionStatusEnum.Expired"
+            ></mat-icon>
+            <mat-icon
+              class="revoked-icon"
+              title="Revoked"
+              svgIcon="error"
+              *ngIf="accessDetail?.status === opportunitySubscriptionStatusEnum.Revoked"
+            ></mat-icon>
+            <strong
+              title="{{ accessDetail?.startDate | date: 'dd-MMM-YYYY' }} to {{ accessDetail?.endDate | date: 'dd-MMM-YYYY' }}"
+              [ngClass]="{
+                'expired-color': accessDetail?.status === opportunitySubscriptionStatusEnum.Expired,
+                'revoked-color': accessDetail?.status === opportunitySubscriptionStatusEnum.Revoked
+              }"
+              >{{ accessDetail?.startDate | date: 'dd-MMM-YYYY' }} to {{ accessDetail?.endDate | date: 'dd-MMM-YYYY' }}</strong
+            >
+          </span>
+          <span class="not-available-icon-container" *ngIf="accessDetail?.status === opportunitySubscriptionStatusEnum.NotAvailable">
+            <mat-icon title="Not Available" svgIcon="error"></mat-icon
+            ><strong title="{{ opportunitySubscriptionStatusEnum.NotAvailable }}">{{
+              opportunitySubscriptionStatusEnum.NotAvailable
+            }}</strong>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>

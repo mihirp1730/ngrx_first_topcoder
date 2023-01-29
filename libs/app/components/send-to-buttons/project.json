@@ -1,0 +1,39 @@
+{
+  "projectType": "library",
+  "root": "libs/app/components/send-to-buttons",
+  "sourceRoot": "libs/app/components/send-to-buttons/src",
+  "prefix": "apollo",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["dist/libs/app/components/send-to-buttons"],
+      "options": {
+        "project": "libs/app/components/send-to-buttons/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/app/components/send-to-buttons/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/app/components/send-to-buttons/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/components/send-to-buttons"],
+      "options": {
+        "jestConfig": "libs/app/components/send-to-buttons/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/components/send-to-buttons/src/**/*.ts", "libs/app/components/send-to-buttons/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

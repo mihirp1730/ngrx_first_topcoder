@@ -1,0 +1,26 @@
+<section id="package-dashboard" data-slb-id="package-dashboard" class="package-dashboard">
+  <header class="package-dashboard__toolbar">
+    <h3 class="package-dashboard__title">My packages</h3>
+    <button slb-icon-button class="package-dashboard__closeBtn" data-slb-id="package-package-dashboard__closeBtn" routerLink="/map">
+      <mat-icon svgIcon="close"></mat-icon>
+    </button>
+  </header>
+  <div class="package-dashboard__content">
+    <nav data-slb-id="package-filters" class="package-dashboard__filters">
+      <apollo-packages-filter
+        [filters]="filters"
+        [sortBy]="sortBy"
+        (packageSearch)="onPackageSearch($event)"
+        (filterChange)="onFilterChange($event)"
+        (sort)="onSort($event)"
+      ></apollo-packages-filter>
+    </nav>
+    <section data-slb-id="package-cards" class="package-dashboard__cards">
+      <apollo-scroll-view itemSize="410" [dataSource]="dataSource" [cardTemplate]="card">
+          <ng-template #card let-package="package">
+            <apollo-package-card [package]="package"> </apollo-package-card>
+          </ng-template>
+      </apollo-scroll-view>
+    </section>
+  </div>
+</section>

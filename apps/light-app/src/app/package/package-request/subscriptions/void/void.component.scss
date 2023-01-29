@@ -1,0 +1,33 @@
+@import 'libs/app/styles';
+@import '../shared-styles';
+
+:host {
+  display: block;
+}
+
+.required {
+  color: $color-alert-red;
+  margin-left: 3px;
+}
+
+.container {
+  ::ng-deep .mat-form-field-wrapper {
+    // Override the DLS' padding for a more condensed UI:
+    padding-bottom: 8px !important;
+  }
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+.create-comment-container {
+  .slb-text-input {
+    textarea {
+      min-width: auto;
+      resize: none;
+    }
+    textarea[disabled] {
+      cursor: not-allowed;
+    }
+  }
+}

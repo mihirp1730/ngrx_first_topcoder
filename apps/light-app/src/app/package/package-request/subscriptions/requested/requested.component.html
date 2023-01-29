@@ -1,0 +1,12 @@
+<div class="title">Requested Package</div>
+<div class="paragraph">You have requested that package on {{ (lastRequestTime$ | async) | date:'YYYY-MM-dd HH:mm' }}</div>
+<div class="container">
+
+  <section class="create-comment-container" data-slb-id="create-comment-container">
+    <div class="btn-container">
+      <button data-slb-id="cancel" slb-button class="package-request-btn" disabled="true">Cancel Request</button>
+      <button data-slb-id="subscriptions" slb-button class="package-request-btn" routerLink="/subscriptions">My Subscriptions</button>
+    </div>
+  </section>
+
+</div>

@@ -1,0 +1,37 @@
+<section class="opportunity-catalog">
+  <header class="page-header">
+    <div class="heading">
+      <h2 class="title">Opportunity Catalog</h2>
+      <button data-slb-id="new-opportunity-btn" slb-button routerLink="/vendor/create">Create New Opportunity</button>
+    </div>
+  </header>
+  <nav class="filter-container">
+    <apollo-opportunity-catalog-filter></apollo-opportunity-catalog-filter>
+  </nav>
+  <ng-container>
+    <div
+      *ngIf="(opportunityList$ | async)?.length !== 0 && (showLoader$ | async) === false"
+    >
+      <cdk-virtual-scroll-viewport appendOnly="true" itemSize="100" class="oppor-wrapper-viewport">
+        <div class="cards-container">
+          <div *cdkVirtualFor="let opportunityDetails of opportunityList$ | async; trackBy: trackBy">
+            <apollo-opportunity-catalog-card [opportunityDetails]="opportunityDetails"></apollo-opportunity-catalog-card>
+          </div>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </div>
+    <div
+      data-slb-id="no-opportunity-message"
+      class="no-data"
+      *ngIf="(opportunityList$ | async)?.length === 0 && (showLoader$ | async) === false"
+    >
+      <div class="content">
+        <h6>No Search Results Found</h6>
+        <p>We're sorry. We couldn't find any results for your search criteria.</p>
+      </div>
+    </div>
+  </ng-container>
+</section>
+<div class="loader-container" *ngIf="(showLoader$ | async) === true">
+  <mat-spinner data-slb-id="load-spinner"></mat-spinner>
+</div>

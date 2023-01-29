@@ -1,0 +1,27 @@
+@import 'libs/app/styles';
+
+::ng-deep .opportunity-carousel {
+  height: 280px !important;
+  width: 90% !important;
+  margin: 0 auto !important;
+
+  .carousel-item-img {
+    display: flex;
+    justify-content: center;
+    img {
+      object-fit: contain;
+      max-height: 200px;
+      width: 80%;
+    }
+  }
+
+  .caption {
+    margin-top: 10px;
+    text-align: center;
+    width: 100%;
+  }
+  .dls-carousel-indicators {
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+}

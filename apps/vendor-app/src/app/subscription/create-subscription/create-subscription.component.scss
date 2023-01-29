@@ -1,0 +1,311 @@
+@import 'libs/app/styles';
+
+.create-subscription {
+  background-color: $color-grey-04;
+  height: 100%;
+  overflow-y: scroll;
+  @include scroll(10px, $color-grey-01, $color-grey-06);
+
+  &__back {
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    height: 43px;
+    width: 23px;
+    border: 1px solid $color-grey-05;
+    border-radius: 1px;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid $color-grey-05;
+    background-color: $color-grey-03;
+    padding: 17px 40px 17px 0;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+
+    .bread-crumb {
+      @include font-size(12);
+      padding: 0 0 5px 20px;
+      color: $color-grey-07;
+      letter-spacing: 0.48px;
+      line-height: 16px;
+    }
+  }
+
+  &__title {
+    @include font-size(20);
+    margin-left: 19px;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 22px;
+    color: $color-white;
+  }
+
+  &__customer-title {
+    @include font-size(20);
+    margin: 20px 0 35px 0;
+    color: $color-white;
+
+    span {
+      color: $color-alert-red;
+    }
+  }
+
+  &__key-name {
+    @include font-size(12);
+    width: 40%;
+    float: left;
+    font-weight: 500;
+    letter-spacing: 0.48px;
+    line-height: 14px;
+    color: $color-white;
+  }
+
+  &__key-value {
+    @include font-size(14);
+    width: 60%;
+    float: left;
+    letter-spacing: 0.48px;
+    line-height: 16px;
+    color: $color-white;
+
+    ::ng-deep .mat-form-field-infix {
+      .mat-input-element {
+        padding-left: 0;
+      }
+    }
+
+    ::ng-deep .dls-form-field.mat-form-field .mat-form-field-flex {
+      padding: 0 8px;
+      width: 259px;
+      height: 36px;
+    }
+  }
+
+  &__key-value-upload-icons {
+    @include font-size(12);
+    width: 50%;
+    float: left;
+    font-weight: 500;
+    letter-spacing: 0.48px;
+    line-height: 14px;
+    color: $color-grey-05;
+  }
+
+  .input-alignment {
+    margin-top: -10px;
+  }
+
+  &__input-price {
+    margin-right: 10px;
+    height: 36px;
+    width: 191px;
+    background-color: $color-grey-01;
+    border: 1px solid $color-grey-05;
+    border-radius: 4px;
+    color: $color-white;
+    padding: 0 5px 0 6px;
+    text-align: left !important;
+  }
+
+  input:focus {
+    border: 1px solid $color-vox-blue !important;
+    outline-offset: 0px !important;
+    outline: none !important;
+  }
+
+  &__input-duration {
+    margin-right: 10px;
+    height: 36px;
+    width: 191px;
+    background-color: $color-grey-01;
+    border: 1px solid $color-grey-05;
+    border-radius: 4px;
+    color: $color-white;
+    padding-left: 6px;
+    text-align: left;
+  }
+
+  &__input-transaction {
+    margin-right: 10px;
+    margin-top: -20px;
+    height: 36px;
+    width: 259px;
+    background-color: $color-grey-01;
+    border: 1px solid $color-grey-05;
+    border-radius: 4px;
+    color: $color-white;
+    padding-left: 6px;
+    text-align: left;
+  }
+
+  &__customer-container {
+    display: block;
+    max-width: 551px;
+    margin: 18px auto 25px auto;
+    padding: 0 20px 0 20px;
+    border: 1px solid $color-grey-05;
+    background-color: $color-grey-02;
+    box-shadow: 0 1px 7px 0 rgba(0, 0, 0, 0.58);
+    border-radius: 5px;
+    height: -webkit-fit-content;
+
+    .customer-container-details {
+      display: flex;
+      margin: 0 0 19px 0;
+    }
+  }
+
+  &__subscription-container {
+    display: block;
+    max-width: 551px;
+    margin: 18px auto 25px auto;
+    padding: 0 20px 0 20px;
+    border: 1px solid $color-grey-05;
+    background-color: $color-grey-02;
+    box-shadow: 0 1px 7px 0 rgba(0, 0, 0, 0.58);
+    border-radius: 5px;
+    height: -webkit-fit-content;
+
+    .customer-container-details {
+      display: flex;
+      margin: 0 0 29px 0;
+    }
+
+    .customer-container-details-price {
+      display: flex;
+      margin: 21px 0 19px 0;
+    }
+
+    .customer-container-details-duration {
+      display: flex;
+      margin: 21px 0 19px 0;
+    }
+
+    .customer-container-details-start {
+      display: flex;
+      margin: 20px 0 -5px 0;
+    }
+
+    .customer-container-details-end {
+      display: flex;
+      margin: 0 0 17px 0;
+    }
+  }
+
+  &__transaction-container {
+    display: block;
+    max-width: 551px;
+    margin: 18px auto 25px auto;
+    padding: 0 20px 0 20px;
+    border: 1px solid $color-grey-05;
+    background-color: $color-grey-02;
+    box-shadow: 0 1px 7px 0 rgba(0, 0, 0, 0.58);
+    border-radius: 5px;
+    height: -webkit-fit-content;
+
+    .customer-container-details {
+      display: flex;
+      margin: 0 0 19px 0;
+
+      .uploaded-file-icons {
+        display: flex;
+        margin-top: -5px;
+
+        .approved-icon-container {
+          @include font-size(12);
+          color: $color-alert-green;
+          font-weight: 500;
+          letter-spacing: 0.48px;
+          line-height: 14px;
+          margin-right: 49px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .file-name {
+            margin-left: 6px;
+          }
+
+          ::ng-deep mat-icon {
+            svg {
+              color: $color-alert-green !important;
+              margin-right: 30px;
+            }
+          }
+        }
+
+        .trash-icon {
+          cursor: pointer;
+
+          ::ng-deep mat-icon {
+            svg {
+              color: $color-alert-red !important;
+            }
+          }
+        }
+      }
+    }
+
+    .btn-container {
+      align-self: flex-start;
+      margin-top: 6px;
+
+      .upload-title {
+        @include font-size(12);
+        width: 50%;
+        font-weight: 500;
+        letter-spacing: 0.48px;
+        line-height: 14px;
+        color: $color-grey-05;
+      }
+
+      .upload-btn {
+        margin: 6px 0 22px 0;
+      }
+    }
+  }
+
+  &__footer-container {
+    background-color: $color-grey-03;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    .create-subscription-btn {
+      margin: 23.5px 33px 23.5px 16px;
+      height: 36px;
+      width: 166px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .button-secondary {
+      @include font-size(14);
+      border: 1px solid $color-grey-05;
+      background-color: $color-grey-02;
+      color: $color-grey-07 !important;
+      font-weight: bold;
+      letter-spacing: 0.48px;
+      line-height: 16px;
+      text-align: center;
+    }
+
+    .button-primary {
+      @include font-size(14);
+      border: 1px solid $color-vox-blue;
+      background-color: $color-vox-blue;
+      color: $color-white;
+      font-weight: bold;
+      letter-spacing: 0.48px;
+      line-height: 16px;
+      text-align: center;
+    }
+  }
+}

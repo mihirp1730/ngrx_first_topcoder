@@ -1,0 +1,32 @@
+<div class="summary-card-buttons__container">
+  <apollo-async-icon
+    *ngIf="getButtonsVisibility(summaryButtonEventType.WELL_LOG)
+      && ((showLoader$ | async)
+      || (summaryCard$ | async)?.wellborelogs.hasWellboreLog)"
+    title="Open Wellbore Log Viewer"
+    svgIcon='log-set'
+    [badge]="(summaryCard$ | async)?.wellborelogs.count"
+    (iconClick)="onWellLogClick()"
+    [isLoading]="showLoader$ | async"></apollo-async-icon>
+
+  <apollo-async-icon
+    *ngIf="getButtonsVisibility(summaryButtonEventType.DOCUMENT)
+      && ((showLoader$ | async)
+      || (summaryCard$ | async)?.documents.hasDocuments)"
+    [title]="documentsButtonTitle$ | async"
+    svgIcon='document'
+    [badge]="(summaryCard$ | async)?.documents.count"
+    (iconClick)="onDocumentClick()"
+    [isLoading]="showLoader$ | async"></apollo-async-icon>
+
+  <apollo-async-icon
+    *ngIf="getButtonsVisibility(summaryButtonEventType.SEISMIC_2D)
+      && ((showLoader$ | async)
+      || (summaryCard$ | async)?.seismic2d.has2dBulk)"
+    title="Open 2D Viewer"
+    svgIcon="2d-seismic"
+    [badge]="(summaryCard$ | async)?.seismic2d.count"
+    (iconClick)="on2dViewerClick()"
+    [isLoading]="showLoader$ | async"
+  ></apollo-async-icon>  
+</div>

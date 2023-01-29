@@ -1,0 +1,6 @@
+<span data-slb-id="subscription-table-actions" class="actions">
+    <a data-slb-id="pending" *ngIf="subscriptionStatus === 'PENDING'" class="disabled">Cancel Request</a>
+    <a data-slb-id="active" *ngIf="subscriptionStatus === 'ACTIVE' && subscriptionId" (click)="download($event)">Download</a>
+    <a data-slb-id="approved" *ngIf="subscriptionStatus === 'APPROVED'" class="disabled">Download</a>
+    <a data-slb-id="expired" *ngIf="subscriptionStatus === 'EXPIRED'" class="disabled">Request</a>
+</span>

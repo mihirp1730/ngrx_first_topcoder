@@ -1,0 +1,12 @@
+<section class="manage-subscription">
+  <header class="manage-subscription__toolbar">
+    <h3 class="manage-subscription__title">Manage Subscriptions</h3>
+    <button data-slb-id="close-btn" slb-icon-button id="manage-subscription__close" routerLink="/vendor/datapackage">
+      <mat-icon svgIcon="close"></mat-icon>
+    </button>
+  </header>
+  <div class="manage-subscription__content">
+    <apollo-data-grid [items]="manageSubscriptions" [columnDefinition]="columnDefinition"></apollo-data-grid>
+  </div>
+</section>
+<div class="loader-container" *ngIf="showLoader"><mat-spinner></mat-spinner></div>

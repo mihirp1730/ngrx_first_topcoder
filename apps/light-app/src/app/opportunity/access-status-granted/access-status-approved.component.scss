@@ -1,0 +1,65 @@
+@import 'libs/app/styles';
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between
+}
+
+.title {
+  font-weight: 600;
+}
+
+.row.content {
+  margin-top: 5px;
+
+  .icon-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 3px solid #28A228;
+    width: 36px;
+    height: 36px;
+    padding: 5px;
+
+    mat-icon {
+      height: 20px;
+      width: 20px;
+      line-height: 10px;
+      color: #28A228;
+    }
+
+    margin-top: 10px;
+  }
+
+  .details-column {
+    margin-left: -5px;
+
+    .column.field {
+      width: 50%;
+      word-wrap: break-word;
+    }
+
+    .column.field div:first-child,
+    .access-period .row p {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .access-duration {
+      margin-bottom: -5px;
+    }
+  }
+
+  .launch-btn-column {
+    margin-top: 10px;
+    margin-right: 5px;
+  }
+}

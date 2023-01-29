@@ -1,0 +1,84 @@
+@import "libs/app/styles";
+
+.apollo-global-filters-container {
+  border-radius: 4px 0 0 0;
+  display: flex;
+  align-items: center;
+  padding: 15px !important;
+  position: absolute;
+  right: 0;
+  z-index: 999;
+
+  ::ng-deep .mat-standard-chip {
+    padding: 15px 10px;
+    border: 1px solid $color-grey-07;
+    .filter-name {
+      margin-left: 10px;
+    }
+  }
+
+
+  ::ng-deep .mat-chip.selected{
+    background-color: $color-voss-blue !important;
+    color: $color-white !important;
+  }
+
+  ::ng-deep .mat-chip.selected {
+    background-color: $color-voss-blue !important;
+    color: $color-white !important;
+  }
+
+  .clear-filters-btn {
+    margin-left: 50px;
+    z-index: 999;
+    padding: 0 10px;
+  }
+}
+
+::ng-deep .material-theme-dark {
+  .filter-checkbox-tags {
+    .listicon.path-nth-1 {
+      ::ng-deep path:nth-of-type(1) {
+        fill: $color-white;
+      }
+    }
+    .listicon.path-nth-2 {
+      ::ng-deep path:nth-of-type(2) {
+        fill: $color-white;
+      }
+    }
+  }
+}
+
+::ng-deep .material-theme-light {
+  .filter-checkbox-tags {
+    .listicon.path-nth-1 {
+      ::ng-deep path:nth-of-type(1) {
+        fill: $color-black;
+      }
+    }
+    .listicon.path-nth-2 {
+      ::ng-deep path:nth-of-type(2) {
+        fill: $color-grey-01;
+      }
+    }
+  }
+}
+
+::ng-deep .global-filter-dialog {
+  max-width: 300px;
+  .filter-wrapper {
+    padding: 15px !important;
+  }
+  .attributesSelectionList {
+    width: 100% !important;
+  }
+  .gis-selected-chip-list  {
+    display: flex;
+    flex-direction: column;
+    .mat-chip {
+      width: fit-content;
+    }
+  }
+}
+

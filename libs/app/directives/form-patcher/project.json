@@ -1,0 +1,23 @@
+{
+  "projectType": "library",
+  "root": "libs/app/directives/form-patcher",
+  "sourceRoot": "libs/app/directives/form-patcher/src",
+  "prefix": "apollo",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/directives/form-patcher"],
+      "options": {
+        "jestConfig": "libs/app/directives/form-patcher/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/directives/form-patcher/src/**/*.ts", "libs/app/directives/form-patcher/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

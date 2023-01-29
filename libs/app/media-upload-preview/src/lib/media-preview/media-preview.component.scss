@@ -1,0 +1,53 @@
+@import '../../../../styles';
+
+.media-preview {
+  width: 240px;
+  margin-right: 16px;
+  .preview {
+    height: 135px;
+    >img {
+      height: 135px;
+      width: 100%;
+      object-fit: contain;
+      background-color: $color-grey-02;
+    }
+  }
+  .media-label {
+    margin: 16px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .media-name {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      width: 210px;
+      .mat-icon {
+        margin-right: 10px;
+        width: 16px;
+        height: 16px;
+      }
+      > span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 84%;
+      }
+    }
+    .delete-btn:not(.mat-button-disabled) {
+      width: 24px;
+      .dls-button-wrapper {
+        color: $color-candy !important;
+      }
+    }
+  }
+  .caption-container {
+    .mat-form-field {
+      width: 100%;
+    }
+  }
+  .text-limit-80 {
+    margin-top: -20px;
+    font-size: 11px;
+  }
+}

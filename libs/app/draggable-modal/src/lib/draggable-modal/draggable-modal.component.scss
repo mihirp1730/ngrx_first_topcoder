@@ -1,0 +1,43 @@
+@import 'libs/app/styles';
+
+.drag-modal {
+  position: absolute;
+  z-index: 20;
+  background-color: $color-grey-03; 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+
+  &__header {
+    border-bottom: 1px solid $color-grey-04;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: move;
+    position: relative;
+
+    .drag-icon {
+      width: fit-content;
+      transform: rotate(90deg);
+
+      mat-icon {
+        position: relative;
+
+        &:first-of-type {
+          left: 7px;
+        }
+
+        &:last-of-type {
+          right: 7px;
+        }
+      }
+    }
+
+    .drag-close {
+      position: absolute;
+      right: 0;
+    }
+  }
+}

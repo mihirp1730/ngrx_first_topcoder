@@ -1,0 +1,82 @@
+@import 'libs/app/styles';
+
+.opportunity-dashboard-container {
+  position: relative;
+  height: auto;
+  min-height: calc(100vh - 52px);
+  color: $color-grey-01;
+  background-color: $color-grey-10;
+
+  .page-header {
+    border-bottom: 1px solid $color-white;
+    padding: 15px 20px;
+    box-shadow: 0px 2px 4px 0 $color-grey-05;
+    background-color: $color-white;
+
+    .heading {
+      display: flex;
+      justify-content: space-between;
+
+      .title {
+        @include font-size(24);
+        margin: 0;
+        flex: auto;
+      }
+    }
+  }
+
+  .cards-container {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 24px;
+
+    @media screen and (min-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+    @media screen and (min-width: 720px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media screen and (min-width: 1080px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media screen and (min-width: 1400px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .container-no-opportunity {
+    text-align: center;
+    color: $color-grey-10;
+    height: calc(100vh - 117px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .content {
+      margin-bottom: 40px;
+
+      .heading {
+        @include font-size(16);
+        color: $color-grey-04;
+        font-weight: 500;
+        text-transform: unset;
+      }
+      .message {
+        @include font-size(14);
+        color: $color-grey-04;
+        width: 17.5rem;
+        display: block;
+        margin: auto;
+      }
+    }
+  }
+
+  .loader-container {
+    height: calc(100vh - 117px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

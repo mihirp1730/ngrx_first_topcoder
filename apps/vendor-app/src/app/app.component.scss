@@ -1,0 +1,21 @@
+@import 'libs/app/styles';
+
+.dls-navigation-framework {
+  .active {
+    color: $color-white;
+  }
+  .mat-badge-medium.mat-badge-above .mat-badge-content {
+    background-color: $color-viz-green;
+    top: -14px;
+    right: -10px;
+  }
+  .dls-navigation-item span {
+    padding-top: 0px;
+  }
+  .dls-navigation-item.privacy-link {
+    position: absolute;
+    bottom: 0px;
+    left: 8px;
+    font-size: small;
+  }
+}

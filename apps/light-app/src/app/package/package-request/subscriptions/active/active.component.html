@@ -1,0 +1,18 @@
+<div class="title">Active Subscription</div>
+<div class="container">
+
+  <section class="create-comment-container" data-slb-id="create-comment-container">
+    <div class="btn-container">
+      <button slb-button
+              data-slb-id="download"
+              class="package-request-btn"
+              [disabled]="packageDownloading$|async"
+              (click)="download()">
+        Download
+        <mat-spinner *ngIf="packageDownloading$|async" class="spinner" diameter="20"></mat-spinner>
+      </button>
+      <button data-slb-id="subscriptions" slb-button class="package-request-btn" routerLink="/subscriptions">My Subscriptions</button>
+    </div>
+  </section>
+
+</div>

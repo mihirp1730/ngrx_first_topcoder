@@ -1,0 +1,136 @@
+{
+  "projectType": "application",
+  "root": "apps/light-app",
+  "sourceRoot": "apps/light-app/src",
+  "prefix": "apollo",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/apps/light-app",
+        "index": "apps/light-app/src/index.html",
+        "main": "apps/light-app/src/main.ts",
+        "polyfills": "apps/light-app/src/polyfills.ts",
+        "tsConfig": "apps/light-app/tsconfig.app.json",
+        "aot": true,
+        "assets": [
+          "apps/light-app/src/favicon.ico",
+          "apps/light-app/src/assets",
+          "apps/light-app/src/environments/environment.json",
+          {
+            "glob": "**/*",
+            "input": "./node_modules/@slb-dls/angular-material/assets/icons",
+            "output": "assets/icons"
+          },
+          {
+            "glob": "**/*",
+            "input": "node_modules/@slb-innersource/gis-canvas/assets",
+            "output": "assets"
+          }
+        ],
+        "styles": [
+          {
+            "input": "node_modules/@slb-dls/angular-material/assets/styles/dls-mat-light-theme.css",
+            "bundleName": "dls-mat-light-theme",
+            "inject": false
+          },
+          {
+            "input": "node_modules/@slb-dls/angular-material/assets/styles/dls-mat-dark-theme.css",
+            "bundleName": "dls-mat-dark-theme",
+            "inject": false
+          },
+          "node_modules/@ag-grid-community/core/dist/styles/ag-grid.min.css",
+          "node_modules/@slb-dls/angular-material/assets/styles/ag-grid-community/dls-ag-grid-dark.css",
+          "node_modules/quill/dist/quill.core.css",
+          "node_modules/quill/dist/quill.snow.css",
+          "apps/light-app/src/styles.scss"
+        ],
+        "scripts": []
+      },
+      "configurations": {
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/light-app/src/environments/environment.ts",
+              "with": "apps/light-app/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "10mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb",
+              "maximumError": "10kb"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "browserTarget": "light-app:build",
+        "proxyConfig": "apps/light-app/proxy.config.json",
+        "liveReload": false,
+        "ssl": true
+      },
+      "configurations": {
+        "development": {
+          "browserTarget": "light-app:build:development"
+        },
+        "production": {
+          "browserTarget": "light-app:build:production"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "serve-local": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": ["nx run auth-server:serve", "nx run light-app:serve", "nx run content-server:serve", "nx run gateway-server:serve"]
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "light-app:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/light-app/src/**/*.ts", "apps/light-app/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/light-app"],
+      "options": {
+        "jestConfig": "apps/light-app/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["app-styles"]
+}

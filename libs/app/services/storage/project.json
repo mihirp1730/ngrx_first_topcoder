@@ -1,0 +1,23 @@
+{
+  "projectType": "library",
+  "root": "libs/app/services/storage",
+  "sourceRoot": "libs/app/services/storage/src",
+  "prefix": "apollo",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/services/storage"],
+      "options": {
+        "jestConfig": "libs/app/services/storage/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/services/storage/src/**/*.ts", "libs/app/services/storage/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

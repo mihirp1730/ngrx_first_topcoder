@@ -1,0 +1,23 @@
+{
+  "projectType": "library",
+  "root": "libs/app/filters",
+  "sourceRoot": "libs/app/filters/src",
+  "prefix": "apollo",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/filters"],
+      "options": {
+        "jestConfig": "libs/app/filters/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/filters/src/**/*.ts", "libs/app/filters/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

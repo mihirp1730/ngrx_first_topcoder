@@ -1,0 +1,24 @@
+{
+  "projectType": "library",
+  "root": "libs/app/feature-flag",
+  "sourceRoot": "libs/app/feature-flag/src",
+  "prefix": "apollo",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/feature-flag/src/**/*.ts", "libs/app/feature-flag/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/feature-flag"],
+      "options": {
+        "jestConfig": "libs/app/feature-flag/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

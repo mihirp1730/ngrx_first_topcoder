@@ -1,0 +1,22 @@
+<section class="global-filter-dialog">
+  <div id="dynamic-modal" title="Filter">
+    <div mat-dialog-title class="title-content">
+      {{ layer.filter?.name }}
+    </div>
+
+    <div mat-dialog-content>
+      <gis-filters
+        *ngIf="
+          layer?.filter &&
+          layer.filter?.attributes &&
+          layer.filter?.attributes?.length
+        "
+        [filter]="filter"
+        [layer]="layer"
+        (filterChange)="onFilterChange()"
+        (click)="$event.stopPropagation()"
+      >
+      </gis-filters>
+    </div>
+  </div>
+</section>

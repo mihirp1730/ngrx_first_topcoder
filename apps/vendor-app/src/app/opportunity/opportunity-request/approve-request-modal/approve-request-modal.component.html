@@ -1,0 +1,111 @@
+<div class="approve-request-modal">
+  <form [formGroup]="requestApproval">
+    <div class="title">
+      <h4>Approve Access Request</h4>
+    </div>
+    <div class="body">
+      <div class="content">
+        <div class="request-info">
+          <h6 class="info-title">Opportunity Name</h6>
+          <div class="opportunity-name" title="{{ item.opportunityName }}">{{ item.opportunityName }}</div>
+
+          <h6 class="info-title">Requester Name</h6>
+          <span title="{{ item.firstName }} {{ item.lastName }}">{{ item.firstName }} {{ item.lastName }}</span>
+
+          <h6 class="info-title">Company Name</h6>
+          <span title="{{ item.companyName }}">{{ item.companyName }}</span>
+
+          <h6 class="info-title">Requested On</h6>
+          <span title="{{ item.requestedOn | date: 'dd-MMM-YYYY' }}">{{ item.requestedOn | date: 'dd-MMM-YYYY' }}</span>
+        </div>
+        <hr />
+        <div class="request-details">
+          <h6>Requested access for</h6>
+          <ng-container *ngIf="this.requestApproval.get('confidentialInfo').disabled === false">
+            <div class="access-levels" formGroupName="confidentialInfo">
+              <div class="level-check">
+                <mat-checkbox formControlName="isChecked" (change)="levelCheckChange($event, 'confInfo')"></mat-checkbox>
+                Details
+              </div>
+              <div class="date-picker">
+                <slb-date-picker-range
+                  label="Select Date Range"
+                  [dateControl]="confidentialDateControl"
+                  [disabled]="confidentialInfoDisabled"
+                  disableTextInput="true"
+                  placeholder="Select Date Range"
+                  [minValue]="minDate"
+                  [maxValue]="opportunityMaxDate"
+                  closeCalendarOnRangeSelected="true"
+                  (rangeSelected)="dateSelected($event, 'confidentialInfo')"
+                  value=""
+                >
+                </slb-date-picker-range>
+                <mat-hint *ngIf="opportunityMaxDate">Opportunity expires on {{ opportunityMaxDate | date: 'dd-MMM-YYYY' }}</mat-hint>
+                <mat-error *ngIf="confidentialDateControl.touched && requestApproval.get('confidentialInfo.dateRange')?.errors?.required">
+                  Date is required</mat-error
+                >
+                <mat-error *ngIf="requestApproval.get('confidentialInfo.dateRange')?.hasError('invalidSelection')"
+                  >Please select valid date range</mat-error
+                >
+                <mat-error *ngIf="requestApproval.get('confidentialInfo.dateRange')?.hasError('invalidDateRange')"
+                  >Start and End Date cannot be same</mat-error
+                >
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="this.requestApproval.get('vdrInfo').disabled === false">
+            <div class="access-levels" formGroupName="vdrInfo">
+              <div class="level-check">
+                <mat-checkbox formControlName="isChecked" (change)="levelCheckChange($event, 'vdrInfo')"></mat-checkbox>
+                VDR
+              </div>
+              <div class="date-picker">
+                <slb-date-picker-range
+                  label="Select Date Range"
+                  closeCalendarOnRangeSelected="true"
+                  [dateControl]="vdrDateControl"
+                  [disabled]="vdrInfoDisabled"
+                  disableTextInput="true"
+                  placeholder="Select Date Range"
+                  [minValue]="minDate"
+                  [maxValue]="opportunityMaxDate"
+                  (rangeSelected)="dateSelected($event, 'vdrInfo')"
+                  value=""
+                >
+                </slb-date-picker-range>
+                <mat-hint *ngIf="opportunityMaxDate">Opportunity expires on {{ opportunityMaxDate | date: 'dd-MMM-YYYY' }}</mat-hint>
+                <mat-error *ngIf="vdrDateControl.touched && requestApproval.get('vdrInfo.dateRange')?.errors?.required">
+                  Date is required.</mat-error
+                >
+                <mat-error *ngIf="requestApproval.get('vdrInfo.dateRange')?.hasError('invalidSelection')"
+                  >Please select valid date range</mat-error
+                >
+                <mat-error *ngIf="requestApproval.get('vdrInfo.dateRange')?.hasError('invalidDateRange')"
+                  >Start and End Date cannot be same
+                </mat-error>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <hr />
+    </div>
+    <div class="action-buttons">
+      <div class="request-access-modal__loader-container" *ngIf="showLoader$ | async">
+        <mat-spinner data-slb-id="load-spinner" [diameter]="32"></mat-spinner>
+      </div>
+      <button slb-secondary-button (click)="closeModal()">Cancel</button>
+      <button
+        slb-button
+        (click)="approve()"
+        [disabled]="
+          !(requestApproval.get('confidentialInfo.isChecked').value || requestApproval.get('vdrInfo.isChecked').value) ||
+          !requestApproval.valid
+        "
+      >
+        Approve
+      </button>
+    </div>
+  </form>
+</div>

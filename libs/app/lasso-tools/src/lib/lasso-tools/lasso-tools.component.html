@@ -1,0 +1,34 @@
+<section data-slb-id="lasso-tools" class="lasso-tools"
+  *ngIf="(lassoToolsService.currentLasso$ | async) as currentLasso">
+
+  <button slb-icon-button class="world-zoom" (click)="onZoomToWorldView()" matTooltip="Zoom to world view"
+    matTooltipPosition="above" data-slb-id="lasso-tools-world">
+    <mat-icon svgIcon="apollo:earth"></mat-icon>
+  </button>
+
+  <section>
+    <button slb-icon-button class="lasso-selection lasso-selection--rectangle"
+      [class.lasso-selection--active]="currentLasso === lassoTool.RECTANGLE" (click)="onRectangleSelection(currentLasso)"
+      matTooltip="Rectangle selection" matTooltipPosition="above" data-slb-id="lasso-tools-rectangle-selection">
+      <mat-icon svgIcon="apollo:rectangle-selection"></mat-icon>
+    </button>
+  
+    <button slb-icon-button class="lasso-selection lasso-selection--polygon"
+      [class.lasso-selection--active]="currentLasso === lassoTool.POLYGON" (click)="onPolygonSelection(currentLasso)"
+      matTooltip="Polygon selection" matTooltipPosition="left" data-slb-id="lasso-tools-polygon-selection">
+      <mat-icon svgIcon="apollo:polygon-selection"></mat-icon>
+    </button>
+  
+    <button slb-icon-button class="lasso-selection lasso-selection--freehand"
+      [class.lasso-selection--active]="currentLasso === lassoTool.FREEHAND" (click)="onFreehandSelection(currentLasso)"
+      matTooltip="Freehand selection" matTooltipPosition="left" data-slb-id="lasso-tools-freehand-selection">
+      <mat-icon svgIcon="apollo:freehand-selection"></mat-icon>
+    </button>
+  </section>
+
+  <button slb-icon-button class="basemap" (click)="onBasemapClick()"
+    matTooltip="Basemap" matTooltipPosition="above" data-slb-id="lasso-tools-basemap">
+    <mat-icon svgIcon="apollo:basemap"></mat-icon>
+  </button>
+
+</section>

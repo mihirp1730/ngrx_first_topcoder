@@ -1,0 +1,29 @@
+<section data-slb-id="menu" class="menu">
+  <header class="menu__header">
+    <span class="menu__initials">{{ initials }}</span>
+    <h4 class="menu__name">
+      Welcome, <span>{{ user.name }}</span>
+    </h4>
+  </header>
+  <div class="menu__content">
+    <ul class="menu__options">
+      <li *ngIf="user.isGuest" class="menu__option">
+        <a [attr.data-slb-id]="option-login" (click)="authRedirect()" matTooltip="Click here to log in" matTooltipPosition="above">Login</a>
+      </li>
+      <li class="menu__option" *ngFor="let option of options">
+        <a *ngIf="user.isGuest" [attr.data-slb-id]="'option-' + option.name" (click)="option.action()" [matTooltip]="'Click here to log in and go to ' + option.name" matTooltipPosition="above">{{ option.name }}</a>
+        <ng-container *ngIf="!user.isGuest">
+          <ng-container *ngIf="option.action else ShowLink">
+            <a [attr.data-slb-id]="'option-' + option.name" (click)="option.action()" [matTooltip]="option.tooltip" matTooltipPosition="above">{{ option.name }}</a>
+          </ng-container>
+          <ng-template #ShowLink>
+            <a [attr.data-slb-id]="'option-' + option.name" [routerLink]="option.link" [matTooltip]="option.tooltip" matTooltipPosition="above">{{ option.name }}</a>
+          </ng-template>
+        </ng-container>
+      </li>
+    </ul>
+  </div>
+  <div class="privacy">
+    <a target="_blank" [href]="privacyUrl">Privacy</a>
+  </div>
+</section>

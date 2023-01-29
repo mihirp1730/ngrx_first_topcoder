@@ -1,0 +1,351 @@
+@import 'libs/app/styles';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+
+  .opportunity-section {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .modular-chat {
+    width: 25%;
+    background-color: $color-white;
+  }
+
+  .map-wrapper {
+    display: flex;
+    height: 100%;
+    width: 60%;
+    position: relative;
+    overflow: hidden;
+
+    .expand-map {
+      position: absolute;
+      top: 0;
+      z-index: 100;
+      width: 15px;
+      height: 40px;
+      border-radius: 1px;
+      background-color: $color-grey-10;
+      color: $color-prussian-blue;
+      text-align: center;
+      line-height: normal;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .clear-lasso {
+      position: absolute;
+      z-index: 2;
+      background-color: $color-grey-02;
+      border: 1px solid $color-grey-04;
+      bottom: 87px;
+      right: 8px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      color: $color-grey-07;
+      padding-top: 2px;
+      width: 36px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background-color: $color-grey-05;
+      cursor: default;
+    }
+
+    gis-canvas {
+      flex: 1;
+    }
+    apollo-lasso-tools.hide,
+    gis-canvas.hide {
+      display: none;
+    }
+
+    ::ng-deep gis-zoom-buttons {
+      position: absolute;
+      z-index: 2;
+      bottom: 30px;
+      left: 10px;
+    }
+
+    ::ng-deep gis-map {
+      .gm-fullscreen-control {
+        display: none;
+      }
+    }
+
+    ::ng-deep gis-search-result-panel {
+      width: auto;
+
+      &[hidden] {
+        display: none;
+      }
+
+      &:hover {
+        .iconandcheckobox .icon {
+          display: inline-block !important;
+          margin-right: 6px;
+          line-height: 18px;
+
+          img {
+            height: 18px;
+            width: 18px;
+          }
+        }
+
+        .iconandcheckobox mat-checkbox {
+          display: none !important;
+        }
+      }
+
+      // As we begin to use flex, make sure the gisCanvas'
+      //   internal div is a full-height flex column.
+      .gisMapCanvas {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      // Manually override to use our package tab implementation:
+      .total-result-wrapper {
+        display: none;
+      }
+
+      // Hide "Actions" context menu
+      .search-acttion-button {
+        display: none;
+      }
+
+      // Since we are hiding the GisCanvas' result footer,
+      //   make sure data groups have full height.
+      .search-result-list-wrapper-inner {
+        height: 100%;
+      }
+
+      // Hide "Filter by map extent" checkbox
+      .extent-filter-checkbox {
+        display: none;
+      }
+
+      gis-search-result-header {
+        // Change summary card title
+        .title {
+          width: calc(100% - 24px);
+
+          h2 {
+            margin: 0;
+            @include font-size(18);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-transform: unset;
+          }
+        }
+
+        .iconandcheckobox .icon {
+          margin-right: 6px;
+          line-height: 18px;
+
+          img {
+            height: 18px;
+            width: 18px;
+          }
+        }
+      }
+
+      // Change summary card content
+      .gis-property {
+        &-container {
+          @include font-size(12);
+        }
+
+        &-value {
+          color: $color-grey-07;
+        }
+      }
+
+      apollo-results-lock-icon {
+        position: absolute;
+        right: 0;
+      }
+    }
+
+    // Hide the GisCanvas' "filter by map extent" footer.
+    ::ng-deep gis-search-result-count {
+      .search-count-container {
+        display: none;
+      }
+    }
+
+    ::ng-deep gis-result-detail-panel {
+      &:hover {
+        .gis-search-result-header {
+          .search-result-header-container {
+            .iconandcheckobox .icon {
+              display: inline-block !important;
+              margin-right: 6px;
+              line-height: 18px;
+
+              img {
+                height: 18px;
+                width: 18px;
+              }
+            }
+
+            .iconandcheckobox mat-checkbox {
+              display: none !important;
+            }
+          }
+        }
+      }
+
+      .gis-item-detail-wrapper {
+        min-width: 400px;
+        width: 400px;
+
+        & gis-back-button + div {
+          height: calc(100% - 50px); // When back to search results link
+        }
+      }
+
+      // Hide "Actions" context menu
+      .search-detail-acttion-button {
+        display: none !important;
+      }
+
+      // Detail header
+      .gis-search-result-header {
+        padding: 10px 15px;
+
+        .search-result-header-container {
+          padding: 0;
+          .icon {
+            margin-right: 6px;
+          }
+          .header-vendor {
+            max-width: 100px;
+            text-align: right;
+            width: 100px;
+            color: $color-grey-07;
+            font-size: 14px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          .title {
+            width: calc(100% - 100px);
+
+            h2 {
+              margin: 0;
+              @include font-size(14);
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              width: 250px;
+            }
+          }
+
+          .iconandcheckobox .icon {
+            margin-right: 6px;
+            line-height: 18px;
+
+            img {
+              height: 18px;
+              width: 18px;
+            }
+
+            mat-icon {
+              display: none;
+            }
+          }
+        }
+      }
+
+      // Action buttons
+      .gis-action-button-container {
+        margin: 0 !important;
+        padding: 10px 12px;
+      }
+
+      // Change detail card content
+      .gis-item-details-content {
+        &-container {
+          height: 100% !important;
+        }
+
+        .gis-property {
+          &-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+
+            .footer-actions {
+              margin-top: auto;
+              display: flex;
+              justify-content: space-evenly;
+            }
+          }
+
+          &-container {
+            @include font-size(12);
+          }
+
+          &-value {
+            color: $color-grey-07;
+          }
+        }
+      }
+    }
+
+    // Make sure our package panel can be hidden
+    //   with the [hidden] attribute.
+    ::ng-deep apollo-packages-panel-list {
+      display: block;
+
+      &[hidden] {
+        display: none;
+      }
+    }
+
+    .results-tabs-container {
+      border-bottom: 1px solid $color-grey-07;
+      border-top: 1px solid $color-grey-07;
+      background-color: $color-grey-04;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 5px 15px;
+
+      > span {
+        font-size: 0.9em;
+        flex-grow: 1;
+      }
+      > button:first-of-type {
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+      }
+      > button:last-of-type {
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+      }
+    }
+
+    ::ng-deep apollo-global-filters {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+    }
+  }
+}

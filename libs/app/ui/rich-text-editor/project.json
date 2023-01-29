@@ -1,0 +1,39 @@
+{
+  "projectType": "library",
+  "root": "libs/app/ui/rich-text-editor",
+  "sourceRoot": "libs/app/ui/rich-text-editor/src",
+  "prefix": "apollo",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["dist/libs/app/ui/rich-text-editor"],
+      "options": {
+        "project": "libs/app/ui/rich-text-editor/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/app/ui/rich-text-editor/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/app/ui/rich-text-editor/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/ui/rich-text-editor"],
+      "options": {
+        "jestConfig": "libs/app/ui/rich-text-editor/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/ui/rich-text-editor/src/**/*.ts", "libs/app/ui/rich-text-editor/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

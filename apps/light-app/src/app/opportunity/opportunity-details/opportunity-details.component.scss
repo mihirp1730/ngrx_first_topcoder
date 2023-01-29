@@ -1,0 +1,428 @@
+@import 'libs/app/styles';
+
+.opportunity-details {
+  &__wrapper {
+    position: relative;
+    height: 100%;
+    color: $color-grey-01;
+    background-color: $color-grey-10;
+    padding: 0.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+
+    .ellipsis-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 60%;
+      margin-left: 0.2rem;
+    }
+  }
+
+  &__container {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  &__nav {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    font-weight: 500;
+    height: 2rem;
+    mat-icon {
+      height: 15px;
+      width: 30px;
+    }
+    .dashboard-link {
+      color: $color-opv-blue;
+      cursor: pointer;
+    }
+    .nav-items {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      width: 100%;
+    }
+  }
+
+  &__line {
+    border-bottom: 1px solid $color-grey-09;
+    margin-top: 5px;
+    width: 100%;
+  }
+
+  &__header {
+    width: 100%;
+
+    &__info {
+      display: flex;
+      padding: 0.5rem 0;
+      align-items: center;
+
+      > button {
+        padding-left: 0;
+      }
+
+      button,
+      ::ng-deep button {
+        padding: 0 10px;
+        font-size: 0.7rem;
+        line-height: 33px;
+
+        &.light-button * {
+          color: $color-voss-blue;
+        }
+
+        &.icon-button {
+          margin: 0;
+          padding-right: 0;
+        }
+
+        &.dls-secondary-button {
+          background-color: $color-grey-10;
+          border-color: $color-voss-blue;
+        }
+
+        &.dls-split-button-menu {
+          padding: 0;
+        }
+      }
+
+      ::ng-deep .dls-split-button {
+        .mat-menu-trigger {
+          height: 100%;
+        }
+      }
+
+      .info-detail {
+        flex: 1;
+        align-items: center;
+        min-width: 0;
+        display: inherit;
+        font-size: 1rem;
+        font-weight: 500;
+
+        .icon {
+          cursor: pointer;
+          color: $color-vox-blue;
+        }
+
+        .opportunity-link {
+          margin-left: auto;
+          margin-right: 0.5rem;
+        }
+
+        .url-link {
+          border-radius: 5px;
+          color: $color-white;
+          background-color: $color-black;
+          padding: 8px;
+          margin-left: 15px;
+          font-size: 12px;
+        }
+      }
+    }
+
+    &__logo {
+      white-space: nowrap;
+      padding: 0;
+      > img {
+        max-width: 70px;
+        max-height: 30px;
+      }
+    }
+    &__status {
+      font-size: 0.9rem;
+      font-weight: 500;
+      .draft {
+        color: $color-black;
+      }
+      .published {
+        color: $color-emerald-green;
+      }
+      .unpublished {
+        color: $color-very-dark-grey1;
+      }
+      .expired {
+        color: $color-light-orange;
+      }
+      .publishing {
+        color: $color-text-warning;
+      }
+    }
+  }
+
+  &__body {
+    width: 100%;
+    flex: 1;
+    overflow: hidden;
+
+    h3 {
+      font-size: 1rem;
+    }
+
+    ::ng-deep mat-tab-group {
+      height: 100%;
+      background-color: $color-grey-10;
+
+      .mat-ink-bar {
+        background-color: $color-vox-blue !important;
+      }
+
+      *:not(.mat-button-base):not(.mat-button-wrapper):not(svg):not(mat-expansion-panel-header):not(mat-panel-title):not(.mat-expansion-indicator) {
+        background-color: $color-grey-10;
+      }
+
+      .mat-tab-label {
+        .mat-tab-label-content {
+          color: $color-grey-05 !important;
+        }
+
+        &.mat-tab-label-active .mat-tab-label-content {
+          color: $color-black !important;
+        }
+      }
+
+      .mat-tab-body-content {
+        &::-webkit-scrollbar {
+          width: 5px;
+
+          &-thumb {
+            background: $color-grey-05;
+          }
+        }
+      }
+    }
+  }
+
+  &__accordion {
+    ::ng-deep .mat-expansion-panel-header.mat-expanded {
+      background-color: $color-voss-blue !important;
+      height: 52px;
+      .mat-expansion-panel-header-title {
+        background-color: $color-voss-blue !important;
+        margin-right: 0px;
+      }
+      mat-panel-title h3 {
+        background-color: $color-voss-blue !important;
+        color: $color-white;
+      }
+      .mat-expansion-indicator::after {
+        color: $color-white !important;
+      }
+    }
+
+    ::ng-deep .mat-expansion-panel-body {
+      padding: 10px 20px 20px;
+    }
+  }
+
+  &__error {
+    .error-msg {
+      text-align: center;
+      font-size: 16px;
+      .error-oops{
+        font-weight: 500;
+      }
+    }
+    .go-back {
+      color: $color-voss-blue;
+      text-align: center;
+      margin: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+  }
+}
+
+.attribute-chips-container {
+  background-color: $color-grey-10;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 10px;
+  .chip {
+    font-weight: bold;
+  }
+}
+
+.fullview {
+  ::ng-deep {
+    .ql-editor {
+      padding: 12px 25px 12px 15px;
+      font-size: 1rem;
+    }
+    .opportunity-carousel {
+      width: 40% !important;
+      margin: 0 auto !important;
+
+      .carousel-item-img {
+        display: flex;
+        justify-content: center;
+        img {
+          object-fit: contain;
+          height: 300px;
+          width: 80%;
+        }
+      }
+    }
+  }
+}
+
+.overview-description {
+  display: flex;
+  .categories {
+    h3 {
+      margin-bottom: 1rem;
+    }
+    .attributes {
+      margin: 0.75rem 0 0 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      width: 7vw;
+    }
+  }
+  .overview-info {
+    h3 {
+      display: flex;
+      justify-content: flex-start;
+      padding-left: 1rem;
+    }
+    .show-less-info {
+      ::ng-deep {
+        .ql-editor {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 15;
+          -webkit-box-orient: vertical;
+          padding-bottom: 0px;
+        }
+      }
+    }
+    .show-more-info {
+      ::ng-deep {
+        .ql-editor {
+          height: auto;
+        }
+      }
+    }
+    .show-more-link {
+      display: flex;
+      cursor: pointer;
+      justify-content: flex-end;
+      color: $color-voss-blue;
+    }
+  }
+}
+
+.data-objects {
+  font-size: 1rem;
+  .title {
+    font-weight: 500;
+  }
+  td {
+    padding: 10px;
+  }
+}
+
+.asset-subtype {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.flex-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+
+button.download-all-btn {
+  margin-right: 5px;
+  .btn-text-container {
+    display: flex;
+    align-items: center;
+    font-size: 11px;
+    background-color: $color-white !important;
+    mat-icon,
+    span {
+      background-color: $color-white !important;
+    }
+  }
+}
+
+.no-access-container,
+.pending-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+  ::ng-deep .mat-icon {
+    height: 100px !important;
+    width: 75px !important;
+    color: $color-grey-12;
+  }
+  .access-locked {
+    font-weight: 500;
+    margin-bottom: 7px;
+  }
+}
+
+.no-access-container {
+  align-items: center !important;
+}
+.pending-container {
+  align-items: left !important;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.container,
+.pending-inner-container {
+  margin-top: -32px !important;
+  align-items: unset !important;
+  .title-row {
+    font-weight: 600;
+    padding: 2px 5px;
+    margin-bottom: 5px;
+    text-align: left;
+  }
+
+  ::ng-deep .mat-icon {
+    height: 32px !important;
+    width: 32px !important;
+    color: $color-black;
+  }
+
+  .details-column {
+    margin-left: 20px;
+    margin-top: -10px;
+  }
+
+  .column div {
+    font-size: 12px;
+    text-align: left;
+  }
+
+  .column div:first-child {
+    font-size: 14px;
+    font-weight: 600;
+  }
+}

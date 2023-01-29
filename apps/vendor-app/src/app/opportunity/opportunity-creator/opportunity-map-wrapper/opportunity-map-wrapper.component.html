@@ -1,0 +1,15 @@
+<div class="opportunity-map-canvas-wrapper" data-slb-id="opportunity-map-canvas-wrapper">
+  <gis-canvas
+    *ngIf="gisSettings.token && gisSettings.deploymentUrl && gisSettings.config"
+    [sToken]="gisSettings.token"
+    [deploymentUrl]="gisSettings.deploymentUrl"
+    [gisSettingsConfig]="gisSettings.config"
+    [appKey]="gisSettings.appKey"
+    [slbDataPartitionId]="gisSettings.partition"
+  ></gis-canvas>
+
+  <button slb-icon-button class="world-zoom" *ngIf="isGlobeOptionVisible" (click)="onZoomToWorldView()" matTooltip="Zoom to world view"
+    matTooltipPosition="above" data-slb-id="opportunity-map-canvas-wrapper-world">
+    <mat-icon svgIcon="apollo:earth"></mat-icon>
+  </button>
+</div>

@@ -1,0 +1,23 @@
+{
+  "projectType": "library",
+  "root": "libs/app/services/communication",
+  "sourceRoot": "libs/app/services/communication/src",
+  "prefix": "apollo",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/services/communication"],
+      "options": {
+        "jestConfig": "libs/app/services/communication/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/services/communication/src/**/*.ts", "libs/app/services/communication/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

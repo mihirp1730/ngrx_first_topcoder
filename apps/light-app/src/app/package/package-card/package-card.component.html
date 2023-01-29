@@ -1,0 +1,36 @@
+<article *ngIf="package"
+  data-slb-id="package-card-{{package.id}}"
+  [routerLink]="['/packages', package.id]"
+  class="package-card" 
+  [title]="'Go to ' + package?.name + ' detail'">
+    <header class="package-card__header">
+      <h4 class="package-card__title">{{ package.name }}</h4>
+      <h4 class="package-card__title"> {{ package.vendor }} </h4>
+    </header>
+    <section>
+      <div *ngIf="package.image; else imgPlaceholder" class="package-card__thumb" [ngStyle]="{'background-image': 'url(' + package?.image + ')'}"></div>
+      <ng-template #imgPlaceholder>
+        <div class="package-card__thumb" [ngStyle]="{'background-image': 'url(assets/image-placeholder.svg)'}"></div>
+      </ng-template>
+    </section>
+    <section class="package-card__info-container">
+      <div class="package-card__info">
+        <label class="package-card__info-label">Data Type</label>
+        <span class="package-card__info-data">{{ package.dataType }}</span>
+      </div>
+      <div class="package-card__info">
+        <label class="package-card__info-label">Region</label>
+        <span class="package-card__info-data">{{ package.region }}</span>
+      </div>
+      <div class="package-card__info">
+        <label class="package-card__info-label">Create Date</label>
+        <span class="package-card__info-data">{{ package.modifiedOn }}</span>
+      </div>
+      <div class="package-card__info">
+        <label class="package-card__info-label">Status</label>
+        <span class="package-card__info-data">{{ package.status }}</span>
+      </div>
+      <p class="package-card__description-title">Description</p>
+      <p class="package-card__description">{{ package.description }}</p>
+    </section>
+</article>

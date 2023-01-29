@@ -1,0 +1,15 @@
+<div class="communication-container">
+  <header class="page-header">
+    <div class="heading">
+      <h2 class="title">Messages</h2>
+    </div>
+  </header>
+  <div class="container">
+    <div class="chat-list">
+      <apollo-chat-list [chatList]="chats$ | async" (chatClick)="onChatClick($event)"></apollo-chat-list>
+    </div>
+    <div class="chat-window">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

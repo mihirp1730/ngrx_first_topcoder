@@ -1,0 +1,49 @@
+<section class="opp-confidential-info">
+  <p class="info tab-sub-heading">Information entered under this section will only be visible once you approve user's requests</p>
+  <form class="con-info-form" [formGroup]="confidentialInformationDetails" [apolloFormPatcher]="initialFormData$ | async">
+    <div class="text-editor">
+      <label class="label">Additional Description</label>
+      <quill-editor
+        [sanitize]="true"
+        class="editor"
+        placeholder="Type here"
+        [modules]="editorModules"
+        formControlName="overview"
+        ngDefaultControl
+      >
+      </quill-editor>
+      <mat-error
+        *ngIf="
+          confidentialInformationDetails?.controls.overview?.errors?.invalidText && confidentialInformationDetails?.controls.overview.dirty
+        "
+        >Please enter valid text.</mat-error
+      >
+    </div>
+
+    <div class="media-upload">
+      <label class="label">Image</label>
+      <apollo-media-upload-preview
+        [options]="mediaUploadoptions"
+        (uploadedMediaFileIds)="uploadedMediaFileIds($event)"
+        [componentIdentifier]="'confidential-info'"
+        [existingMediaFileList]="existingMediaFileList$ | async"
+        formControlName="media"
+        ngDefaultControl
+      >
+      </apollo-media-upload-preview>
+    </div>
+
+    <div class="doc-upload">
+      <label class="label">Documents</label>
+      <apollo-document-upload-preview
+        [options]="documentUploadoptions"
+        [multipleFiles]="true"
+        (uploadedDocFileIds)="uploadDocFileIds($event)"
+        [componentIdentifier]="'confidential-info'"
+        [existingDocFileList]="documents$ | async"
+        ngDefaultControl
+      >
+      </apollo-document-upload-preview>
+    </div>
+  </form>
+</section>

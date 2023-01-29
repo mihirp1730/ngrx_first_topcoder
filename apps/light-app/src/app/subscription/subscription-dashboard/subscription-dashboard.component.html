@@ -1,0 +1,79 @@
+<article class="subscription-dashboard">
+  <header class="subscription-dashboard__toolbar">
+    <h3 class="subscription-dashboard__title">My Subscriptions</h3>
+    <button slb-icon-button id="subscription-dashboard__closeBtn" data-slb-id="subscription-dashboard__closeBtn" routerLink="/map">
+      <mat-icon svgIcon="close"></mat-icon>
+    </button>
+  </header>
+  <nav data-slb-id="subscription-filters" class="subscription-dashboard__filters">
+    <apollo-subscription-filter
+      [filters]="filters"
+      [sortBy]="sortBy"
+      (packageSearch)="onPackageSearch($event)"
+      (filterChange)="onFilterChange($event)"
+      (sort)="onSort($event)"
+    ></apollo-subscription-filter>
+  </nav>
+
+  <div class="subscription-dashboard__content">
+    <section data-slb-id="pending-subscriptions" class="subscription-dashboard__cards">
+      <div class="subscription-dashboard__table-title">Pending Approvals</div>
+      <div class="subscription-dashboard__table-columns">
+        <span *ngFor="let c of columnDefinition">
+          {{ c.columnName }}
+        </span>
+      </div>
+      <cdk-virtual-scroll-viewport itemSize="100" class="subscription-dashboard__scroll-viewport">
+        <mat-spinner *ngIf="requestsDataSource.loading$ | async"></mat-spinner>
+        <div *cdkVirtualFor="let requests of requestsDataSource" class="subscription-dashboard__scroll-item">
+          <ng-container *ngFor="let subscription of requests">
+            <apollo-subscription-table
+              [subscription]="subscription"
+              [isRequest]='true'
+              [pendingRequests]="pendingSubs"
+            ></apollo-subscription-table>
+          </ng-container>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </section>
+    <section data-slb-id="active-subscriptions" class="subscription-dashboard__cards">
+      <div class="subscription-dashboard__table-title">Active</div>
+      <div class="subscription-dashboard__table-columns">
+        <span *ngFor="let c of columnDefinition2">
+          {{ c.columnName }}
+        </span>
+      </div>
+      <cdk-virtual-scroll-viewport itemSize="100" class="subscription-dashboard__scroll-viewport">
+        <mat-spinner *ngIf="activeSubsDataSource.loading$ | async"></mat-spinner>
+        <div *cdkVirtualFor="let subs of activeSubsDataSource" class="subscription-dashboard__scroll-item">
+          <ng-container *ngFor="let subscription of subs">
+            <apollo-subscription-table
+              [subscription]="subscription"
+              [isRequest]='false'
+            ></apollo-subscription-table>
+          </ng-container>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </section>
+    <section data-slb-id="expired-subscriptions" class="subscription-dashboard__cards">
+      <div class="subscription-dashboard__table-title">Expired</div>
+      <div class="subscription-dashboard__table-columns">
+        <span *ngFor="let c of columnDefinition2">
+          {{ c.columnName }}
+        </span>
+      </div>
+      <cdk-virtual-scroll-viewport itemSize="100" class="subscription-dashboard__scroll-viewport">
+        <mat-spinner *ngIf="expiredSubsDataSource.loading$ | async"></mat-spinner>
+        <div *cdkVirtualFor="let subs of expiredSubsDataSource" class="subscription-dashboard__scroll-item">
+          <ng-container *ngFor="let subscription of subs">
+            <apollo-subscription-table
+              [subscription]="subscription"
+              [isRequest]='false'
+            ></apollo-subscription-table>
+          </ng-container>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </section>
+  </div>
+</article>
+

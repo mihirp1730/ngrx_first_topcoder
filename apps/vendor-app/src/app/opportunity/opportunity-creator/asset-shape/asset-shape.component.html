@@ -1,0 +1,230 @@
+<div class="opportunity-asset-shape">
+  <p class="info tab-sub-heading">
+    This is what customers will see on the map when they discover the Opportunity. Upload shape file (.zip) or GeoJSON.
+  </p>
+  <section class="toggle-global-option">
+    <div class="global-option-button-container" *ngIf="isGlobalVisible" (click)="toggleGlobalOption()">
+      <button
+        data-slb-id="hide-layer"
+        [ngClass]="{ 'no-action': !layersLoaded }"
+        [disabled]="!layersLoaded"
+        matTooltip="Hide All"
+        class="toggle-global-option-button"
+        slb-icon-button
+      >
+        <mat-icon svgIcon="preview"></mat-icon>
+      </button>
+      <span class="global-option-label">Hide All</span>
+    </div>
+    <div class="global-option-button-container" *ngIf="!isGlobalVisible" (click)="toggleGlobalOption()">
+      <button
+        data-slb-id="show-layer"
+        [ngClass]="{ 'no-action': !layersLoaded }"
+        [disabled]="!layersLoaded"
+        slb-icon-button
+        class="toggle-global-option-button"
+        matTooltip="Show All"
+      >
+        <mat-icon svgIcon="no-preview"></mat-icon>
+      </button>
+      <span class="global-option-label">Show All</span>
+    </div>
+  </section>
+  <ng-template ngFor let-attribute [ngForOf]="shapeUploaders" let-idx="index">
+    <ng-container *ngIf="idx !== 0">
+      <hr />
+    </ng-container>
+    <section>
+      <header>
+        <div class="asset-shape-color">
+          <div class="label">Selected Asset Type</div>
+          <div
+            class="color-box"
+            [ngStyle]="{
+              'background-color': selectedAssetType?.fillColor
+            }"
+          ></div>
+          <div class="asset-type">{{ selectedAssetType?.assetType }}</div>
+        </div>
+        <div class="asset-data-type">
+          <div class="asset-data-type_label">Data type</div>
+          <div class="asset-data-type_container" *ngIf="idx === 0">
+            <span class="data-type-value">Asset</span>
+            <button
+              *ngIf="attribute.visible"
+              data-slb-id="hide-layer"
+              (click)="toggleLayer(attribute)"
+              [ngClass]="{ 'no-action': !layersLoaded }"
+              [disabled]="!layersLoaded"
+              matTooltip="Hide Data Type"
+              class="toggle-asset-data-type"
+              [matt]
+              slb-icon-button
+            >
+              <mat-icon svgIcon="preview"></mat-icon>
+            </button>
+            <button
+              *ngIf="!attribute.visible"
+              data-slb-id="show-layer"
+              (click)="toggleLayer(attribute)"
+              [ngClass]="{ 'no-action': !layersLoaded }"
+              [disabled]="!layersLoaded"
+              slb-icon-button
+              class="toggle-asset-data-type"
+              matTooltip="Show Data Type"
+            >
+              <mat-icon svgIcon="no-preview"></mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="data-type" *ngIf="idx !== 0">
+          <div class="remove-btn">
+            <button
+              data-slb-id="remove-types"
+              (click)="deleteMapRepresentationFilesByGroup(attribute.type)"
+              [ngClass]="{ 'no-action': isPublsihed }"
+              [disabled]="isPublsihed"
+              slb-icon-button
+            >
+              <mat-icon svgIcon="delete"></mat-icon>&nbsp;<span>Remove Section</span>
+            </button>
+          </div>
+          <div class="opportunity-field">
+            <mat-form-field slbFormField>
+              <mat-select
+                (selectionChange)="shapeTypeSelection($event, idx)"
+                placeholder="Select"
+                [(value)]="shapeUploaders[idx].type"
+                [disabled]="optionConsumed(shapeUploaders[idx].type)"
+                name="dataTypeselector"
+              >
+                <mat-option
+                  *ngFor="let mrOption of dataTypes"
+                  [value]="mrOption.value"
+                  [ngStyle]="{ display: mrOption.value === 'Opportunity' ? 'none' : 'block' }"
+                  [disabled]="optionConsumed(mrOption.value)"
+                >
+                  <mat-icon *ngIf="mrOption.icon" [svgIcon]="mrOption.icon"></mat-icon> {{ mrOption.viewText }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button
+              *ngIf="attribute.visible"
+              data-slb-id="hide-layer"
+              (click)="toggleLayer(attribute)"
+              [ngClass]="{ 'no-action': !layersLoaded }"
+              [disabled]="!layersLoaded"
+              matTooltip="Hide Data Type"
+              class="toggle-data-type"
+              slb-icon-button
+            >
+              <mat-icon svgIcon="preview"></mat-icon>
+            </button>
+            <button
+              *ngIf="!attribute.visible"
+              data-slb-id="show-layer"
+              (click)="toggleLayer(attribute)"
+              [ngClass]="{ 'no-action': !layersLoaded }"
+              [disabled]="!layersLoaded"
+              slb-icon-button
+              class="toggle-data-type"
+              matTooltip="Show Data Type"
+            >
+              <mat-icon svgIcon="no-preview"></mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="upload-asset-shape">
+          <label class="upload-asset-shape_label">File(s)<span *ngIf="idx === 0" class="required">*</span></label>
+          <div *ngFor="let uploadDetail of mrStartUploadDetails">
+            <ng-container *ngIf="shapeUploaders[idx].type === uploadDetail?.group">
+              <div class="file-box" *ngIf="uploadDetail?.progress.associated === false">
+                <mat-spinner data-slb-id="load-spinner"></mat-spinner>
+                <div class="ellipsis-text" [title]="uploadDetail?.name">{{ uploadDetail?.name }}</div>
+                <div class="close-btn">
+                  <button data-slb-id="cancel-file-upload" slb-icon-button>
+                    <mat-icon svgIcon="close"></mat-icon>
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <div class="upload-asset-shape_box">
+            <div *ngFor="let item of completedMRUploadDetails$ | async">
+              <div class="file-box" *ngIf="shapeUploaders[idx].type === item.type">
+                <div class="status-icon">
+                  <mat-icon svgIcon="check"></mat-icon>
+                </div>
+                <div class="ellipsis-text file-name" [apolloMapHighlight]="item" [title]="item.fileName">{{ item.fileName }}</div>
+                <div class="close-btn">
+                  <button
+                    data-slb-id="close"
+                    [ngClass]="{ 'no-action': isPublsihed }"
+                    [disabled]="isPublsihed"
+                    (click)="deleteExistingMRFile(item.mapRepresentationId, item.type)"
+                    slb-icon-button
+                  >
+                    <mat-icon svgIcon="close"></mat-icon>
+                  </button>
+                </div>
+                <div class="hide-file-btn toggle-file">
+                  <button
+                    *ngIf="!item.hidden"
+                    data-slb-id="hide-layer"
+                    (click)="toggleMR(item)"
+                    [ngClass]="{ 'no-action': !layersLoaded }"
+                    [disabled]="!layersLoaded"
+                    matTooltip="Hide File"
+                    class="toggle-asset-data-type"
+                    [matt]
+                    slb-icon-button
+                  >
+                    <mat-icon svgIcon="preview"></mat-icon>
+                  </button>
+                </div>
+                <div class="show-file-btn toggle-file">
+                  <button
+                    *ngIf="item.hidden"
+                    data-slb-id="show-layer"
+                    (click)="toggleMR(item)"
+                    [ngClass]="{ 'no-action': !layersLoaded }"
+                    [disabled]="!layersLoaded"
+                    slb-icon-button
+                    class="toggle-asset-data-type"
+                    matTooltip="Show File"
+                  >
+                    <mat-icon svgIcon="no-preview"></mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="uploader-box">
+              <apollo-upload-widget
+                data-slb-id="upload-asset-shape-files-widget"
+                widgetStyle="drag-drop"
+                [maxFileSizes]="maxFileSizes"
+                [extensions]="extensions"
+                [canUpload]="(uploadEnabled$ | async) && shapeUploaders[idx].type?.length > 0 && isPublsihed === false"
+                [multipleFiles]="false"
+                (startUpload)="onMRStartUpload($event, shapeUploaders[idx].type)"
+                [selectedDataType]="shapeUploaders[idx].type"
+              ></apollo-upload-widget>
+            </div>
+          </div>
+        </div>
+      </header>
+    </section>
+  </ng-template>
+  <hr />
+  <button
+    data-slb-id="add-more-shape-type"
+    color="primary"
+    class="add-data-type"
+    (click)="addDataType()"
+    slb-secondary-button
+    [disabled]="this.isPublsihed || doUploadersHaveFiles()"
+  >
+    Add Data Type
+  </button>
+  <hr />
+</div>

@@ -1,0 +1,12 @@
+<div data-slb-id="opportunity-modal-nonpublic-signin" class="modal-nonpublic-signin">
+  <div mat-dialog-title class="title-content">
+    <h4>Login to open Opportunity</h4>
+    <slb-modal-close-button data-slb-id="close" [dialogRef]="dialogRef" buttonType="Icon"></slb-modal-close-button>
+  </div>
+  <div mat-dialog-content class="modal-content">
+    <p>This opportunity is locked, to view it you need to login first.</p>
+    <div class="btn-container">
+      <button data-slb-id="login" slb-button (click)="signin()">Login</button>
+    </div>
+  </div>
+</div>

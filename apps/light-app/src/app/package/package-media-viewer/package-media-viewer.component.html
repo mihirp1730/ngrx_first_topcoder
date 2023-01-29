@@ -1,0 +1,11 @@
+<slb-carousel data-slb-id="package-media-carousel" [value]="mediaDetails" [showControls]="true" [showIndicators]="true"
+    [styleClass]="'media-carousel'" [activeSlideIndex]="1" slidesToShow="1" slidesToScroll="1">
+    <ng-template slbTemplate="item" let-item>
+        <div class="carousel-item-wrapper">
+          <div class="carousel-item-img">
+            <img [src]="item.signedUrl" alt="image"> <!--- support media--->
+          </div>
+          <div class="caption">{{item.caption}}</div><!--- support media caption--->
+        </div>
+    </ng-template>
+</slb-carousel>

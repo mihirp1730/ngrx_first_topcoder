@@ -1,0 +1,21 @@
+<section class="search-bar" data-slb-id="main-search-container">
+  <button
+    class="search-bar__menu"
+    slb-icon-button
+    data-slb-id="hamburger-menu"
+    matTooltip="View Menu"
+    matTooltipPosition="below"
+    (click)="onToggleMenu()"
+  >
+    <mat-icon svgIcon="hamburger"></mat-icon>
+  </button>
+  <gis-search-box
+    data-slb-id="search-box"
+    [foundsearchvalue]="showClearSearch"
+    [filterCount]="filterCount"
+    [startingSearchKeyword]="searchValue"
+    (showSearchInfo)="onShowSearchInfo($event)"
+    (hideSearchInfo)="onHideSearchInfo()"
+    (showlayerInfo)="onShowlayerInfo()"
+    ></gis-search-box>
+</section>

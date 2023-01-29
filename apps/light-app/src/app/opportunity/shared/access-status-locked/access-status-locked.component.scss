@@ -1,0 +1,27 @@
+@import 'libs/app/styles';
+
+.no-access-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 28px;
+
+  .title-row {
+    font-weight: 600;
+    text-align: left;
+  }
+
+  ::ng-deep .mat-icon {
+    height: 100px !important;
+    width: 75px !important;
+    color: $color-grey-12;
+  }
+
+  .access-locked {
+    font-weight: 500;
+    margin-bottom: 7px;
+  }
+
+  .center {
+    text-align: center;
+  }
+}

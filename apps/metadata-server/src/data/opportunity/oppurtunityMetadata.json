@@ -1,0 +1,7 @@
+{
+  "assetTypes": ["Oil & Gas", "Wind", "Solar", "CCUS", "Geothermal", "Carbon Trading"],
+  "deliveryTypes": ["VDR", "DDR", "Data pack"],
+  "offerTypes": ["License Round", "Farm-in", "Direct Negotiation", "Other"],
+  "contractTypes": ["Production Sharing Contract", "Royalty Based Contract", "Risk Sharing Contract", "Other"],
+  "phaseTypes": ["Exploration", "Appraisal", "Production", "Other"]
+}

@@ -1,0 +1,10 @@
+<apollo-chat-window 
+  [sender]="sender$ | async" 
+  [participants]="participants$ | async" 
+  [chatMessages]="messages$ | async"
+  [chatGroup]="chatGroup$ | async"
+  (sendMessage)="sendMessage($event)" 
+  (openModalEvent)="openModal($event)" 
+  [activeChatId]="activeChatId$ | async"
+  (getPartipantsEvent)="getParticipants()">
+</apollo-chat-window>

@@ -1,0 +1,14 @@
+<div data-slb-id="input-modal" class="modal-container">
+    <slb-modal-close-button data-slb-id="close" class="modal-container__close" [dialogRef]="dialogRef" buttonType="Icon"></slb-modal-close-button>
+    <h1 mat-dialog-title>{{options.title}}</h1>
+    <div mat-dialog-content class="modal-container__content">
+        <mat-form-field *ngFor="let modalInput of options.modalInputs">
+            <mat-label>{{modalInput.name}}</mat-label>
+            <input matInput [type]="modalInput.type" [(ngModel)]="modalInput.value">
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="modal-container__action-buttons">
+        <button data-slb-id="cancel" slb-secondary-button (click)="closeModal()">{{options.cancelButtonText}}</button>
+        <button data-slb-id="confirm" class="modal-container__btn-confirm" (click)="onConfirm()" slb-button>{{options.confirmButtonText}}</button>
+    </div>
+</div>

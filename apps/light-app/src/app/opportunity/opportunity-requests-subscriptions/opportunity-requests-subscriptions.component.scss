@@ -1,0 +1,77 @@
+@import 'libs/app/styles';
+
+.requests-subscriptions-dashboard {
+  .title {
+    border-bottom: 1px solid $color-white;
+    padding: 1px 3px;
+
+    h2 {
+      font-size: 20px;
+      padding: 0px 12px 7px 10px;
+      font-weight: 500;
+    }
+  }
+
+  .mat-tab-label-container {
+    padding-left: 20px;
+    padding-bottom: 20px;
+  }
+
+  .mat-tab-group {
+    padding: 0px 16px 16px 16px;
+  }
+
+  .mat-tab-header {
+    margin: 0px;
+  }
+
+  ::ng-deep .mat-tab-body-wrapper {
+    height: calc(100vh - 200px);
+  }
+
+  ::ng-deep .mat-tab-body-content {
+    overflow: auto;
+    width: 99%;
+  }
+
+  .cards-container {
+    width: 96%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 16px;
+
+    @media screen and (min-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+    @media screen and (min-width: 720px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media screen and (min-width: 1080px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media screen and (min-width: 1400px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .loader-container {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.32);
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.25s, margin 0.25s;
+    width: 100vw;
+    z-index: 100;
+
+    .slb-loading-spinner,
+    .mat-spinner {
+      left: 48%;
+      position: relative;
+      top: 48%;
+    }
+  }
+}

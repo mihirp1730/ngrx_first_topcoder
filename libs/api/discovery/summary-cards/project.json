@@ -1,0 +1,23 @@
+{
+  "root": "libs/api/discovery/summary-cards",
+  "sourceRoot": "libs/api/discovery/summary-cards/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/api/discovery/summary-cards/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/api/discovery/summary-cards"],
+      "options": {
+        "jestConfig": "libs/api/discovery/summary-cards/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

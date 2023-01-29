@@ -1,0 +1,27 @@
+@import 'libs/app/styles';
+
+.request-dashboard {
+  &__toolbar {
+    display: flex;
+    width: 100%;
+    background-color: $color-grey-03;
+    justify-content: space-between;
+    border-top: 2px solid $color-grey-04;
+    border-bottom: 1px solid $color-grey-04;
+    padding: 7px 20px;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  &__title {
+    @include font-size(15);
+    color: $color-white;
+    margin: 0;
+  }
+
+  &__content {
+    margin: auto;
+    width: calc(100% - 30px);
+    height: calc(100% - 70px);
+  }
+}

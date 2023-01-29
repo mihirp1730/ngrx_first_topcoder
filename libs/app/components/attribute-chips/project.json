@@ -1,0 +1,23 @@
+{
+  "projectType": "library",
+  "root": "libs/app/components/attribute-chips",
+  "sourceRoot": "libs/app/components/attribute-chips/src",
+  "prefix": "apollo",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/components/attribute-chips"],
+      "options": {
+        "jestConfig": "libs/app/components/attribute-chips/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/components/attribute-chips/src/**/*.ts", "libs/app/components/attribute-chips/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

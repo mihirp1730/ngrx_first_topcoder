@@ -1,0 +1,36 @@
+@import 'libs/app/styles';
+
+.header {
+    display:flex;
+    background-color: $color-white !important;
+    width:100%;
+    padding:10px;
+    align-items: center;
+    justify-content: space-between;
+
+    .filters{
+        display: flex;
+        align-items: center;
+        column-gap: 8px;
+        width: 65%;
+        justify-content: flex-end;
+    }
+
+    ::ng-deep .dls-search {
+        width:35% !important;
+
+        .mat-form-field-wrapper {
+            padding-bottom: 0  !important;
+        }
+    }
+
+    ::ng-deep .apollo-global-filters-container {
+        padding: 0 !important;
+        position: unset;
+
+        .clear-filters-btn {
+            margin-left: 10px !important;
+        }
+    }
+
+}

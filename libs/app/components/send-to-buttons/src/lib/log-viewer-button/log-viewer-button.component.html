@@ -1,0 +1,11 @@
+<button
+  mat-menu-item
+  *ngIf="displayButton"
+  [class.disabled]="isDisabled"
+  [matTooltip]="tooltip"
+  matTooltipPosition="right"
+  (click)="handleClick()"
+>
+  <mat-icon svgIcon="log-set"></mat-icon>
+  <span>Log Viewer</span>
+</button>

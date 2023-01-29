@@ -1,0 +1,12 @@
+<div data-slb-id="vendor-dashboard-error-notification" class="modal-vendor-dashboard">
+  <div mat-dialog-title class="title-content">
+    <h4>Error</h4>
+    <slb-modal-close-button data-slb-id="close" [dialogRef]="dialogRef" buttonType="Icon"></slb-modal-close-button>
+  </div>
+  <div mat-dialog-content class="modal-content">
+    <p>Something went wrong!</p>
+    <div class="btn-container">
+      <button data-slb-id="login" slb-button (click)="refresh()">Refresh</button>
+    </div>
+  </div>
+</div>

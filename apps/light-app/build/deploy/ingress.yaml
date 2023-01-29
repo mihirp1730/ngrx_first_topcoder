@@ -1,0 +1,32 @@
+{{$definitionName := getenv "BUILD_DEFINITIONNAME" -}}
+{{$sourceBranchName := getenv "BUILD_SOURCEBRANCHNAME" -}}
+{{$buildNumber := getenv "BUILD_BUILDNUMBER" -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{$definitionName}}$DEPLOYMENTID
+  annotations:
+    release-description: "$RELEASE_DESCRIPTION"
+  labels:
+    BUILD_DEFINITIONNAME: "{{$definitionName}}"
+    BUILD_SOURCEBRANCHNAME: "{{$sourceBranchName}}"
+    BUILD_BUILDNUMBER: "{{$buildNumber}}"
+    RELEASE_NAME: "$RELEASE_NAME"
+    RELEASE_REQUESTEDFOR: "$REQUESTED_FOR"
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+       sub_filter_once on;
+       sub_filter '<base href="/">' '<base href="$APPPATH/">';
+spec:
+  rules:
+  - http:
+      paths:
+      - path: $APPPATH/?(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: {{$definitionName}}$DEPLOYMENTID
+            port:
+              number: 8080

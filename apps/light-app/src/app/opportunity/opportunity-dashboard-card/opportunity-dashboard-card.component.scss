@@ -1,0 +1,149 @@
+@import 'libs/app/styles';
+
+.opportunity-card {
+  height: 100%;
+  padding: 0 !important;
+  border: 1px solid $color-grey-08;
+  border-radius: 4px;
+  background-color: $color-white;
+  color: $color-grey-02 !important;
+
+  .mat-card-image {
+    object-fit: contain;
+    width: 100%;
+    padding-top: 15px;
+  }
+  .mat-card-content {
+    color: $color-black;
+
+    .flex-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .flex-row {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .properties-container {
+      font-size: 0.75rem;
+      list-style: none;
+      padding: 0 20px 20px 20px;
+
+      li {
+        display: flex;
+
+        .label {
+          width: 32px;
+          color: $color-black;
+        }
+        .value.no-data {
+          color: $color-grey-06;
+        }
+        .value.time {
+          font-weight: bold;
+        }
+        .value.duration {
+          color: $color-viz-green;
+        }
+        .value {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+
+    .flex-row.requests {
+      justify-content: space-evenly;
+      height: 70px;
+      border-top: 1px solid $color-grey-08;
+      text-align: center;
+      display: flex;
+
+      .box {
+        font-size: 0.75rem;
+        color: $color-grey-03;
+        font-weight: 500;
+        display: inline-block;
+        padding-top: 15px;
+
+        .key-value {
+          @include font-size(16);
+          font-weight: bold;
+        }
+      }
+
+      .requests {
+        border-right: 1px solid $color-grey-08;
+        width: 50%;
+      }
+
+      .queries {
+        width: 50%;
+      }
+    }
+
+    .flex-row.header {
+      justify-content: flex-end;
+      padding: 10px 20px;
+
+      .caption {
+        margin-right: auto;
+
+        .opportunity-caption {
+          @include font-size(16);
+          font-weight: 500;
+          margin-bottom: 5px;
+          line-height: 16px;
+          color: $color-grey-01;
+        }
+
+        .chip {
+          height: 24px;
+          border-radius: 12px;
+          color: $color-grey-01;
+          font-size: 0.75rem;
+          display: flex;
+          justify-content: space-between;
+          padding: 5px 10px;
+          margin-top: 3px;
+          line-height: 14px;
+          text-transform: capitalize;
+          float: left;
+        }
+        .chip.draft {
+          background-color: $color-grey-09;
+        }
+        .chip.pending {
+          background-color: $color-text-warning;
+        }
+        .chip.onoffer {
+          background-color: $color-text-success;
+        }
+        .chip.published {
+          background-color: $color-almond-brown;
+        }
+        .chip.publishing {
+          background-color: $color-alert-amber;
+        }
+        .chip.empty {
+          background-color: $color-grey-09;
+        }
+      }
+
+      .menu {
+        ::ng-deep .mat-icon {
+          svg {
+            color: $color-grey-05;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+::ng-deep .mat-card {
+  border-radius: unset !important;
+}

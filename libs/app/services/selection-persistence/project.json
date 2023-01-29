@@ -1,0 +1,23 @@
+{
+  "projectType": "library",
+  "root": "libs/app/services/selection-persistence",
+  "sourceRoot": "libs/app/services/selection-persistence/src",
+  "prefix": "apollo",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/services/selection-persistence"],
+      "options": {
+        "jestConfig": "libs/app/services/selection-persistence/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/services/selection-persistence/src/**/*.ts", "libs/app/services/selection-persistence/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

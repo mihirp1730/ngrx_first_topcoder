@@ -1,0 +1,32 @@
+{
+  "root": "libs/server/opportunity/attendee",
+  "sourceRoot": "libs/server/opportunity/attendee/src",
+  "projectType": "library",
+  "targets": {
+    "build-proto": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "npm run proto-loader-gen-types -- --keepCase --longs=String --enums=String --defaults --oneofs --grpcLib=@grpc/grpc-js --outDir=libs/server/opportunity/attendee/src/lib/proto libs/server/opportunity/attendee/src/assets/proto/opportunity-resource.proto"
+        ],
+        "parallel": false
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/server/opportunity/attendee/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/server/opportunity/attendee"],
+      "options": {
+        "jestConfig": "libs/server/opportunity/attendee/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

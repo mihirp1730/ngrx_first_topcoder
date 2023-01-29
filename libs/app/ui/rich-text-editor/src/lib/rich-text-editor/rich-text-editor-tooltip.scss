@@ -1,0 +1,120 @@
+@import 'libs/app/styles';
+
+/** All toolbar buttons are inside of .ql-formats */
+.ql-formats > button, .ql-formats > span {
+  position: relative;
+  /** Set a tooltip with css pseudo-elements, when buttons are hover, active or focus  */
+  &:hover::after,&:active::after,&:focus::after {
+    background: $color-grey-04;
+    color: $color-white;
+    padding: 0.5em;
+    border-radius: 0.4em;
+    top: -120%;
+    left: -10px;
+    z-index: 999999;
+    position: absolute;
+    font-size: 12px;
+    width: fit-content !important;
+  }
+}
+.ql-bold {
+  &:hover::after,&:active::after,&:focus::after {
+    content: 'Bold';
+  }
+}
+.ql-italic {
+  &:hover::after,&:active::after,&:focus::after {
+    content: 'Italic';
+  }
+}
+.ql-underline {
+  &:hover::after,&:active::after,&:focus::after {
+    content: 'Underline';
+  }
+}
+.ql-strike {
+  &:hover::after,&:active::after,&:focus::after {
+    content: 'Strikeout';
+  }
+}
+.ql-link {
+  &:hover::after,&:active::after,&:focus::after {
+    content: 'Hyperlink';
+  }
+}
+.ql-blockquote {
+  &:hover::after,&:active::after,&:focus::after {
+    content: 'Quote';
+  }
+}
+.ql-indent[value='-1']{
+  &:hover::after,&:active::after,&:focus::after {
+    content: 'Decrease Indent';
+    top: -175% !important;
+  }
+}
+.ql-indent[value='+1']{
+  &:hover::after,&:active::after,&:focus::after {
+    content: 'Increase Indent';
+    top: -175% !important;
+  }
+}
+.ql-clean {
+  &:hover::after,&:active::after,&:focus::after {
+    content: 'Clean Format';
+    top: -175% !important;
+  }
+}
+.ql-code-block {
+  &:hover::after,&:active::after,&:focus::after {
+    content: 'Codeblock';
+  }
+}
+.ql-size {
+  &:hover::after,&:active::after,&:focus::after {
+    content: 'Font-size';
+    left: 10px !important;
+    top: -150% !important;
+  }
+}
+.ql-header {
+  &:hover::after,&:active::after,&:focus::after {
+    content: 'Header-size';
+    top: -150% !important;
+  }
+}
+.ql-color {
+  &:hover::after,&:active::after,&:focus::after {
+    content: 'Font color';
+    top: -250% !important;
+  }
+}
+.ql-background {
+  &:hover::after,&:active::after,&:focus::after {
+    content: 'Background Color';
+    top: -250% !important;
+  }
+}
+.ql-align {
+  &:hover::after,&:active::after,&:focus::after {
+    content: 'Align';
+    top: -150% !important;
+  }
+}
+.ql-image {
+  &:hover::after,&:active::after,&:focus::after {
+    content: 'Image';
+  }
+}
+.ql-list[value='bullet'] {
+  &:hover::after,&:active::after,&:focus::after {
+    content: 'Bulleted List';
+    top: -175%;
+  }
+}
+.ql-list[value='ordered'] {
+  &:hover::after,&:active::after,&:focus::after {
+    content: 'Numbered List';
+    top: -175%;
+  }
+}

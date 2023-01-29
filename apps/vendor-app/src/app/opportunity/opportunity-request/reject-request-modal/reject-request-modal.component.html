@@ -1,0 +1,55 @@
+<div class="reject-request-modal">
+  <div class="title">
+    <h4>Reject Access Request</h4>
+  </div>
+  <div class="body">
+    <div class="content">
+      <div class="request-info">
+        <h6 class="info-title">Opportunity Name</h6>
+        <span>{{ item.opportunityName }}</span>
+
+        <h6 class="info-title">Requester Name</h6>
+        <span>{{ item.firstName }} {{ item.lastName }}</span>
+
+        <h6 class="info-title">Company Name</h6>
+        <span>{{item.companyName}}</span>
+
+        <h6 class="info-title">Requested On</h6>
+        <span>{{ item.requestedOn | date: 'dd-MMM-YYYY' }}</span>
+      </div>
+      <hr />
+      <div class="request-details">
+        <h6>Requested access for</h6>
+        <ul>
+          <li *ngFor="let levels of item.accessLevels">
+            {{ levels }}
+          </li>
+        </ul>
+
+        <form [formGroup]="requestApproval" class="comment-section">
+          <mat-form-field slbFormField>
+            <mat-label> Reason for Rejection </mat-label>
+            <textarea matInput required formControlName="rejectionReason"> </textarea>
+            <mat-error *ngIf="requestApproval.get('rejectionReason')?.errors?.required"> Please enter reason.</mat-error>
+            <mat-error *ngIf="requestApproval.get('rejectionReason')?.errors?.pattern"> Please enter valid reason.</mat-error>
+          </mat-form-field>
+        </form>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div class="action-buttons">
+    <div class="request-access-modal__loader-container" *ngIf="showLoader$ | async">
+      <mat-spinner data-slb-id="load-spinner" [diameter]="32"></mat-spinner>
+    </div>
+    <button slb-secondary-button (click)="closeModal()">Cancel</button>
+    <button
+      slb-secondary-button
+      [ngClass]="{ rejectbtn: requestApproval.valid }"
+      [disabled]="!requestApproval.valid"
+      (click)="rejectRequest()"
+    >
+      Reject
+    </button>
+  </div>
+</div>

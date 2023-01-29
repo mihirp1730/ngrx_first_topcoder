@@ -1,0 +1,64 @@
+@import 'libs/app/styles';
+
+.modular-chat-container {
+  height: 100vh;
+  .modular-chat-content {
+    display: flex;
+    background-color: $color-white;
+    width: 100%;
+    flex-direction: column;
+    height: 100%;
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      .msg {
+        font-size: 1rem;
+        font-weight: bold;
+        display: flex;
+        align-self: center;
+        padding: 10px;
+      }
+    }
+    .chat-window-container {
+      padding: 10px;
+      height: 90%;
+      ::ng-deep .chat-window {
+        border: none;
+        height: 100%;
+        .content {
+          height: 100%;
+        }
+        .chat-scroll-viewport {
+          height: 100% !important;
+          margin-bottom: 5px;
+        }
+        .message-container {
+          height: 85%;
+        }
+        .cdk-virtual-scroll-content-wrapper {
+          padding-right: 10px;
+        }
+      }
+      ::ng-deep .chat-message-send {
+        width: 100% !important;
+        float: none !important;
+        .user-info {
+          justify-content: flex-end;
+        }
+      }
+      ::ng-deep .chat-message-received {
+        width: 100% !important;
+        float: none !important;
+        .user-info {
+          justify-content: flex-start;
+        }
+      }
+      .loader-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+      }
+    }
+  }
+}

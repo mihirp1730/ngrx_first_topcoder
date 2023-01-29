@@ -1,0 +1,20 @@
+@import 'libs/app/styles';
+
+.package-filters {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  mat-form-field.mat-form-field {
+    display: inline;
+    flex: 1 1 auto;
+    margin-right: 15px;
+    min-width: 200px;
+    width: 200px;
+  }
+
+  .filter-form {
+    display: flex;
+  }
+}

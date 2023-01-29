@@ -1,0 +1,19 @@
+<div class="access-denied-container">
+  <div class="access-denied-inner-container">
+    <div class="icon-wrapper">
+      <mat-icon matTooltip="Access denied" svgIcon="locked"></mat-icon>
+    </div>
+    <h1 class="heading">Access denied</h1>
+    <h3 class="sub-heading">You are not authorized to access the Asset Transaction app for the account you are in.</h3>
+    <p *ngIf="userContext">
+      The contract you are switching to does not have any Asset transaction Host deployment. Please contact your DELFI Manager.
+    </p>
+    <p *ngIf="!userContext">
+      You do not have any active Asset transaction Host subscription. Please select the "Featured" icon on the menu bar to access DELFI
+      Portal to request subscription.
+    </p>
+    <button class="btn-portal-redirect" data-slb-id="delfi-portal-redirect" slb-button (click)="redirectToDelfiPortal()">
+      DELFI Portal
+    </button>
+  </div>
+</div>

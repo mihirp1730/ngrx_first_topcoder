@@ -1,0 +1,74 @@
+jobs:
+  - job: Job_1
+    displayName: Build
+    pool:
+      name: de-build
+    variables:
+      - group: VSTS User & Token for QP Express
+    steps:
+      - checkout: self
+        clean: False
+      - task: Bash@3
+        displayName: Make `apps/auth-server/build/build.sh` script executable
+        inputs:
+          targetType: inline
+          script: >-
+            chmod +x apps/auth-server/build/build.sh
+
+            rm -rf /root/.cache
+
+            npm cache clean --force
+      - task: Bash@3
+        displayName: Make `apps/auth-server/build/build.sh` script executable
+        inputs:
+          filePath: apps/auth-server/build/build.sh
+          script: >
+            chmod +x apps/auth-server/build/build.sh
+      - task: PublishTestResults@2
+        displayName: Publish Test Results testresults/**/*.xml
+        inputs:
+          testResultsFiles: testresults/**/*.xml
+          mergeTestResults: true
+      - task: PublishCodeCoverageResults@1
+        displayName: Publish code coverage from $(Build.SourcesDirectory)/coverage/apps/auth-server/cobertura-coverage.xml
+        inputs:
+          codeCoverageTool: Cobertura
+          summaryFileLocation: $(Build.SourcesDirectory)/coverage/apps/auth-server/cobertura-coverage.xml
+          reportDirectory: $(Build.SourcesDirectory)/coverage/apps/auth-server
+      - task: SonarQubePrepare@4
+        displayName: Prepare analysis on SonarQube
+        inputs:
+          SonarQube: 8697bcbd-21f8-4e8e-a3d9-5f371de419e4
+          scannerMode: CLI
+          configFile: apps/auth-server/sonar-project.properties
+      - task: SonarQubeAnalyze@4
+        displayName: Run Code Analysis
+      - task: SonarQubePublish@4
+        displayName: Publish Quality Gate Result
+      - task: Bash@3
+        displayName: Get Commit Description
+        inputs:
+          targetType: inline
+          script: >-
+            CHANGES=`git log -1 --pretty=%B`
+
+            mkdir -p $(Build.artifactStagingDirectory)/exported
+
+            echo $(Build.artifactStagingDirectory)/exported
+
+            echo "$(Build.Repository.Name)" > $(Build.artifactStagingDirectory)/exported/CHANGES
+
+            echo "$CHANGES" >> $(Build.artifactStagingDirectory)/exported/CHANGES
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: Git commit'
+        inputs:
+          PathtoPublish: $(Build.ArtifactStagingDirectory)/exported
+          ArtifactName: exported
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: buildartifacts'
+        inputs:
+          PathtoPublish: buildartifacts/auth-server
+          ArtifactName: buildartifacts
+      - task: mspremier.PostBuildCleanup.PostBuildCleanup-task.PostBuildCleanup@3
+        displayName: 'Clean Agent Directories'
+        condition: always()

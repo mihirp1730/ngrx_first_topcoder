@@ -1,0 +1,23 @@
+{
+  "projectType": "library",
+  "root": "libs/app/components/map-toolbar",
+  "sourceRoot": "libs/app/components/map-toolbar/src",
+  "prefix": "apollo",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/components/map-toolbar"],
+      "options": {
+        "jestConfig": "libs/app/components/map-toolbar/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/components/map-toolbar/src/**/*.ts", "libs/app/components/map-toolbar/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

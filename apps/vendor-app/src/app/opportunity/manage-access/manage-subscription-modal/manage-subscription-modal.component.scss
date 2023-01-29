@@ -1,0 +1,84 @@
+@import 'libs/app/styles';
+
+.manage-subscription-modal {
+  width: 600px;
+  .title {
+    h4 {
+      margin: 0 0 20px 0;
+    }
+  }
+  .body {
+    .content {
+      display: flex;
+      margin-bottom: 20px;
+      .subscription-info {
+        width: 30%;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        .opportunity-name{
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis
+        }
+      }
+      hr {
+        margin: 0 5%;
+      }
+      .subscription-details {
+        width: 60%;
+        .approved-access {
+          .heading {
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+          }
+          margin-top: 2px;
+          margin-bottom: 10px;
+          .date-picker {
+            margin-top: 2px;
+            display: flex;
+            flex-direction: column;
+            ::ng-deep slb-date-picker-range {
+              .mat-form-field {
+                width: 80%;
+              }
+              .mat-form-field-wrapper{
+                padding-bottom: 0;
+              }
+              .mat-error {
+                display: none;
+              }
+              .mat-form-field-flex {
+                background-color: $color-white;
+              }
+            }
+            .mat-hint {
+              font-size: 11px !important;
+            }
+            .mat-error {
+              margin-top: -5px;
+              @include font-size(10);
+            }
+          }
+        }
+      }
+    }
+    .comment-form-field {
+      width: 100%;
+      ::ng-deep textarea {
+        min-height: 110px;
+        max-height: 110px;
+        margin-bottom: 4px;
+      }
+    }
+  }
+  .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    > button {
+      margin-left: 5%;
+      width: 20%;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+<div data-slb-id="pending-action-cell" class="flex-container">
+  <div class="slb-icon-cell flex-child">
+    <button data-slb-id="comments" type="button" slb-icon-button class="icon-label-info" (click)="onCommentsAction();">
+      <mat-icon title="Comments" svgIcon="chat"></mat-icon>
+    </button>
+    <button data-slb-id="approve" type="button" slb-tertiary-button class="approve-btn" (click)="onApproveAction();">
+      <mat-icon title="Approve" class="icon-label-approve" svgIcon="approved"></mat-icon>
+      <span title="Approve"  class="icon-label-approve-title">Approve</span>
+    </button>
+    <button data-slb-id="reject" type="button" slb-tertiary-button class="reject-btn">
+      <mat-icon title="Reject"  class="icon-label-error" svgIcon="error"></mat-icon>
+      <span title="Reject"  class="icon-label-error-title">Reject</span>
+    </button>
+  </div>
+</div>

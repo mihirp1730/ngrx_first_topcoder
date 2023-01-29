@@ -1,0 +1,32 @@
+<div class="doc-preview">
+  <div class="doc-label">
+    <div class="doc-name">
+      <mat-icon [svgIcon]="file?.fileType"></mat-icon>
+      <a [href]="file?.signedUrl" target="_blank" class="name" [title]="file?.name">
+          {{file?.name}}
+      </a>
+    </div>
+    <button *ngIf="!isPublished" type="button" slb-icon-button class="delete-btn" (click)="removeDocEmit(file.id)">
+      <mat-icon title="Remove document" svgIcon="delete"></mat-icon>
+    </button>
+  </div>
+  <div class="caption-container">
+   <form [formGroup]="docTextForm">
+    <mat-form-field slbFormField>
+      <mat-label>
+        Document Caption
+      </mat-label>
+      <textarea
+        matInput
+        class="caption-field"
+        formControlName="docCaption"
+        name="docCaption"
+        placeholder="caption"
+        maxlength="80"
+        rows="4">
+      </textarea>
+    </mat-form-field>
+    <div class="text-limit-80">Maximum text limit is 80 characters.</div>
+   </form>
+  </div>
+</div>

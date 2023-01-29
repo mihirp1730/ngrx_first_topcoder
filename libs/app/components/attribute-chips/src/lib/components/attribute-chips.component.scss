@@ -1,0 +1,23 @@
+@import 'libs/app/styles';
+
+.attribute-chips {
+  &__container {
+    background-color: $color-grey-10;
+    display: flex;
+    justify-content: flex-start;
+
+  }
+
+  &__chip {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+
+    mat-icon {
+      margin-right: 10px;
+
+    }
+
+  }
+
+}

@@ -1,0 +1,29 @@
+@import 'libs/app/styles';
+
+.toolbar-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  delfi-gui-user-profile {
+    margin-right: auto;
+  }
+
+  a {
+    margin-right: 15px;
+    border: 1px solid $color-vox-blue;
+    background-color: $color-grey-02;
+
+    ::ng-deep .dls-button-wrapper {
+      color: $color-white !important;
+      font-weight: 500 !important;
+    }
+
+    mat-icon {
+      margin-right: 10px;
+    }
+  }
+  delfi-gui-support {
+    margin-right: 1rem;
+  }
+}

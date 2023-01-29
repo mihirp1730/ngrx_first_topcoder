@@ -1,0 +1,27 @@
+{
+  "projectType": "library",
+  "root": "libs/app/interceptors/billing-account-id",
+  "sourceRoot": "libs/app/interceptors/billing-account-id/src",
+  "prefix": "apollo",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/app/interceptors/billing-account-id/src/**/*.ts",
+          "libs/app/interceptors/billing-account-id/src/**/*.html"
+        ]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/interceptors/billing-account-id"],
+      "options": {
+        "jestConfig": "libs/app/interceptors/billing-account-id/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,6 @@
+<div class="attribute-chips__container">
+    <span class="attribute-chips__chip" *ngFor="let attribute of attributes">
+        <mat-icon [matTooltip]="attribute.tooltip" [svgIcon]="attribute.icon"></mat-icon>
+        <label>{{ attribute.label }}</label>
+    </span>
+</div>

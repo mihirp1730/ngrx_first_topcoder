@@ -1,0 +1,14 @@
+@import 'libs/app/styles';
+
+.rich-text-viewer {
+  &__wrapper {
+    background-color: $color-grey-10;
+
+    ::ng-deep * {
+      background-color: $color-grey-10;
+
+    }
+
+  }
+
+}

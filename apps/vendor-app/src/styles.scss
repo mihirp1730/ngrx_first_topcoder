@@ -1,0 +1,119 @@
+@import 'libs/app/styles';
+@import 'libs/app/ui/rich-text-editor';
+
+@import '~@angular/cdk/overlay-prebuilt.css';
+@import '~@angular/cdk/a11y-prebuilt.css';
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+  .oppor-landing-page .dls-framework-canvas .dls-navigation-framework-content {
+    overflow-y: hidden;
+  }
+}
+
+delfi-gui-user-profile {
+  .arrow-box::after {
+    border-bottom-color: #39414d !important;
+  }
+}
+
+.delfi-gui-user-profile-panel-class {
+  box-sizing: border-box;
+  border-radius: 5px;
+  .user-profile-overlay-item-container {
+    mat-icon {
+      pointer-events: auto;
+    }
+  }
+  delfi-gui-billing-account > div {
+    background-color: #39414d !important;
+    margin: 0 !important;
+    padding: 40px;
+  }
+}
+
+.delfi-gui-user-profile-backdrop {
+  background: rgba(0, 0, 0, 0.9);
+  opacity: 0.5 !important;
+}
+// IE10+ | for fixing IE overflow issue
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .delfi-gui-support-panel-class {
+    overflow: hidden;
+  }
+}
+
+// Common CSS for Textbox Start
+.mat-form-field.mat-form-field-type-mat-input {
+  .mat-input-element {
+    padding: 10px 0;
+    width: 97%;
+    border: 0 !important;
+  }
+
+  .mat-form-field-underline {
+    height: 0 !important;
+
+    .mat-form-field-ripple {
+      height: 0 !important;
+    }
+  }
+
+  .mat-form-field-infix {
+    padding: 0 !important;
+  }
+}
+
+.mat-form-field.mat-form-field-type-mat-input.mat-form-field-invalid {
+  .mat-input-element {
+    border: 1px solid $color-alert-red;
+  }
+}
+// Common CSS for Textbox End
+
+// Common CSS for Map spinner Start
+.loader-container {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.32);
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.25s, margin 0.25s;
+  width: 100vw;
+  z-index: 100;
+
+  .slb-loading-spinner,
+  .mat-spinner {
+    left: 48%;
+    position: relative;
+    top: 48%;
+  }
+}
+// Common CSS for Map spinner Start
+// Added to hide data partition component Start
+delfi-gui-data-partition {
+  .dp-button,
+  .sticky {
+    display: none !important;
+  }
+}
+// Added to hide data partition component End
+.dls-sidenav-container.mat-drawer-container.mat-sidenav-container .mat-sidenav-content {
+  margin-left: 82px !important;
+}
+
+.delfi-gui-support-panel-class {
+  overflow-y: auto;
+  overflow-y: overlay;
+  box-sizing: border-box;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.delfi-gui-support-backdrop {
+  background: rgba(0, 0, 0, 0.9);
+  opacity: 0.5 !important;
+}

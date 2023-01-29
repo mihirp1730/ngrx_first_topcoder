@@ -1,0 +1,31 @@
+<section class="request-dashboard">
+  <div class="title">
+    <h2>Requests</h2>
+  </div>
+    <mat-tab-group
+      horizontalPosition="left"
+      verticalPosition="above"
+  >
+      <mat-tab>
+          <ng-template mat-tab-label>
+             Pending({{(pendingRequests$ | async).length}})
+          </ng-template>
+          <apollo-pending-requests></apollo-pending-requests>
+      </mat-tab>
+      <mat-tab>
+          <ng-template mat-tab-label>
+            Approved({{(approvedRequests$ | async).length}})
+          </ng-template>
+          <apollo-approved-requests></apollo-approved-requests>
+      </mat-tab>
+      <mat-tab>
+          <ng-template mat-tab-label>
+            Rejected({{(rejectedRequests$ | async).length}})
+          </ng-template>
+          <apollo-rejected-requests></apollo-rejected-requests>
+      </mat-tab>
+  </mat-tab-group>
+</section>
+<div class="loader-container" *ngIf="showLoader$ | async">
+  <mat-spinner data-slb-id="load-spinner"></mat-spinner>
+</div>

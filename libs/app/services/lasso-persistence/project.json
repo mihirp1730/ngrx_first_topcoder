@@ -1,0 +1,23 @@
+{
+  "projectType": "library",
+  "root": "libs/app/services/lasso-persistence",
+  "sourceRoot": "libs/app/services/lasso-persistence/src",
+  "prefix": "apollo",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/services/lasso-persistence"],
+      "options": {
+        "jestConfig": "libs/app/services/lasso-persistence/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/services/lasso-persistence/src/**/*.ts", "libs/app/services/lasso-persistence/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

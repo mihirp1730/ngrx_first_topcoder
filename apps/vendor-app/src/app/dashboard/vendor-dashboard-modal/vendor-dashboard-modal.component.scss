@@ -1,0 +1,27 @@
+.modal-vendor-dashboard {
+
+  .modal-content {
+    height: 80px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+  }
+}
+
+.title-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 5px 0 15px 0 !important;
+
+  h4 {
+    margin: 0;
+  }
+}
+
+.btn-container {
+  text-align: right;
+}

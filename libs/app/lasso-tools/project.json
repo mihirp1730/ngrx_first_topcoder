@@ -1,0 +1,36 @@
+{
+  "projectType": "library",
+  "root": "libs/app/lasso-tools",
+  "sourceRoot": "libs/app/lasso-tools/src",
+  "prefix": "apollo",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "options": {
+        "tsConfig": "libs/app/lasso-tools/tsconfig.lib.json",
+        "project": "libs/app/lasso-tools/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/app/lasso-tools/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/lasso-tools/src/**/*.ts", "libs/app/lasso-tools/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/lasso-tools"],
+      "options": {
+        "jestConfig": "libs/app/lasso-tools/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

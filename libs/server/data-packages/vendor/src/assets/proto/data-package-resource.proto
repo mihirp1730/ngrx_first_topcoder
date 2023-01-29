@@ -1,0 +1,189 @@
+// Copied from the delfi-data-marketplace Azure DevOps repo:
+// https://dev.azure.com/slb-swt/delfi-data-marketplace/_git/data-package-light?path=%2Fdata-package-resource%2Fsrc%2Fmain%2Fproto%2Fservice.proto
+
+syntax = "proto3";
+package com.slb.xchange.resource;
+import "google/protobuf/empty.proto";
+
+option java_package = "com.slb.xchange.resource";
+option java_multiple_files = true;
+
+service DataPackageService {
+  rpc createDataPackage(CreateDataPackageRequest) returns (CreateDataPackageResponse);
+  rpc updateDataPackage(UpdateDataPackageRequest) returns (UpdateDataPackageResponse);
+  rpc getDataPackage(GetDataPackageRequest) returns (GetDataPackageResponse);
+  rpc createDataPackageProfile(CreateDataPackageProfileRequest) returns (CreateDataPackageProfileResponse);
+  rpc publishDataPackage(PublishDataPackageRequest) returns (google.protobuf.Empty);
+  rpc getPublishedDataPackages(GetPublishedDataPackagesRequest) returns (GetPublishedDataPackagesResponse);
+  rpc createDataItem(CreateDataItemRequest) returns (CreateDataItemResponse);
+  rpc getDataPackages(GetDataPackagesRequest) returns (GetDataPackagesResponse);
+  rpc getDataItems(GetDataItemsRequest) returns (GetDataItemsResponse);
+  rpc deleteDataPackage(DeleteDataPackageRequest) returns (google.protobuf.Empty);
+  rpc unPublishDataPackage(UnPublishDataPackageRequest) returns (google.protobuf.Empty);
+  rpc createMarketingRepresentation(CreateMarketingRepresentationRequest) returns (CreateMarketingRepresentationResponse);
+  rpc getMarketingRepresentations(GetMarketingRepresentationsRequest) returns (GetMarketingRepresentationsResponse);
+}
+
+message CreateDataPackageRequest {
+  string dataPackageName = 1;
+}
+
+message CreateDataPackageResponse {
+  string dataPackageId = 1;
+}
+
+message GetDataPackageRequest {
+  string dataPackageId = 1;
+}
+
+message GetDataPackageResponse {
+  DetailedDataPackage dataPackage = 1;
+}
+
+message CreateDataPackageProfileRequest {
+  string             dataPackageId      = 1;
+  DataPackageProfile dataPackageProfile = 2;
+}
+
+message DataPackageProfile {
+  Overview            overview            = 1;
+  FeaturesAndContents featuresAndContents = 2;
+  DataPackagePrice    dataPackagePrice    = 3;
+  repeated string     regions             = 4;
+  repeated Media      media               = 5;
+}
+
+message Overview {
+  string          overview  = 1;
+  repeated string keyPoints = 2;
+}
+
+message FeaturesAndContents {
+  repeated string keyPoints = 1;
+}
+
+message FileDetails {
+  string fileId   = 1;
+  string fileType = 2;
+}
+
+message DataPackagePrice {
+  double price        = 1;
+  bool   onRequest    = 2;
+  int32  durationTerm = 3;
+}
+
+message Media {
+  string fileId       = 1;
+  string fileName     = 2;
+  string fileType     = 3;
+  string caption      = 4;
+  bool   profileImage = 5;
+}
+
+message CreateDataPackageProfileResponse {
+  string dataPackageProfileId = 1;
+}
+
+message PublishDataPackageRequest {
+  string dataPackageId = 1;
+}
+
+message GetPublishedDataPackagesRequest {
+  string dataPackageId = 1;
+}
+
+message GetPublishedDataPackagesResponse {
+  repeated DataPackage dataPackages = 1;
+}
+
+message DataPackage {
+  string             dataPackageId      = 1;
+  string             name               = 2;
+  DataPackageProfile dataPackageProfile = 3;
+  string             vendorId           = 4;
+}
+
+message UpdateDataPackageRequest {
+  string dataPackageName = 1;
+  string dataPackageId   = 2;
+}
+
+message UpdateDataPackageResponse {
+  string dataPackageId = 1;
+}
+
+message CreateDataItemRequest {
+  string dataPackageId = 1;
+  string recordId      = 2;
+}
+
+message CreateDataItemResponse {
+  string dataItemId = 1;
+}
+
+message DetailedDataPackage {
+  string             dataPackageId      = 1;
+  string             name               = 2;
+  string             status             = 3;
+  DataPackageProfile dataPackageProfile = 4;
+  string             createdBy          = 5;
+  string             createdDate        = 6;
+  string             lastModifiedBy     = 7;
+  string             lastModifiedDate   = 8;
+  string             vendorId           = 9;
+}
+
+message GetDataPackagesRequest {
+  string filterQuery = 1;
+}
+
+message GetDataPackagesResponse {
+  repeated DetailedDataPackage dataPackages = 1;
+}
+
+message GetDataItemsRequest {
+  string dataPackageId = 1;
+}
+
+message GetDataItemsResponse {
+  repeated DataItem dataItem = 1;
+}
+
+message DataItem {
+  string dataItemId = 1;
+  string fileName   = 2;
+}
+
+message DeleteDataPackageRequest {
+  string dataPackageId = 1;
+}
+
+message UnPublishDataPackageRequest {
+  string dataPackageId = 1;
+}
+
+message CreateMarketingRepresentationRequest {
+  string dataPackageId    = 1;
+  string fileId           = 2;
+  string dataType         = 3;
+}
+message CreateMarketingRepresentationResponse {
+  string marketingRepresentationId = 1;
+}
+
+
+message GetMarketingRepresentationsRequest {
+  string dataPackageId = 1;
+}
+
+message GetMarketingRepresentationsResponse {
+  repeated MarketingRepresentation marketingRepresentations = 1;
+}
+
+message MarketingRepresentation {
+  string marketingRepresentationId = 1;
+  string fileId = 2;
+  string dataType = 3;
+  string fileName = 4;
+}

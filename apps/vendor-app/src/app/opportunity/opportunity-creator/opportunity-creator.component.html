@@ -1,0 +1,104 @@
+<section class="opportunity-creator material-theme-light">
+  <div class="opportunity-form">
+    <header class="page-header">
+      <div class="heading">
+        <span class="back-link" slb-tertiary-button>
+          <mat-icon data-slb-id="go-back-btn" svgIcon="arrow-left-1" (click)="onGoHome()" matTooltip="Go back"> </mat-icon>
+        </span>
+        <div class="opp-name-status">
+          <h2
+            class="title"
+            title="{{ (selectedOpportunity$ | async)?.opportunityName ? (selectedOpportunity$ | async)?.opportunityName : 'Opportunity' }}"
+          >
+            <span>
+              {{ (selectedOpportunity$ | async)?.opportunityName ? (selectedOpportunity$ | async)?.opportunityName : 'Opportunity' }}
+            </span>
+          </h2>
+          <div>{{ (selectedOpportunity$ | async)?.opportunityType ? (selectedOpportunity$ | async)?.opportunityType : 'PUBLIC' }}</div>
+        </div>
+        <apollo-create-opportunity-modal
+          (createOpportunityFormChanged)="createOpportunityFormChanged($event)"
+        ></apollo-create-opportunity-modal>
+        <div class="button-container">
+          <span
+            class="save-draft-msg"
+            *ngIf="((isOpportunitySaved$ | async) && (savedOpportunityTimeStamp$ | async)) || (lastModifiedlTimeStamp$ | async)"
+          >
+            Draft saved on {{ (savedOpportunityTimeStamp$ | async) || (lastModifiedlTimeStamp$ | async) | date: 'dd-MMM-YYYY HH:mm' }}</span
+          >
+          <button
+            data-slb-id="save-opportunity-draft-btn"
+            class="save-btn"
+            slb-secondary-button
+            [disabled]="(saveCheck$ | async) || (alreadyPublished$ | async) === true"
+            (click)="saveAsDraft()"
+          >
+            Save
+          </button>
+          <button
+            data-slb-id="publish-opportunity-btn"
+            class="publish-btn"
+            slb-button
+            [disabled]="publishCheck$ | async"
+            (click)="publishOpportunity()"
+          >
+            Publish
+          </button>
+        </div>
+      </div>
+    </header>
+    <div [ngClass]="{ wrapper: selectedIndex === 2 }">
+      <div class="tabs">
+        <mat-tab-group horizontalPosition="left" verticalPosition="above" (selectedTabChange)="selectedTabChange($event)" #tabGroup>
+          <mat-tab>
+            <ng-template mat-tab-label> Overview </ng-template>
+            <apollo-opportunity-details
+              (formIsValid)="detailsFormIsValid($event)"
+              (opportunityDetailsChanged)="opportunityDetailsChanged($event)"
+              (isOpportunityDetailsFormDirty)="opportunityDetailsFormIsDirty($event)"
+            ></apollo-opportunity-details>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label> Highlights </ng-template>
+            <ng-template matTabContent>
+              <apollo-open-information
+                (openInformationChanged)="opportunityOpenInformation($event)"
+                (formIsValid)="openInformationFormIsValid($event)"
+                (isOpenInfoDirty)="openInformationIsDirty($event)"
+              ></apollo-open-information>
+            </ng-template>
+          </mat-tab>
+          <mat-tab [disabled]="(selectedOpportunity$ | async)?.opportunityType === 'PRIVATE'">
+            <ng-template mat-tab-label> Shapes </ng-template>
+            <apollo-asset-shape></apollo-asset-shape>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label> Details </ng-template>
+            <ng-template matTabContent>
+              <apollo-confidential-information
+                (formIsValid)="confidentialInfoFormIsValid($event)"
+                (confidentialInformationChanged)="opportunityConfidentialInformation($event)"
+                (isConfidentialInformationDirty)="confidentialInformationIsDirty($event)"
+              ></apollo-confidential-information>
+            </ng-template>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label> Services </ng-template>
+            <apollo-additional-services
+              (formIsValid)="additionalServicesInfoFormIsValid($event)"
+              (additionalServicesChanged)="opportunityAdditionalServices($event)"
+              (isAdditionalServicesDirty)="additionalServicesIsDirty($event)"
+            ></apollo-additional-services>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+      <apollo-opportunity-map-wrapper
+        [isGlobeOptionVisible]="showGlobeOption"
+        [@gisCanvasTrigger]="animationState"
+      ></apollo-opportunity-map-wrapper>
+    </div>
+  </div>
+</section>
+<div class="loader-container" *ngIf="showLoader$ | async">
+  <mat-spinner data-slb-id="load-spinner"></mat-spinner>
+</div>

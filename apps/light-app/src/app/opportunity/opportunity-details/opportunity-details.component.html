@@ -1,0 +1,277 @@
+<div class="opportunity-details__wrapper">
+  <section class="opportunity-details__container">
+    <ng-container *ngIf="(showLoader$ | async) === false && (opportunity$ | async) as opportunity; else noOpportunity">
+      <header class="opportunity-details__header">
+        <div class="opportunity-details__header__info">
+          <div class="info-detail">
+            <mat-icon svgIcon="arrow-left-3" class="icon" (click)="onOpportunityDetailsBack()" matTooltip="Go Back"></mat-icon>
+            <div class="title ellipsis-text" title="{{ opportunity?.opportunityName }}">{{ opportunity?.opportunityName | titlecase }}</div>
+            <div class="opportunity-link">
+              <mat-icon *ngIf="!isRouteFlow" class="icon" svgIcon="link" (click)="detailsPage()"></mat-icon>
+              <span class="url-link" *ngIf="showTooltip">Link Copied</span>
+            </div>
+          </div>
+          <slb-button-group [align]="'end'">
+            <ng-container *ngIf="(showLoader$ | async) === false && (opportunity$ | async)">
+              <button
+                class="light-button"
+                data-slb-id="messages-btn"
+                slb-secondary-button
+                (click)="onOpenMsgPanel()"
+                [state]="{
+                  opportunityId: (opportunity$ | async).opportunityId,
+                  opportunityName: (opportunity$ | async).opportunityName,
+                  dataVendorId: (opportunity$ | async).dataVendorId
+                }"
+              >
+                <mat-icon svgIcon="chat" matTooltip="Go to messages"></mat-icon>
+                <span>Messages</span>
+              </button>
+              <button slb-button [disabled]="isRequestBtnDisabled" (click)="requestAccess()">Request Access</button>
+            </ng-container>
+          </slb-button-group>
+        </div>
+        <div class="opportunity-details__header__logo">
+          <img *ngIf="signedUrl" [alt]="" [src]="signedUrl" />
+        </div>
+      </header>
+      <section class="opportunity-details__body">
+        <mat-tab-group horizontalPosition="left" verticalPosition="above" class="opportunity-details__info-tabs">
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <label>Highlights</label>
+            </ng-template>
+            <ng-container
+              *ngTemplateOutlet="
+                opportunityDetailsBody;
+                context: {
+                  opportunityProfile: opportunity?.opportunityProfile,
+                  countries: opportunity?.countries,
+                  renderableDocuments$: renderableOpenDocuments$,
+                  typeOfDoc: 'open',
+                  ccusAttributes: opportunity?.ccusAttributes
+                }
+              "
+            ></ng-container>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <label>Details</label>
+            </ng-template>
+            <ng-container
+              *ngTemplateOutlet="
+                opportunityDetailsBody;
+                context: {
+                  opportunityProfile: opportunity?.confidentialOpportunityProfile,
+                  isConfidentailProfile: opportunity?.confidentialOpportunityProfile,
+                  countries: opportunity?.countries,
+                  renderableDocuments$: renderableConfidentialDocuments$,
+                  typeOfDoc: 'confidential'
+                }
+              "
+            ></ng-container>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <label>Services</label>
+            </ng-template>
+            <ng-container *ngTemplateOutlet="opportunityAdditionalServices"></ng-container>
+          </mat-tab>
+        </mat-tab-group>
+      </section>
+    </ng-container>
+  </section>
+</div>
+
+<ng-template #noOpportunity>
+  <ng-container *ngIf="(showLoader$ | async) === false; else opportunityDetailsLoader">
+    <div class="opportunity-details__error">
+      <label class="error-msg"
+        ><span class="error-oops">Oops!</span><br />
+        We are unable to load the opportunity at this moment. <br />Please try again after sometime.</label
+      >
+      <div class="go-back">
+        <div (click)="onOpportunityDetailsBack()">Back To Opportunity List</div>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #opportunityDetailsLoader class="opportunity-details__loader">
+  <mat-spinner data-slb-id="load-spinner"></mat-spinner>
+</ng-template>
+
+<ng-template
+  #opportunityDetailsBody
+  let-opportunityProfile="opportunityProfile"
+  let-renderableDocuments$="renderableDocuments$"
+  let-countries="countries"
+  let-typeOfDoc="typeOfDoc"
+  let-isConfidentailProfile="isConfidentailProfile"
+  let-ccusAttributes="ccusAttributes"
+>
+  <div
+    *ngIf="
+      (isConfidentailProfile &&
+        isConfidentailProfile.hasAccess === true &&
+        (approvedCIStatus || '').toLowerCase() === accessStatus.Approved) ||
+      !isConfidentailProfile
+    "
+    class="opportunity-details__accordion"
+  >
+    <mat-accordion>
+      <!-- Overview section -->
+      <mat-expansion-panel *ngIf="opportunityProfile?.overview as overview" [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h3>Overview</h3>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <apollo-opportunity-media-viewer
+          [ngClass]="{ fullview: isRouteFlow || isOpportunityExpanded }"
+          [opportunityMedia]="opportunityProfile?.media"
+        ></apollo-opportunity-media-viewer>
+        <div class="overview-description">
+          <div class="categories" *ngIf="!isConfidentailProfile">
+            <h3>Categories</h3>
+            <div class="attributes" *ngFor="let attr of profileAttributes">
+              <apollo-attribute-chips [attributes]="[attr]"></apollo-attribute-chips>
+            </div>
+          </div>
+          <div class="overview-info">
+            <h3>Overview</h3>
+            <apollo-rich-text-viewer
+              [ngClass]="{ fullview: isRouteFlow || isOpportunityExpanded, 'show-more-info': !showMore, 'show-less-info': showMore }"
+              [content]="overview"
+              [format]="html"
+              theme="snow"
+            ></apollo-rich-text-viewer>
+            <span (click)="onShowMoreClick()" class="show-more-link" *ngIf="overview.length > 1000">{{
+              showMore ? 'show more' : 'show less'
+            }}</span>
+          </div>
+        </div>
+      </mat-expansion-panel>
+      <!-- Documents section -->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h3>Documents ({{ (renderableDocuments$ | async).length }})</h3>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="flex-row" *ngIf="(renderableDocuments$ | async).length">
+          <button
+            data-slb-id="download-all-btn"
+            class="download-all-btn"
+            color="primary"
+            slb-secondary-button
+            (click)="downloadAllDoc(typeOfDoc)"
+          >
+            <div class="btn-text-container">
+              <mat-icon svgIcon="download"></mat-icon>
+              <span>{{ (renderableDocuments$ | async).length > 1 ? 'Download All' : 'Download' }}</span>
+            </div>
+          </button>
+        </div>
+        <apollo-documents [documents]="renderableDocuments$ | async" (openedDocument)="openDocument($event)"> </apollo-documents>
+      </mat-expansion-panel>
+      <!-- Data Objects section -->
+      <mat-expansion-panel *ngIf="!isConfidentailProfile && !isRouteFlow">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h3>Data Objects ({{ (opportunity$ | async)?.dataObjects.length }})</h3>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <table class="data-objects">
+          <tr *ngFor="let dataObj of (opportunity$ | async)?.dataObjects">
+            <td>
+              <mat-icon [svgIcon]="dataObj.entityIcon"></mat-icon>
+            </td>
+            <td>
+              <span> {{ dataObj.name }}</span>
+            </td>
+            <td>
+              <span>{{ dataObj.count }}</span>
+            </td>
+          </tr>
+        </table>
+      </mat-expansion-panel>
+      <!-- Asset Subtype section -->
+      <mat-expansion-panel *ngIf="!isConfidentailProfile">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h3>Asset Subtype</h3>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
+          <span class="asset-subtype">
+            {{ (opportunity$ | async)?.assetType[0] }}
+          </span>
+        </div>
+        <div *ngIf="ccusAttributes">
+          <div *ngIf="ccusAttributes.expectedSequestration" class="attribute-chips-container">
+            <span class="chip">Expected Sequestration</span>
+            <span>{{ ccusAttributes.expectedSequestration }}<span [matTooltip]="'Tonne'"> t</span></span>
+          </div>
+          <div *ngIf="ccusAttributes.costOfCarbonAbated" class="attribute-chips-container">
+            <span class="chip">Cost of CO2 Abated</span>
+            <span>{{ ccusAttributes.costOfCarbonAbated }}<span [matTooltip]="'$/Tonne'"> $/t</span></span>
+          </div>
+          <div *ngIf="ccusAttributes.certifier" class="attribute-chips-container">
+            <span class="chip">Certifier</span>
+            <span>{{ ccusAttributes.certifier }}</span>
+          </div>
+          <div *ngIf="ccusAttributes.lastValidatedOrVerified" class="attribute-chips-container">
+            <span class="chip">Last Validated Or Verified</span>
+            <span>{{ convertedValidatedDate || getValidatedDate(ccusAttributes.lastValidatedOrVerified) }}</span>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <section
+    class="no-access-container"
+    *ngIf="
+      isConfidentailProfile && isConfidentailProfile.hasAccess === false && (pendingCIStatus || '').toLowerCase() !== accessStatus.Pending
+    "
+  >
+    <div>
+      <mat-icon svgIcon="locked"></mat-icon>
+    </div>
+    <div class="access-locked">Access Locked.</div>
+    <div class="request-access-info">To unlock this information, please Request an Access from the above.</div>
+  </section>
+  <section
+    class="pending-container"
+    *ngIf="
+      isConfidentailProfile && isConfidentailProfile.hasAccess === false && (pendingCIStatus || '').toLowerCase() === accessStatus.Pending
+    "
+  >
+    <div class="pending-inner-container">
+      <div class="title-row">{{ accessType }}</div>
+      <div class="row content">
+        <div class="icon-column">
+          <mat-icon svgIcon="availability"></mat-icon>
+        </div>
+        <div class="details-column">
+          <p>Your Access for Details is pending.</p>
+          <div class="row">
+            <div class="column">
+              <div>Request Raised On</div>
+              <div>{{ requestDetails?.requestedOn | date: 'dd-MMM-YYYY' }}</div>
+            </div>
+            <div class="column pending-with">
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+        <div class="cancel-btn-column"></div>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #opportunityAdditionalServices>
+  <apollo-access-level-details [selectedOpportunityId]="opportunitiesDetails.opportunityId"> </apollo-access-level-details>
+</ng-template>

@@ -1,0 +1,74 @@
+@import 'libs/app/styles';
+
+.opportunity-open-information {
+  .info {
+    @include font-size(12);
+  }
+
+  .label {
+    @include font-size(14);
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+
+  .required {
+    color: $color-candy;
+  }
+
+  .open-info-form {
+    width: 60vw;
+    .text-editor {
+      margin-bottom: 20px;
+      ::ng-deep {
+        .ql-container {
+          margin-bottom: 10px;
+          border-radius: 0 0 4px 4px;
+        }
+        .ql-editor {
+          box-sizing: border-box;
+          height: 350px;
+          width: 100%;
+          border-radius: 0 0 4px 4px;
+          margin-bottom: 10px;
+        }
+        .ql-toolbar {
+          box-sizing: border-box;
+          height: auto;
+          width: 100%;
+          border: 1px dashed $color-grey-08;
+          border-radius: 4px 4px 0 0;
+          background-color: $color-grey-10;
+        }
+        .ql-snow {
+          .ql-tooltip.ql-editing {
+            left: 0 !important;
+          }
+        }
+      }
+    }
+    .doc-upload {
+      .doc-info {
+        margin: 0;
+        font-size: 12px;
+      }
+    }
+  }
+  ::ng-deep .file-uploader,
+  ::ng-deep .media-upload-preview {
+    .info-container {
+      margin: 0;
+      color: $color-grey-01;
+    }
+  }
+  ::ng-deep .media-preview {
+    .preview > img {
+      height: 135px;
+      width: 100%;
+      object-fit: contain;
+      background-color: $color-white !important;
+    }
+  }
+  .info.tab-sub-heading {
+    width: 60vw;
+  }
+}

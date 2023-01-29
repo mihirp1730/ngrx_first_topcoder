@@ -1,0 +1,24 @@
+{
+  "projectType": "library",
+  "root": "libs/app/delfi-gui-auth-config",
+  "sourceRoot": "libs/app/delfi-gui-auth-config/src",
+  "prefix": "apollo",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/delfi-gui-auth-config/src/**/*.ts", "libs/app/delfi-gui-auth-config/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/delfi-gui-auth-config"],
+      "options": {
+        "jestConfig": "libs/app/delfi-gui-auth-config/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,23 @@
+{
+  "projectType": "library",
+  "root": "libs/app/components/rich-text-viewer",
+  "sourceRoot": "libs/app/components/rich-text-viewer/src",
+  "prefix": "apollo",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/components/rich-text-viewer"],
+      "options": {
+        "jestConfig": "libs/app/components/rich-text-viewer/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/components/rich-text-viewer/src/**/*.ts", "libs/app/components/rich-text-viewer/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

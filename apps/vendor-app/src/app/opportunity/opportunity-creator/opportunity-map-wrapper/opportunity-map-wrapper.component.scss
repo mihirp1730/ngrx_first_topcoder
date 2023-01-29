@@ -1,0 +1,58 @@
+.opportunity-map-canvas-wrapper {
+  height: calc(100% - 1px);
+  width:100%;
+  position: relative;
+
+  gis-zoom-buttons.zoom-bar {
+    position: absolute !important;
+    z-index: 2000 !important;
+    padding: 5px 5px !important;
+    div {
+      padding-bottom: 5px;;
+    }
+  }
+  gis-canvas {
+    .gisMapCanvas {
+      gis-map {
+        z-index: 1;
+        .gis-map-div {
+          position: absolute;
+          right: 0;
+          height: 100% !important;
+        }
+      }
+    }
+    .gisCommonSpinner {
+      display: none;
+      width: 64px;
+      height: 64px;
+      position: absolute;
+      margin: auto;
+      top: 40%;
+      left: 40%;
+    }
+  }
+
+  .world-zoom {
+    position: absolute;
+    bottom: 15px;
+    right: 5px;
+    background-color: #1683fb;
+    border-radius: 50%;
+    max-height: 46px;
+    height: 46px;
+    max-width: 46px;
+    width: 46px;
+    z-index: 2;
+  
+    mat-icon {
+      height: 40px;
+      width: 40px;
+    }
+  
+    &:hover {
+      box-shadow: 0 3px 12px rgb(0 0 0 / 23%), 0 3px 12px rgb(0 0 0 / 16%);
+      transform: scale(1.1);
+    }
+  }
+}

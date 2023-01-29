@@ -1,0 +1,36 @@
+{
+  "projectType": "library",
+  "root": "libs/app/ui/notification",
+  "sourceRoot": "libs/app/ui/notification/src",
+  "prefix": "apollo",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "options": {
+        "tsConfig": "libs/app/ui/notification/tsconfig.lib.json",
+        "project": "libs/app/ui/notification/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/app/ui/notification/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/ui/notification/src/**/*.ts", "libs/app/ui/notification/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/ui/notification"],
+      "options": {
+        "jestConfig": "libs/app/ui/notification/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

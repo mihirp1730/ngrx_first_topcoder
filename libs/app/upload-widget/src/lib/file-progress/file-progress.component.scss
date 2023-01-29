@@ -1,0 +1,100 @@
+@import '../../../../styles';
+
+.file-progress {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  &__name {
+    display: flex;
+    align-items: center;
+    width: calc(100% - 36px);
+
+    label {
+      margin-left: 10px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: calc(100% - 22px);
+    }
+  }
+
+  &__complete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 99px;
+    border: 1px solid #28A228;
+    width: 20px;
+    height: 20px;
+
+    mat-icon {
+      height: 10px;
+      width: 10px;
+      line-height: 10px;
+      color: #28A228;
+    }
+  }
+
+  &__erroneous {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+
+    mat-icon {
+      height: 20px;
+      width: 20px;
+      line-height: 20px;
+      color: $color-candy;
+    }
+  }
+
+  &__bar {
+    ::ng-deep slb-progress-indicator .dls-progress-indicator-container {
+      display: flex;
+      align-items: center;
+      flex-direction: row-reverse;
+
+      .value {
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      mat-progress-bar {
+        height: 15px;
+        margin-right: 8px;
+      }
+    }
+  }
+
+  &__cancel {
+    &.mat-button-disabled {
+      mat-icon {
+        color: gray;
+        cursor: not-allowed;
+      }
+    }
+
+    mat-icon {
+      color: $color-candy;
+      cursor: pointer;
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &__errorMessage {
+    line-height: 14px;
+    font-size: 12px;
+    color: $color-candy;
+  }
+}

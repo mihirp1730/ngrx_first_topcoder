@@ -1,0 +1,24 @@
+{
+  "projectType": "library",
+  "root": "libs/app/auth-codeflow",
+  "sourceRoot": "libs/app/auth-codeflow/src",
+  "prefix": "apollo",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/auth-codeflow/src/**/*.ts", "libs/app/auth-codeflow/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/auth-codeflow"],
+      "options": {
+        "jestConfig": "libs/app/auth-codeflow/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,40 @@
+<div data-slb-id="packages-panel-item">
+  <div [title]="packageName$ | async" class="header">
+    <span [class.light]="(packageName$ | async) === 'Not Available'" [class.header-title]="(packageName$ | async) !== 'Not Available'">
+      {{ packageName$ | async }}
+    </span>
+    <span class="header-vendor">
+      <ng-container *ngIf="packageVendorName$ | async as packageVendorName; else ShowLoader">
+        <span [attr.title]="packageVendorName">{{ packageVendorName }}</span>
+      </ng-container>
+      <ng-template #ShowLoader>
+        <mat-spinner [diameter]="20" [strokeWidth]="4"></mat-spinner>
+      </ng-template>
+    </span>
+  </div>
+  <div class="attributes">
+    <div>
+      <span>Region</span>
+      <span [title]="packageRegion$ | async">{{ packageRegion$ | async }}</span>
+    </div>
+    <div>
+      <span>Data Type</span>
+      <span [title]="packageDataType$ | async">{{ packageDataType$ | async }}</span>
+    </div>
+    <div>
+      <span>Price</span>
+      <ng-container *ngIf="(packageOnRequest$ | async); else withPrice">
+        <span>On request</span>
+      </ng-container>
+      <ng-template #withPrice>
+        <span *ngIf="(packagePrice$ | async) !== 'Not Available'; else notAvailable">
+          <span class="light" [title]="packagePrice$ | async">{{ packagePrice$ | async | currency }} USD </span>
+          <span [title]="(packageDuration$ | async)+' MONTHS'"> - {{ packageDuration$ | async }} MONTHS </span>
+        </span>
+        <ng-template #notAvailable>
+          <span>Not Available</span>
+        </ng-template>
+      </ng-template>
+    </div>
+  </div>
+</div>

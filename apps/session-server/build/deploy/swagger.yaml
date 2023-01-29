@@ -1,0 +1,183 @@
+#  If you are going to add new environment variable to this file, please remeber you have to also modife input in the envsubst command in the deploy.sh file
+swagger: "2.0"
+info:
+  version: 2.0.0
+  title: GAIA Light Server $CONTAINER_CLUSTER $GCLOUD_PROJECT
+  description: GAIA Light orchestrating service.
+host: session-server-$CONTAINER_CLUSTER.endpoints.$GCLOUD_PROJECT.cloud.goog
+basePath: /api/session
+tags:
+  - name: Session
+    description: Creates and stores session data for particular user
+  - name: Log
+    description: Logs errors comming from client
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+x-google-endpoints:
+  - name: session-server-$CONTAINER_CLUSTER.endpoints.$GCLOUD_PROJECT.cloud.goog
+
+################################################################################
+#                                  Security                                    #
+################################################################################
+security:
+  - sauth_token: []
+
+securityDefinitions:
+  sauth_token:
+    authorizationUrl: ""
+    flow: "implicit"
+    type: "oauth2"
+    x-google-issuer: "$AUTH_ISSUER"
+    x-google-jwks_uri: "$AUTH_JWK_URI"
+    x-google-audiences: "$AUTH_CLIENT_ID"
+
+paths:
+  /health:
+    get:
+      operationId: health
+      tags:
+        - health
+      summary: "health endpoint "
+      description: "health endpoint "
+      parameters:
+        - in: header
+          name: appKey
+          type: string
+          description: "App Key for the Application"
+          required: true
+      responses:
+        "200":
+          description: returns OK meaning that service is up and running
+        "404":
+          description: returns when "appKey" is not defined in headers. Must for this endpoint to function
+  /NewSession:
+    get:
+      operationId: "newsession"
+      tags:
+        - Session
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+      summary: "Creates or returns session for the user stored in http header"
+      description: "Creates or returns session for the user stored in http header"
+      responses:
+        200:
+          description: Session object
+          schema:
+            type: object
+  /DeleteSession:
+    delete:
+      operationId: "deletesession"
+      tags:
+        - Session
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+      summary: "Delete session for the user stored in http header"
+      description: "Delete session for the user stored in http header"
+      responses:
+        200:
+          description: Session object
+          schema:
+            type: object
+  /ChangeSessionComponent:
+    post:
+      operationId: "changesessioncomponent"
+      tags:
+        - Session
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - name: changeSessionComponentRequest
+          in: body
+          description: change session component request
+          required: true
+          schema:
+            type: object
+      summary: "change single session component for the user stored in http header"
+      description: "change single session component for the user stored in http header"
+      responses:
+        200:
+          description: Session object
+          schema:
+            type: object
+  /ChangeSessionComponents:
+    post:
+      operationId: "changesessioncomponents"
+      tags:
+        - Session
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - name: changeSessionComponentsRequest
+          in: body
+          description: change session components request
+          required: true
+          schema:
+            type: object
+      summary: "change single session component for the user stored in http header"
+      description: "change single session component for the user stored in http header"
+      responses:
+        200:
+          description: Session object
+          schema:
+            type: object
+  /ChangeSessionComponentInstanceData:
+    post:
+      operationId: "changeSessionComponentInstanceData"
+      tags:
+        - Session
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - name: changeSessionComponentInstanceDataRequest
+          in: body
+          description: change session component instance data request
+          required: true
+          schema:
+            type: object
+      summary: "change single session component for the user stored in http header"
+      description: "change single session component for the user stored in http header"
+      responses:
+        200:
+          description: Session object
+          schema:
+            type: object
+  /LogAtlasClientError:
+    post:
+      operationId: "logAtlasClientError"
+      tags:
+        - Log
+      summary: "Logs errors from client side atlas application"
+      description: "Logs errors coming from atlas web application on client side"
+      responses:
+        200:
+          description: Success status
+          schema:
+            type: object
+  /LogAtlasClientPerformance:
+    post:
+      operationId: "logAtlasClientPerformance"
+      tags:
+        - Log
+      summary: "Logs performance metrics from client side atlas application"
+      description: "Logs performance metrics coming from atlas web application on client side"
+      responses:
+        200:
+          description: Success status
+          schema:
+            type: object

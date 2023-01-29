@@ -1,0 +1,221 @@
+@import 'libs/app/styles';
+
+.user-modal {
+  width: 1000px;
+
+  .title {
+    > h3 {
+      margin: 0 0 10px 0;
+    }
+  }
+
+  .divider {
+    margin-bottom: 15px;
+  }
+
+  .label {
+    font-weight: 500;
+    font-size: 14px;
+
+    .mandatory {
+      color: $color-candy;
+    }
+  }
+
+  .opportunity-name {
+    width: 500px;
+    ::ng-deep .mat-form-field-wrapper {
+      padding: 0;
+      margin-bottom: 8px;
+
+      .mat-error {
+        display: none;
+      }
+    }
+    .mat-error {
+      margin-left: 5px;
+      margin-top: -5px;
+      @include font-size(10);
+    }
+    &__single {
+      margin-bottom:2em;
+      div {
+        font-weight: 400;
+        font-size: 1.3em;
+      }
+    }
+    &__single_url {
+      display: flex;
+      flex-direction: column;
+      margin-top: 12px;
+      margin-bottom: -6px;
+      div {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        .mat-form-field {
+          width: 80%;
+        }
+      }
+      .copy-url {
+        margin-top: -15px;
+      }
+      .url-link {
+        color: $color-white;
+        background-color: $color-black;
+        border-radius: 6px;
+        padding: 3px;
+        margin-top: 12px;
+        font-size: 11px;
+        height: 24px;
+      }
+    }
+  }
+  .users {
+    width: 100%;
+
+    .user-details {
+      max-height: 16em;
+      overflow-y: auto;
+
+      .user-info {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .hide-icon {
+          visibility: hidden;
+        }
+        .info {
+          display: flex;
+          flex-direction: column;
+          ::ng-deep .mat-form-field-wrapper {
+            padding: 10px 0px;
+            margin-top: 10px;
+            .mat-error {
+              margin-top: 5px;
+              @include font-size(10);
+            }
+          }
+          .remove-icon {
+            cursor: pointer;
+            color: $color-vox-blue;
+            padding-right: 5px;
+            height: 15px;
+          }
+          .approve-icon {
+            color: $color-text-success;
+          }
+          .warning-icon {
+            color: $color-text-error;
+          }
+        }
+
+        .subscription-check {
+          width: 17px;
+          height: 15px;
+        }
+
+        .email-field {
+          margin-left: -30px;
+        }
+        mat-error{
+          margin-top: -15px;
+          font-size: 10px;
+          font-size: 0.625rem;
+        }
+      }
+      .adduser-icon {
+        background: transparent;
+        outline: none;
+        border: none;
+        color: $color-voss-blue;
+        font-size: 14px;
+        cursor: pointer;
+        margin-top: 7px;
+      }
+      .adduser-disable {
+        color: $color-grey-11;
+      }
+    }
+  }
+
+  .details {
+    width: 100%;
+    max-height: 16em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .access-details {
+      width: 50%;
+      .info-container {
+        margin-left: 10px;
+        .mat-error {
+          margin-top: -5px;
+          @include font-size(10);
+        }
+        .details-info {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          .levels {
+            margin-top: 14px;
+          }
+          .date-picker {
+            margin-top: 2px;
+            display: flex;
+            flex-direction: column;
+            ::ng-deep slb-date-picker-range {
+              width: 21em;
+              margin-right: -5em;
+              .mat-form-field {
+                width: 80%;
+              }
+              .mat-form-field-wrapper{
+                padding-bottom: 0;
+              }
+              .mat-error {
+                display: none;
+              }
+              .mat-form-field-flex {
+                background-color: $color-white;
+              }
+            }
+            .mat-hint {
+              font-size: 11px !important;
+            }
+            .mat-error {
+              margin-top: -5px;
+              @include font-size(10);
+            }
+          }
+        }
+        .sub-heading {
+          margin-bottom: 10px;
+          margin-top: 10px;
+          font-weight: 500;
+        }
+      }
+    }
+    .message-info {
+      width: 50%;
+      .message-field {
+        width: 90%;
+        margin-left: 10%;
+        textarea {
+          max-height: 14em; 
+        }
+      }
+    }
+  }
+  .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    > button {
+      margin-left: 2%;
+      width: 10%;
+    }
+  }
+}

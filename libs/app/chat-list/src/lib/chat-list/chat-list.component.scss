@@ -1,0 +1,29 @@
+@import 'libs/app/styles';
+
+.chat-list-container {
+  height: 100%;
+  background-color: $color-white;
+  padding: 20px 2px 20px 10px;
+
+  .header {
+    @include font-size(16);
+    color: $color-grey-01;
+    display: flex;
+    flex-direction: row;
+    padding: 0 20px 20px 10px;
+
+    &__filter-icon {
+      margin-left: auto;
+      margin-right: 0;
+      background-color: transparent;
+      border-color: transparent;
+    }
+  }
+
+  .scroll-viewport {
+    min-height: calc(100% - 29px);
+    width: 100%;
+    overflow-x: hidden;
+    height: 74vh;
+  }
+}

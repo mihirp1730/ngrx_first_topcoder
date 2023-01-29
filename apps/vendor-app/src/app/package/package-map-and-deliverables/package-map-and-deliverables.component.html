@@ -1,0 +1,112 @@
+<section class="map-deliverables">
+  <form [formGroup]="form">
+    <mat-accordion>
+      <mat-expansion-panel [disabled]="!isPackageSaved" data-slb-id="marketing-representation">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Map Representation ({{ marketingRepresentationsCount }}) <span class="required">*</span> </mat-panel-title>
+          <mat-spinner data-slb-id="load-spinner" class="map-deliverables__spinner" diameter="20" *ngIf="marketingRepresentationsInProgress"></mat-spinner>
+        </mat-expansion-panel-header>
+        <p class="map-deliverables__description">
+          This is what customers will see on the map when they discover the package. Upload shape file (.zip) up to 2 GB.
+          Only characters A-Z, numbers 0-9, -, _ and space are supported for the file name.
+        </p>
+        <div class="map-deliverables__files" formArrayName="dataTypes" *ngIf="dataTypes?.length">
+          <div class="add-file" *ngFor="let dataType of dataTypes; let i = index">
+            <button data-slb-id="close-btn" class="close-btn" *ngIf="i !== 0 && !marketingRepresentations[dataTypeValue.value]?.length" [disabled]="marketingRepresentations[dataTypeValue.value]?.length" (click)="closeDataTypeSection(i)">
+              <mat-icon svgIcon="close" class="close-icon" matTooltip="Close"></mat-icon>
+            </button>
+            <label class="label">Data Type<span class="required">*</span></label>
+            <mat-form-field slbFormField data-slb-id="select-data-type">
+              <mat-select
+                #dataTypeValue
+                [formControlName]="i"
+                placeholder="Select Data Type (Required)"
+                (selectionChange)="onDataTypeChange(i, $event)"
+                [disabled]="marketingRepresentations[dataTypeValue.value]?.length"
+              >
+                <mat-option *ngFor="let mrOption of mapRepresentationOptions" [value]="mrOption.value" [disabled]="mrOption.disabled">
+                  <mat-icon *ngIf="mrOption.icon" [svgIcon]="mrOption.icon"></mat-icon> {{ mrOption.viewText }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div>
+              <label class="label">File(s) <span class="required">*</span></label>
+              <ng-container *ngIf="marketingRepresentations[dataTypeValue.value]?.length">
+                <apollo-file-progress
+                  *ngFor="let shape of marketingRepresentations[dataTypeValue.value]"
+                  [file]="shape"
+                  [isDeleteDisabled]="isPackagePublished"
+                  (cancelUpload)="onCancelUpload($event)"
+                ></apollo-file-progress>
+              </ng-container>
+              <apollo-upload-widget
+                data-slb-id="upload-files-widget"
+                widgetStyle="link"
+                [maxFileSizes]="maxFileSizes"
+                [extensions]="extensions"
+                [canUpload]="(dataTypeValue.value !== '') && !isPackagePublished"
+                [multipleFiles]="true"
+                (startUpload)="onMRStartUpload($event, i)"
+                [selectedDataType]="dataTypeValue.value"
+              ></apollo-upload-widget>
+            </div>
+          </div>
+
+          <button
+            data-slb-id="add-data-type-btn"
+            slb-tertiary-button
+            class="add-group-button"
+            color="primary"
+            title="Add a different data type to the package"
+            *ngIf="!isPackagePublished && mapRepresentationOptions$ | async as mapRepresentationOptions"
+            [disabled]="dataTypes?.length >= mapRepresentationOptions.length || marketingRepresentationsCount === 0"
+            (click)="addDataType()"
+          >
+            <mat-icon svgIcon="plus"></mat-icon> Add Data Type
+          </button>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <mat-accordion>
+      <mat-expansion-panel [disabled]="!isPackageSaved" data-slb-id="deliverables">
+        <mat-expansion-panel-header>
+          <mat-panel-title> Deliverables Included in the Package ({{ deliverables?.length || 0 }}) </mat-panel-title>
+          <mat-spinner data-slb-id="load-spinner" class="map-deliverables__spinner" diameter="20" *ngIf="deliverablesInProgress"></mat-spinner>
+        </mat-expansion-panel-header>
+        <p class="map-deliverables__description">
+          This is what the users can download when they gain access to the package.
+          Only characters A-Z, numbers 0-9, -, _ and space are supported for the file name.<br />
+        </p>
+        <div class="map-deliverables__files">
+          <div class="add-file add-file--no-border">
+            <label class="label">File(s)</label>
+            <ng-container *ngIf="deliverables.length">
+              <apollo-file-progress
+                *ngFor="let deliverable of deliverables"
+                [file]="deliverable"
+                [isDeleteDisabled]="false"
+                (cancelUpload)="onCancelUpload($event)"
+              ></apollo-file-progress>
+            </ng-container>
+            <apollo-upload-widget
+              data-slb-id="upload-files-widget"
+              widgetStyle="link"
+              [multipleFiles]="true"
+              [maxFileSizes]="maxFileSizesDeliverable"
+              [extensions]="extensionsDeliverable"
+              [canUpload]="true"
+              (startUpload)="onDeliverableStartUpload($event)"
+            ></apollo-upload-widget>
+          </div>
+          <div class="go-back-btn">
+            <button *ngIf="isPackagePublished" data-slb-id="go-back" slb-secondary-button [routerLink]="['/vendor/package/requests']" [disabled]="deliverablesInProgress">
+              <span class="go-back-icon"><mat-icon svgIcon="arrow-left-1"></mat-icon></span>Go To Subscription Requests
+            </button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </form>
+</section>

@@ -1,0 +1,49 @@
+<div data-slb-id="media-upload-preview" class="media-upload-preview">
+
+  <div class="info-container">
+    <div *ngFor="let infoMsg of options?.infoMessages">
+      {{ infoMsg }}
+    </div>
+  </div>
+
+  <slb-dropzone
+    #dropzone
+    data-slb-id="dropzone"
+    [ngClass]="{'drop-zone-area-error' : uploaderError}"
+    [dropzoneTemplate]="dropzoneTemplate"
+    [multiple]="options?.multiple"
+    [disabled]="options?.disabled"
+    [hidden]="isPackagePublished"
+    [accept]="options?.extensions"
+    [maxFileSize]="options?.maxFileSize"
+    (onFilesChange)="onFileSelected($event, dropzone)">
+    <ng-template #dropzoneTemplate>
+      <div class="icon-container">
+        <mat-icon svgIcon="cloud-upload"></mat-icon>
+      </div>
+      <div class="upload-validity">
+        <div>
+          {{options?.dropzoneInfoText}}
+        </div>
+        <div *ngIf="uploaderError">
+          {{options?.dropzoneErrorText}}
+        </div>
+      </div>
+    </ng-template>
+  </slb-dropzone>
+
+  <div>
+    <div class="preview-container" *ngIf="files.length > 0 else noPreview ">
+      <ng-container *ngFor="let file of files">
+        <apollo-media-preview *ngIf="file && file !== null" [file]="file" [isPublished]="isPackagePublished" (removeMedia) = "removeMedia($event)" (captionEdit) = "captionEdited($event)">
+        </apollo-media-preview>
+      </ng-container>
+    </div>
+    <ng-template #noPreview>
+      <div class="no-preview-container">
+        {{options?.noPreviewText}}
+      </div>
+    </ng-template>
+  </div>
+</div>
+<div class="loader-container" *ngIf="showLoader"><mat-spinner data-slb-id="load-spinner"></mat-spinner></div>

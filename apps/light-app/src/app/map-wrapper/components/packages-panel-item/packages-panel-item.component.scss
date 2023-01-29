@@ -1,0 +1,85 @@
+@import 'libs/app/styles';
+
+:host {
+  background: $color-grey-01;
+  display: block;
+  height: 164px;
+  border-bottom: 1px solid #bfbfbf;
+
+  * {
+    cursor: pointer;
+  }
+
+  &:hover {
+    background: $color-grey-02;
+  }
+}
+
+.header {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: stretch;
+  flex-direction: row;
+  align-content: stretch;
+  padding: 20px 20px 10px 20px;
+
+  .header-title {
+    flex-grow: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-transform: capitalize;
+    font-size: 16px;
+    font-weight: bold;
+    max-width: 250px;
+  }
+
+  .header-vendor {
+    color: #BFBFBF;
+    max-width: 100px;
+    text-align: right;
+    font-size: 14px;
+    font-weight: 100;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.attributes {
+  padding: 10px 20px 20px 20px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: stretch;
+  line-height: 26px;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: stretch;
+
+  > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    align-items: stretch;
+
+    span {
+      width: 100%;
+
+      &:first-of-type:not(.light) {
+        font-weight: 600;
+      }
+
+      &:last-of-type,
+      &.light {
+        color: #bfbfbf;
+        font-weight: 100;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+    }
+  }
+}

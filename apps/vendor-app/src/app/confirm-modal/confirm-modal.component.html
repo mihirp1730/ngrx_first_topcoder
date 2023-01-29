@@ -1,0 +1,25 @@
+<div class="confirm-modal">
+  <div mat-dialog-title class="confirm-modal__title-content">
+    <h4>{{ title }}</h4>
+  </div>
+  <div mat-dialog-content class="mat-dialog-content confirm-modal__mat-dialog-content">
+    <div class="confirm-modal__content-container">
+      <div class="confirm-modal__cancel-text">
+        {{ content }}
+        <br />
+        {{ subContent }}
+      </div>
+    </div>
+    <div class="confirm-modal__action-buttons">
+      <slb-modal-close-button
+        *ngIf="displayObject"
+        [dialogRef]="dialogRef"
+        buttonType="Secondary"
+        [buttonText]="cancelButtonText"
+      ></slb-modal-close-button>
+      <button data-slb-id="confirm-modal-btn" class="confirm-modal__button-yes" (click)="yesBtnHandler()" slb-button>
+        {{ confirmButtonText }}
+      </button>
+    </div>
+  </div>
+</div>

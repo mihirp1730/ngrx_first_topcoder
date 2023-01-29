@@ -1,0 +1,524 @@
+#  If you are going to add new environment variable to this file, please remeber you have to also modife input in the envsubst command in the deploy.sh file
+swagger: '2.0'
+info:
+  version: 2.0.0
+  title: GAIA Light Metadata Server $CONTAINER_CLUSTER $GCLOUD_PROJECT
+  description: GAIA Light server for providing metadata. Data is persisted in JSON files.
+host: metadata-server-$CONTAINER_CLUSTER.endpoints.$GCLOUD_PROJECT.cloud.goog
+basePath: /api
+tags:
+  - name: Metadata
+    description: API for maintaining Categories.
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+x-google-endpoints:
+  - name: metadata-server-$CONTAINER_CLUSTER.endpoints.$GCLOUD_PROJECT.cloud.goog
+
+################################################################################
+#                                  Security                                    #
+################################################################################
+
+# remove token validation in esp as we enabled IAP
+# security:
+#   - sauth_token: [ ]
+
+# securityDefinitions:
+#   sauth_token:
+#     authorizationUrl: ""
+#     flow: "implicit"
+#     type: "oauth2"
+#     x-google-issuer: "$AUTH_ISSUER"
+#     x-google-jwks_uri: "$AUTH_JWK_URI"
+#     x-google-audiences: "$AUTH_CLIENT_ID"
+
+paths:
+  /metadata/health:
+    get:
+      operationId: health
+      tags:
+        - health
+      summary: 'health endpoint '
+      description: 'health endpoint '
+      parameters:
+        - in: header
+          name: appKey
+          type: string
+          description: 'App Key for the Application'
+          required: true
+      responses:
+        '200':
+          description: returns OK meaning that service is up and running
+        '404':
+          description: returns when "appKey" is not defined in headers. Must for this endpoint to function
+  /metadata/map-config:
+    get:
+      operationId: getMapConfiguration
+      tags:
+        - map
+      summary: 'map configuration '
+      description: 'map configuration endpoint '
+      parameters:
+        - in: header
+          name: request
+          type: string
+          description: 'incoming request object'
+          required: true
+      responses:
+        '200':
+          description: returns map configuration for the given request host
+        '500':
+          description: returns when the request host is not found in the configuration
+  /metadata/consumer-url:
+    get:
+      operationId: getConsumerAppUrl
+      tags:
+        - map
+      summary: 'consumer url '
+      description: 'consumer url endpoint '
+      parameters:
+        - in: header
+          name: request
+          type: string
+          description: 'incoming request object'
+          required: true
+        - in: header  
+          name: vendorid
+          type: string
+          description: 'incoming vendorid'
+          required: true
+      responses:
+        '200':
+          description: returns consumer url for the given request host
+        '500':
+          description: returns when the request host is not found in the configuration
+  /metadata/layers:
+    get:
+      operationId: getCategories
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          default: Bearer {token}
+          type: string
+      tags:
+        - Metadata
+      summary: Returns Metadata.
+      description: Returns Metadata.
+      responses:
+        '200':
+          description: A list of Categories.
+          schema:
+            type: array
+            items:
+              '$ref': '#/definitions/Category'
+  /metadata/layers/{layerName}:
+    get:
+      operationId: getCategory
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          default: Bearer {token}
+          type: string
+        - in: path
+          name: layerName
+          type: string
+          required: true
+          description: This is the specific layer to get.
+      tags:
+        - Metadata
+      summary: Returns layer metadata.
+      description: Returns layer metadata.
+      responses:
+        '200':
+          description: A Category.
+          schema:
+            '$ref': '#/definitions/Category'
+  /metadata/layer:
+    post:
+      operationId: postLayer
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          default: Bearer {token}
+          type: string
+        - name: layer
+          in: body
+          schema:
+            type: object
+      tags:
+        - Metadata
+      summary: Update existing layer if existing or create new layer.
+      description: Update existing layer if existing or create new layer.
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /metadata/layer/{layerName}:
+    delete:
+      operationId: deleteLayer
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          default: Bearer {token}
+          type: string
+        - name: layerName
+          in: path
+          required: true
+          type: string
+          description: This is the specific layer to delete.
+      tags:
+        - Metadata
+      summary: Delete existing layer with status Experimental.
+      description: Delete existing layer with status Experimental.
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /metadata/finalize:
+    post:
+      operationId: finalizeLayer
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          default: Bearer {token}
+          type: string
+        - name: layerNames
+          in: body
+          schema:
+            type: object
+      tags:
+        - Metadata
+      summary: Promote experimental layers.
+      description: Promote experimental layers.
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /metadata/marketing-layers:
+    get:
+      operationId: getMarketingLayers
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          default: Bearer {token}
+          type: string
+      tags:
+        - Metadata
+      summary: Returns all marketing layer metadata.
+      description: Returns all marketing layer metadata.
+      responses:
+        200:
+          description: A list of data types.
+          schema:
+            type: array
+            items:
+              '$ref': '#/definitions/DataType'
+  /metadata/regions:
+    get:
+      operationId: getRegions
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          default: Bearer {token}
+          type: string
+      tags:
+        - Metadata
+      summary: Returns all region options.
+      description: Returns all Regions.
+      responses:
+        200:
+          description: A list of regions.
+          schema:
+            type: array
+            items:
+              '$ref': '#/definitions/Region'
+  /metadata/environment:
+    get:
+      operationId: getEnvironment
+      tags:
+        - environment
+      summary: Returns environment keys.
+      description: Returns environment keys
+      responses:
+        '200':
+          description: An object of app keys required by app initialization.
+          schema:
+            type: object
+            items:
+              '$ref': '#/definitions/Env'
+  /metadata/map:
+    get:
+      operationId: getMapWrapperComponentSettings
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          default: Bearer {token}
+          type: string
+      tags:
+        - Map
+      summary: Returns Map wrapper settings.
+      description: Returns Map wrapper settings
+      responses:
+        '200':
+          description: An object of settings required by map-wrapper project.
+          schema:
+            type: object
+            items:
+              '$ref': '#/definitions/Map'
+  /metadata/setting:
+    post:
+      operationId: postLayerSetting
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          default: Bearer {token}
+          type: string
+        - name: layerSetting
+          in: body
+          schema:
+            type: object
+      tags:
+        - Map
+      summary: Update existing layer if existing or create new layer.
+      description: Update existing layer if existing or create new layer.
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /metadata/opportunities:
+    get:
+      operationId: getOppurtunityMetadata
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          default: Bearer {token}
+          type: string
+      tags:
+        - Metadata
+      summary: Returns all Oppurtunity Metadata.
+      description: Returns opportunity metadata like assets, delievery, offer, contract, phase types.
+      responses:
+        200:
+          description: An object of opportunity metadata.
+          schema:
+            type: object
+            items:
+              '$ref': '#/definitions/Opportunities'
+definitions:
+  Category:
+    properties:
+      attributes:
+        description: A collection of attributes of a Category.
+        readOnly: true
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            displayName:
+              type: string
+            type:
+              type: string
+            isGlobalFilter:
+              type: boolean
+            isFilterable:
+              type: boolean
+            filterType:
+              type: string
+            displayInSearchResults:
+              type: boolean
+            displayInSearchDetails:
+              type: boolean
+            identity:
+              type: boolean
+            displaySequence:
+              type: number
+      name:
+        description: Name identifier of a Category.
+        type: string
+      displayName:
+        description: Name of a Category.
+        type: string
+      displaySequence:
+        type: number
+      zIndex:
+        type: number
+      displayInMap:
+        type: string
+      searchable:
+        type: boolean
+      selectable:
+        type: boolean
+      primaryKeyCol:
+        type: string
+      displayIcon:
+        type: string
+      displayTitleAttribute:
+        type: string
+      displaySubtitle:
+        type: string
+      displayColorAttribute:
+        type: string
+      displayColors:
+        description: A collection of color definitions.
+        type: array
+        items:
+          type: object
+          properties:
+            value:
+              type: string
+            color:
+              type: string
+      mapLargeTable:
+        type: string
+  Region:
+    type: string
+    description: all the region options
+    enum:
+      - Global
+      - North America
+      - South America
+      - Europe
+      - Africa
+      - Antarctica
+      - Asia
+      - Australia
+  DataType:
+    properties:
+      shapeType:
+        type: string
+        description: shape type identifier of a marketing representation layer
+      layerName:
+        type: string
+        description: Type identifier of a marketing representation layer
+      displayName:
+        type: string
+        description: Display name of a marketing representation layer
+      maplargeTable:
+        type: string
+        description: Common maplarge table of a marketing representation layer
+      primaryKey:
+        type: string
+        description: Primary key of a marketing representation layer
+  Env:
+    properties:
+      app:
+        type: object
+        properties:
+          key:
+            type: string
+          splitKey:
+            type: string
+          usersnapUrl:
+            type: string
+      map:
+        type: object
+        properties:
+          deploymentUrl:
+            type: string
+          layerConfigUrl:
+            type: string
+          productId:
+            type: string
+      xchange:
+        type: object
+        properties:
+          mlAccount:
+            type: string
+  Map:
+    properties:
+      gisCanvas:
+        description: Settings object that conforms to interface exposed by GisCanvas
+          project.
+        type: object
+      zoomToRadius:
+        description: A collection zoom level with corresponding numbers assigned to
+          them.
+        type: array
+        items:
+          type: number
+      filtersPage:
+        description: Object used when paging through filters data sets.
+        type: object
+        properties:
+          page:
+            type: number
+          skip:
+            type: number
+          take:
+            type: number
+          search:
+            type: string
+          layer:
+            type: string
+          column:
+            type: string
+          loading:
+            type: boolean
+      searchPage:
+        description: Object used when paging through search query results.
+        type: object
+        properties:
+          page:
+            type: number
+          skip:
+            type: number
+          take:
+            type: number
+          search:
+            type: string
+          layer:
+            type: string
+          column:
+            type: string
+          loading:
+            type: boolean
+      selectionPage:
+        description: Object used when paging through selections query results.
+        type: object
+        properties:
+          page:
+            type: number
+          skip:
+            type: number
+          take:
+            type: number
+          search:
+            type: string
+          layer:
+            type: string
+          column:
+            type: string
+          loading:
+            type: boolean
+  Opportunities:
+    properties:
+      assetTypes:
+        type: array
+        description: Assets types for opportunity
+      deliveryTypes:
+        type: string
+        description: Delivery types for opportunity
+      offerTypes:
+        type: string
+        description: Offer types for opportunity
+      contractTypes:
+        type: string
+        description: Contract types for opportunity
+      phaseTypes:
+        type: string
+        description: Phase types for opportunity

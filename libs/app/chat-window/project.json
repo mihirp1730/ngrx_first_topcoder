@@ -1,0 +1,39 @@
+{
+  "projectType": "library",
+  "root": "libs/app/chat-window",
+  "sourceRoot": "libs/app/chat-window/src",
+  "prefix": "apollo",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["dist/libs/app/chat-window"],
+      "options": {
+        "project": "libs/app/chat-window/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/app/chat-window/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/app/chat-window/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/chat-window"],
+      "options": {
+        "jestConfig": "libs/app/chat-window/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/chat-window/src/**/*.ts", "libs/app/chat-window/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

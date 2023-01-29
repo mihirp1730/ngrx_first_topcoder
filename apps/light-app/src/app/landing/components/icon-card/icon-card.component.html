@@ -1,0 +1,7 @@
+<section class="card-container">
+  <div class="card" *ngFor="let card of cards">
+    <img [src]="'assets/icons/' + card.icon + '.svg'" alt="" />
+    <h4 class="card__title">{{ card.title }}</h4>
+    <p class="card__description">{{ card.description }}</p>
+  </div>
+</section>

@@ -1,0 +1,44 @@
+{
+  "/api/auth": {
+    "target": "http://localhost:3333",
+    "secure": false
+  },
+  "/api/metadata": {
+    "target": "http://localhost:3334",
+    "secure": false
+  },
+  "/api/session": {
+    "target": "http://localhost:3335",
+    "secure": false
+  },
+  "/api/content": {
+    "target": "http://localhost:3337",
+    "secure": false
+  },
+  "/api/gateway": {
+    "target": "http://localhost:3338",
+    "secure": false
+  },
+  "/api-to-proxy": {
+    "target": "https://evd.gaia-osdu.gaiaops.cloud.slb-ds.com",
+    "pathRewrite": {
+      "^/api-to-proxy/api/gateway": "/api/gateway",
+      "^/api-to-proxy/api/metadata": "/api/metadata",
+      "^/api-to-proxy/api/gateway/attendee/opportunities": "/api/gateway/attendee/opportunities",
+      "^/api-to-proxy/api/attendee/opportunities": "/api/attendee/opportunities",
+      "^/api-to-proxy/data-packages": "/data-packages",
+      "^/api-to-proxy/data-vendors": "/data-vendors",
+      "^/api-to-proxy/file-manager/files": "/file-manager/files",
+      "^/api-to-proxy/vendor": "/vendor",
+      "^/api-to-proxy/chat/threads": "/chat/threads",
+      "^/api-to-proxy/attendee/opportunity-subscription-requests": "/attendee/opportunity-subscription-requests",
+      "^/api-to-proxy/host/opportunity-subscription-request": "/host/opportunity-subscription-request",
+      "^/api-to-proxy/attendee/opportunity-subscriptions": "/attendee/opportunity-subscriptions"
+    },
+    "secure": false
+  },
+  "/data-vendors": {
+    "target": "https://evd.gaia-osdu.gaiaops.cloud.slb-ds.com",
+    "secure": false
+  }
+}

@@ -1,0 +1,168 @@
+@import 'libs/app/styles';
+
+.expandable-card {
+  &__header {
+    margin-bottom: 15px;
+  }
+
+  &__section-title {
+    @include font-size(16);
+    margin-bottom: 30px;
+  }
+
+  &__expandable {
+    border-radius: 0px;
+  }
+
+  &__divider {
+    width: 100%;
+    border-bottom: 1px solid #262c34;
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    padding: 0 100px 10px 30px;
+    color: #5e6670;
+
+    span {
+      padding: 0 20px 0 20px;
+      width: 150px;
+    }
+  }
+
+  &__data {
+    width: 100%;
+    display: flex;
+    line-height: 19px;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    padding: 0px;
+    margin-bottom: 10px;
+    margin-left: -5px;
+    color: $color-white !important;
+
+    mat-panel-title {
+      justify-content: space-between;
+      margin: auto;
+    }
+
+    span:first-child {
+      padding-left: 30px;
+    }
+
+    span {
+      @include font-size(14);
+      font-weight: normal;
+      padding: 20px 0 15px 0;
+      width: 180px;
+      white-space: nowrap;
+      height: 55px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &:hover {
+        @include line-height(14);
+        overflow: visible;
+        white-space: normal;
+      }
+    }
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+  &__expanded {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 100px 0 60px;
+    line-height: 16px;
+
+    &__title {
+      width: 100%;
+    }
+
+    span {
+      @include font-size(14);
+      font-weight: normal;
+      padding: 0 170px 0 20px;
+      min-width: 300px;
+      height: 300px;
+      text-align: left;
+    }
+
+    &__container {
+      display: flex;
+      flex-flow: column wrap;
+      justify-content: space-around;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    &__item {
+      padding: 5px;
+      text-decoration: none;
+      margin-top: 10px;
+      color: $color-white;
+      text-align: left;
+
+      a {
+        text-decoration: none;
+      }
+    }
+
+    &__scroll {
+      height: 100%;
+    }
+
+    &__row {
+      display: flex;
+      max-width: 1200px;
+      grid-template-columns: repeat(4, 1fr);
+      column-gap: 10px;
+      margin: auto;
+      margin-bottom: 10px;
+    }
+
+    &__table-title {
+      @include font-size(15);
+      color: $color-white;
+      margin: 0;
+    }
+
+    &__table-columns {
+      @include font-size(16);
+      margin-bottom: 30px;
+    }
+  }
+}
+
+.isSelected {
+  margin-bottom: 5px;
+  margin-top: 5px;
+  border-radius: 5px;
+}
+
+.actions a {
+  font-weight: bold;
+}
+.actions {
+  a.request-disable {
+    pointer-events: none;
+    color: $color-grey-07;
+    opacity: 0.6;
+  }
+}
+
+.data-subscription-requests {
+  pointer-events: none;
+  .package-name {
+    pointer-events: all;
+  }
+}

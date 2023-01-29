@@ -1,0 +1,83 @@
+@import 'libs/app/styles';
+
+.modal-container {
+  &__close {
+    float: right;
+  }
+
+  &__header {
+    .header {
+      @include font-size(20);
+      font-weight: 500;
+      margin: 0 0 5px 0;
+    }
+    .subtitle {
+      font-size: 14px;
+      letter-spacing: 0.48px;
+      line-height: 16px;
+      color: $color-grey-07;
+      margin-top: 0;
+    }
+  }
+
+  &__header-chat {
+    margin-bottom: 24px;
+
+    .header {
+      @include font-size(20);
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    .subtitle {
+      .value {
+        @include font-size(14);
+        line-height: 25px;
+        font-weight: bold;
+        color: $color-grey-03;
+
+        .label {
+          color: $color-grey-06;
+          font-weight: normal;
+        }
+      }
+    }
+  }
+
+  &__mat-dialog-content {
+    padding-bottom: 0 !important;
+  }
+
+  &__content-container {
+    margin: 20px 0 11px 0;
+    width: 32rem;
+
+    .subcontent {
+      color: $color-grey-07;
+      margin-top: 6px;
+      white-space: pre-wrap;
+      max-height: 250px;
+    }
+  }
+
+  &__action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+
+    button {
+      min-width: 134px;
+    }
+  }
+
+  &__btn-confirm {
+    cursor: pointer;
+    margin-left: 12px;
+  }
+
+  button[disabled] {
+    cursor: not-allowed;
+    background-color: $color-grey-04;
+    border: 1px solid $color-grey-05;
+  }
+}

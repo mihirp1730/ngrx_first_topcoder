@@ -1,0 +1,23 @@
+{
+  "root": "libs/server/server-logger",
+  "sourceRoot": "libs/server/server-logger/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/server/server-logger/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/server/server-logger"],
+      "options": {
+        "jestConfig": "libs/server/server-logger/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,19 @@
+@import 'libs/app/styles';
+@import './subscriptions/shared-styles.scss';
+
+.request {
+  text-align: left;
+
+  &__container {
+    border: 1px solid $color-grey-05;
+    box-shadow: 0 1px 7px 0 rgba(0, 0, 0, 0.58);
+    border-radius: 5px;
+    height: -webkit-fit-content;
+    background-color: $color-grey-04;
+    padding: 20px;
+  }
+}
+
+.no-margin-bottom {
+  margin-bottom: -10px;
+}

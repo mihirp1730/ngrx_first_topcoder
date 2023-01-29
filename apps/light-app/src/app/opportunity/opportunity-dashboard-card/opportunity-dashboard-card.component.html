@@ -1,0 +1,83 @@
+<mat-card class="opportunity-card">
+  <img mat-card-image [src]="imgPlaceHolderSrc" />
+  <mat-card-content>
+    <div class="flex-row header">
+      <div class="caption">
+        <div class="opportunity-caption" title="{{opportunityDetails?.opportunityName}}">
+          {{opportunityDetails?.opportunityName}}
+        </div>
+        <div class="chips">
+          <ng-container *ngIf="opportunityDetails?.opportunityStatus.toLowerCase() as status; else empty">
+            <div class="chip" [ngClass]="status">
+              <span>{{status}}</span>
+            </div>
+          </ng-container>
+          <ng-template #empty>
+            <div class="chip empty">
+              <span>Not Available</span>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="menu">
+        <mat-icon svgIcon="more"></mat-icon>
+      </div>
+    </div>
+    <ul class="properties-container">
+      <li data-slb-id="data-asset-type-info">
+        <div class="label" title="Asset Type">
+          <mat-icon svgIcon="apollo:assetType"></mat-icon>
+        </div>
+        <div class="value">
+          {{opportunityDetails?.opportunityProfile?.assetType?.join(', ') || noValueAltText}}
+        </div>
+      </li>
+      <li data-slb-id="data-offer-info">
+        <div class="label" title="Offer Type">
+          <mat-icon svgIcon="apollo:offerType"></mat-icon>
+        </div>
+        <div class="value">
+          {{opportunityDetails?.opportunityProfile?.offer?.join(', ') || noValueAltText}}
+        </div>
+      </li>
+      <li data-slb-id="data-contract-info">
+        <div class="label" title="Contract">
+          <mat-icon svgIcon="apollo:contract"></mat-icon>
+        </div>
+        <div class="value">
+          {{opportunityDetails?.opportunityProfile?.contract?.join(', ') || noValueAltText}}
+        </div>
+      </li>
+      <li data-slb-id="data-region-info">
+        <div class="label" title="Region">
+          <mat-icon svgIcon="apollo:region"></mat-icon>
+        </div>
+        <div class="value">
+          {{opportunityDetails?.countries?.join(', ') || noValueAltText}}
+        </div>
+      </li>
+      <li data-slb-id="data-date-range">
+        <div class="label" title="Date Time">
+          <mat-icon svgIcon="apollo:dateTime"></mat-icon>
+        </div>
+        <div class="value time">
+          <div
+            *ngIf="(opportunityDetails?.opportunityProfile?.offerStartDate && opportunityDetails?.opportunityProfile?.offerEndDate) else noDateTimeData">
+            <span>{{ opportunityDetails?.opportunityProfile?.offerStartDate | date: 'YYYY-MM-dd, HH:mm' }}</span> to <span>{{ opportunityDetails?.opportunityProfile?.offerEndDate | date: 'YYYY-MM-dd, HH:mm' }}</span>
+          </div>
+          <ng-template #noDateTimeData>
+            {{noValueAltText}}
+          </ng-template>
+        </div>
+      </li>
+      <li data-slb-id="data-duration-info">
+        <div class="label" title="Duration">
+          <mat-icon svgIcon="apollo:scheduler"></mat-icon>
+        </div>
+        <div class="value duration">
+          {{duration}} Days
+        </div>
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>

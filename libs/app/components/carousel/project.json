@@ -1,0 +1,23 @@
+{
+  "projectType": "library",
+  "root": "libs/app/components/carousel",
+  "sourceRoot": "libs/app/components/carousel/src",
+  "prefix": "apollo",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/components/carousel"],
+      "options": {
+        "jestConfig": "libs/app/components/carousel/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/components/carousel/src/**/*.ts", "libs/app/components/carousel/src/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}

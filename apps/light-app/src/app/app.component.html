@@ -1,0 +1,41 @@
+<apollo-usersnap></apollo-usersnap>
+<apollo-whatfix *ngIf="whatFix$ | async"></apollo-whatfix>
+
+<slb-navigation-framework [applicationLogo]="'assets/images/asset-portal.png'" [immersiveMode]="false"
+  [displayViewModeButtons]="false" [hasSidenav]="hasSidenav" mode="single">
+  <slb-framework-toolbar>
+    <a slb-secondary-button class="slb-btn-lnk" href={{vendorAppUrl}}><mat-icon svgIcon="expand-1"></mat-icon>Asset Host
+      Portal</a>
+    <slb-logout class="logout" id="userEmail" [userInitials]="userInitials" (logout)="signout()" [userName]="userName">
+      <div>{{userEmail}}</div>
+    </slb-logout>
+  </slb-framework-toolbar>
+  <slb-framework-sidenav>
+    <ng-content *ngTemplateOutlet="sidenav"></ng-content>
+  </slb-framework-sidenav>
+  <slb-framework-content>
+    <router-outlet></router-outlet>
+  </slb-framework-content>
+</slb-navigation-framework>
+
+<ng-template #sidenav>
+  <mat-nav-list class="nav-list">
+    <a class="dls-navigation-item" title="Map" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active"
+      routerLink="/map">
+      <mat-icon svgIcon="map"></mat-icon>
+    </a>
+    <a class="dls-navigation-item" title="Messages" routerLinkActive="active" routerLink="/communication">
+      <span [matBadge]="(unreadChatsCount$ | async)" [matBadgeHidden]="(unreadChatsCount$ | async) === 0">
+        <mat-icon svgIcon="chat"></mat-icon>
+      </span>
+    </a>
+    <a class="dls-navigation-item" title="Requests" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+      routerLink="/opportunity/requests">
+      <mat-icon svgIcon="checklist"></mat-icon>
+    </a>
+    <a class="dls-navigation-item privacy-link" href="https://www.slb.com/who-we-are/privacy"
+      target="_blank">Privacy</a>
+  </mat-nav-list>
+</ng-template>
+
+<apollo-toast-message position="bottom-right"></apollo-toast-message>

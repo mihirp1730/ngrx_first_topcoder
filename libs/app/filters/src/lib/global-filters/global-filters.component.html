@@ -1,0 +1,48 @@
+<div *ngIf="showGlobalFilters" class="apollo-global-filters-container">
+  <mat-chip-list class="filter-checkbox-tags">
+    <ng-template ngFor let-layer [ngForOf]="layers">
+      <ng-template ngFor let-attribute [ngForOf]="layer?.filter?.attributes">
+        <mat-chip #matChip="matChip" [slbPopoverTriggerFor]="tooltip" slbPopoverTrigger="click"
+          [slbPopoverHasBackdrop]="true"
+          [ngClass]="isFilter(attribute?.values)"
+          *ngIf="attribute.isFilterable && !attribute.identity && attribute.isGlobalFilter"
+          (click)="onClick(layer, attribute)" (closed)="onClose()">
+          <ng-container [ngSwitch]="attribute?.displayName">
+            <ng-container *ngSwitchCase="'Country'">
+              <mat-icon class="listicon path-nth-1" svgIcon="geotag"></mat-icon>
+            </ng-container>
+            <ng-container *ngSwitchCase="'Asset Type'">
+              <mat-icon class="listicon path-nth-2" svgIcon="apollo:assetType"></mat-icon>
+            </ng-container>
+            <ng-container *ngSwitchCase="'Offer Type'">
+              <mat-icon class="listicon path-nth-2" svgIcon="apollo:offerType"></mat-icon>
+            </ng-container>
+            <ng-container *ngSwitchCase="'Contract Type'">
+              <mat-icon class="listicon path-nth-1" svgIcon="apollo:contract"></mat-icon>
+            </ng-container>
+            <ng-container *ngSwitchCase="'Phase Type'">
+              <mat-icon class="listicon path-nth-1" svgIcon="apollo:phase"></mat-icon>
+            </ng-container>
+          </ng-container>
+          <span class="filter-name">{{ attribute?.displayName }}</span>
+        </mat-chip>
+      </ng-template>
+    </ng-template>
+  </mat-chip-list>
+  <button data-slb-id="clear-all-filters-btn" class="clear-filters-btn" slb-secondary-button
+    (click)="clearAllFilters()" [disabled]="(!attributeSelected && !dataObjectFilter)">
+    <mat-icon svgIcon="filter-reset"></mat-icon>
+    <span>Clear Filters</span>
+  </button>
+</div>
+
+  <slb-popover #tooltip>
+    <section *ngIf="selectedLayer" class="global-filter-dialog">
+      <gis-filters *ngIf="
+      selectedLayer?.filter &&
+      selectedLayer?.filter?.attributes &&
+      selectedLayer?.filter?.attributes?.length" [filter]="filter" [layer]="selectedLayer"
+        (filterChange)="onFilterChange(selectedLayer)">
+      </gis-filters>
+    </section>
+  </slb-popover>

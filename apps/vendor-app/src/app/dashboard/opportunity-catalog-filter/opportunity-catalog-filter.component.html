@@ -1,0 +1,121 @@
+<section class="opportunity-filters">
+  <form class="filter-form" [formGroup]="filtersForm">
+    <div>
+      <slb-autocomplete [placeholder]="'Start typing...'" label="Search" errorText="Field is required" name="search"
+        formControlName="opportunityName" [variants]="opportunityNames">
+      </slb-autocomplete>
+    </div>
+    <div class="filters-container">
+      <mat-form-field slbFormField>
+        <mat-label>Asset Type</mat-label>
+        <mat-select #selectAsset multiple formControlName="assetType" disableOptionCentering [value]="''"
+          placeholder="Select">
+          <mat-select-trigger>
+            <span *ngIf="filtersForm?.value?.assetType?.length > 1; else singleAssetType">
+              {{ filtersForm?.value?.assetType[1] }}
+              (+{{ filtersForm.value.assetType.length - 1 }}
+              {{ filtersForm.value.assetType.length === 2 ? 'item' : 'items' }})
+            </span>
+            <ng-template #singleAssetType>
+              <span *ngIf="filtersForm?.value?.assetType?.length === 1">
+                {{ filtersForm?.value.assetType[0] }}
+              </span>
+            </ng-template>
+          </mat-select-trigger>
+          <mat-option #allSelectAsset (click)="toggleAllSelection('assetType')" [value]="''">All</mat-option>
+          <mat-option (click)="togglePerOne('assetType')" *ngFor="let asset of assetTypeFilter$ | async"
+            [value]="asset.value">
+            {{ asset.viewText }}
+          </mat-option>
+          <mat-option (click)="togglePerOne('assetType')" [value]="'Not available'">Not available</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field slbFormField>
+        <mat-label>Offer Type</mat-label>
+        <mat-select #selectOfferType multiple formControlName="offerType" disableOptionCentering [value]="''"
+          placeholder="Select">
+          <mat-select-trigger>
+            <span *ngIf="filtersForm?.value?.offerType?.length > 1; else singleOfferType">
+              {{ filtersForm?.value.offerType[1] }}
+              (+{{ filtersForm.value.offerType.length - 1 }}
+              {{ filtersForm.value.offerType.length === 2 ? 'item' : 'items' }})
+            </span>
+            <ng-template #singleOfferType>
+              <span *ngIf="filtersForm?.value?.offerType?.length === 1">
+                {{ filtersForm?.value.offerType[0] }}
+              </span>
+            </ng-template>
+          </mat-select-trigger>
+          <mat-option #allSelectOfferType (click)="toggleAllSelection('offerType')" [value]="''">All</mat-option>
+          <mat-option (click)="togglePerOne('offerType')" *ngFor="let offer of offerTypeFilter$ | async"
+            [value]="offer.value">
+            {{ offer.viewText }}
+          </mat-option>
+          <mat-option (click)="togglePerOne('offerType')" [value]="'Not available'">Not available</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field slbFormField>
+        <mat-label>Delivery Type</mat-label>
+        <mat-select #selectDeliveryType multiple formControlName="deliveryType" disableOptionCentering [value]="''"
+          placeholder="Select">
+          <mat-select-trigger>
+            <span *ngIf="filtersForm?.value?.deliveryType?.length > 1; else singleDeliveryType">
+              {{ filtersForm?.value.deliveryType[1] }}
+              (+{{ filtersForm.value.deliveryType.length - 1 }}
+              {{ filtersForm.value.deliveryType.length === 2 ? 'item' : 'items' }})
+            </span>
+            <ng-template #singleDeliveryType>
+              <span *ngIf="filtersForm?.value?.deliveryType?.length === 1">
+                {{ filtersForm?.value.deliveryType[0] }}
+              </span>
+            </ng-template>
+          </mat-select-trigger>
+          <mat-option #allSelectDeliveryType (click)="toggleAllSelection('deliveryType')" [value]="''">All</mat-option>
+          <mat-option (click)="togglePerOne('deliveryType')" *ngFor="let delivery of deliveryFilter$ | async"
+            [value]="delivery.value">
+            {{ delivery.viewText }}
+          </mat-option>
+          <mat-option (click)="togglePerOne('deliveryType')" [value]="'Not available'">Not available</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field slbFormField>
+        <mat-label>Status</mat-label>
+        <mat-select #selectStatus multiple formControlName="status" disableOptionCentering [value]="''"
+          placeholder="Select">
+          <mat-select-trigger>
+            <span *ngIf="filtersForm?.value?.status?.length > 1; else singleStatus">
+              {{ filtersForm?.value.status[1] }}
+              (+{{ filtersForm.value.status.length - 1 }}
+              {{ filtersForm.value.status.length === 2 ? 'item' : 'items' }})
+            </span>
+            <ng-template #singleStatus>
+              <span *ngIf="filtersForm?.value?.status?.length === 1">
+                {{ filtersForm?.value.status[0] }}
+              </span>
+            </ng-template>
+          </mat-select-trigger>
+          <mat-option #allSelectStatus (click)="toggleAllSelection('status')" [value]="''">All</mat-option>
+          <mat-option (click)="togglePerOne('status')" *ngFor="let status of statusFilter$ | async"
+            [value]="status.value">
+            {{ status.viewText }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="clear-all">
+        <button slb-tertiary-button title="Clear All Filters" color="primary"
+          [disabled]="!(filtersForm?.controls.opportunityName.value ||
+           filtersForm?.controls.assetType.value?.length||
+           filtersForm?.controls.deliveryType.value?.length ||
+           filtersForm?.controls.offerType.value?.length ||
+           filtersForm?.controls.status.value?.length)"
+          (click)="filtersForm.reset()"
+          >
+          <mat-icon svgIcon="clear"></mat-icon>
+          <span>Clear All</span>
+      </button>
+      </div>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,9 @@
+@import 'libs/app/styles';
+
+button {
+  &.disabled,
+  &.disabled:hover {
+    color: $color-grey-05;
+    cursor: not-allowed;
+  }
+}

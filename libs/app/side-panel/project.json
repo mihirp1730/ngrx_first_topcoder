@@ -1,0 +1,36 @@
+{
+  "projectType": "library",
+  "root": "libs/app/side-panel",
+  "sourceRoot": "libs/app/side-panel/src",
+  "prefix": "apollo",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "options": {
+        "tsConfig": "libs/app/side-panel/tsconfig.lib.json",
+        "project": "libs/app/side-panel/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/app/side-panel/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/app/side-panel/src/**/*.ts", "libs/app/side-panel/src/**/*.html"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/app/side-panel"],
+      "options": {
+        "jestConfig": "libs/app/side-panel/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,121 @@
+@import 'libs/app/styles';
+
+.opportunity-request-card {
+  margin-top: 20px;
+  height: 180px;
+  padding: 0 !important;
+  .mat-card-image {
+    height: 185px;
+    object-fit: cover;
+    width: 100%;
+    margin-top: 0;
+    border-radius: 3px 3px 0 0;
+  }
+  .mat-card-content {
+    margin-top: 8px;
+    margin-bottom: 0;
+    padding: 0px !important;
+    color: $color-black;
+    .flex-col {
+      display: flex;
+      flex-direction: column;
+    }
+    .flex-row {
+      display: flex;
+      flex-direction: row;
+    }
+    .properties-container {
+      font-size: 0.75rem;
+      list-style: none;
+      padding: 0 20px;
+      margin-bottom: 5px;
+      li {
+        display: flex;
+        .label {
+          width: 30%;
+          color: $color-black;
+          font-weight: 500;
+        }
+        .value.no-data {
+          color: $color-grey-06;
+        }
+        .value {
+          font-weight: 600;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          span {
+            font-weight: 700;
+          }
+        }
+      }
+    }
+    .menu {
+      .more {
+        cursor: pointer;
+      }
+    }
+    ::ng-deep mat-menu {
+      .mat-menu-item {
+        font-size: 12px;
+      }
+    }
+
+    .flex-row.time {
+      height: 70px;
+      padding: 0px 0px;
+      border-top: 1px solid $color-grey-08;
+      div.box {
+        padding: 5px;
+        width: 50%;
+        text-align: center;
+      }
+      div.edge {
+        border-right: 1px solid $color-grey-08;
+      }
+    }
+    .flex-row.caption {
+      padding: 0 20px;
+      justify-content: flex-end;
+      div.name {
+        margin-right: auto;
+        margin-top: 8px;
+        .opportunity-request-caption {
+          font-size: 16px;
+          font-weight: 700;
+          margin-bottom: 5px;
+          width: 250px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .mat-chip {
+          color: $color-white;
+        }
+        .mat-chip.pending {
+          background-color: $color-text-warning;
+        }
+        .mat-chip.rejected {
+          background-color: $color-grey-01;
+        }
+        .mat-chip.cancelled {
+          background-color: $color-terracota-orange;
+        }
+      }
+      .logo-container {
+        height: 40px;
+        display: flex;
+        margin: 5px 0px;
+      }
+    }
+  }
+}
+.opportunity-request-card.pending {
+  border-color: $color-text-warning;
+}
+.opportunity-request-card.rejected {
+  border-color: $color-grey-01;
+}
+.opportunity-request-card.cancelled {
+  border-color: $color-terracota-orange;
+}

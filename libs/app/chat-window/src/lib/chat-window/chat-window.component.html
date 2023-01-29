@@ -1,0 +1,73 @@
+<div class="chat-window">
+  <div class="header" *ngIf="showHeader">
+    <div class="header__from-user-info" *ngIf="participants; else startChat">
+      <div class="avatar">
+        <mat-icon svgIcon="profile"></mat-icon>
+      </div>
+      <div class="info">
+        <div class="info__name">{{ chatGroup }}</div>
+        <!-- Company Name is not yet defined in the context, hardcoded for now -->
+        <div class="info__company-name">Company Name</div>
+      </div>
+    </div>
+    <div
+      *ngIf="participants"
+      (click)="getParticipants()"
+      class="header__participants"
+      [slbPopoverTriggerFor]="poplist"
+      slbPopoverTrigger="click"
+    >
+      <div>Participants</div>
+      <div>
+        <mat-icon svgIcon="apollo:team"></mat-icon>
+      </div>
+    </div>
+    <slb-popover #poplist hideArrow="true">
+      <apollo-chat-participants (openModalEvent)="openModal($event)" [participants]="participants"></apollo-chat-participants>
+    </slb-popover>
+    <ng-template #startChat>Start chat</ng-template>
+  </div>
+  <div class="content">
+    <div class="message-container">
+      <cdk-virtual-scroll-viewport
+        class="chat-scroll-viewport"
+        data-slb-id="chat-list"
+        [itemSize]="50"
+        minBufferPx="200"
+        maxBufferPx="200"
+        #virtualScroll
+      >
+        <div class="chat-message" *ngFor="let message of chatMessages; let i = index">
+          <div [class]="sender.email === message?.sender ? 'chat-message-send' : 'chat-message-received'">
+            <div class="user-info">
+              <div class="avatar">
+                <mat-icon svgIcon="profile"></mat-icon>
+              </div>
+              <span *ngIf="sender.email === message?.sender">You</span>
+              <span *ngIf="sender.email !== message?.sender">{{ message?.displayName ?? message?.sender }}</span>
+            </div>
+            <div class="message">
+              {{ message?.content }}
+            </div>
+            <span class="msg-date" *ngIf="message?.createdDate">{{
+              getDate(message?.createdDate) | date: 'dd-MMM-YYYY, HH:mm':'+offset'
+            }}</span>
+            <span class="msg-date" *ngIf="message?.createdDate === undefined">{{
+              getDate(message?.createdOn) | date: 'dd-MMM-YYYY, HH:mm':'+offset'
+            }}</span>
+          </div>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </div>
+    <div class="chat-input">
+      <form [formGroup]="chatForm">
+        <mat-form-field slbFormField class="input-form-field">
+          <input matInput type="text" formControlName="messageField" name="messageField" placeholder="Type here" />
+          <button matSuffix [disabled]="chatForm.get('messageField').value === ''" slb-icon-button (click)="send()">
+            <mat-icon svgIcon="send-1"></mat-icon>
+          </button>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+<div *ngIf="selectedPackage$ | async as package" class="package-details-pane-content">
+  <div class="progress-spinner" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+  <div [attr.data-slb-id]="'package-detail-pane-' + packageId" class="grid-container">
+    <div class="grid-item header-left1">
+      <div>
+        <h4>{{ package.name }}</h4>
+      </div>
+      <div>
+        <ng-container *ngIf="package?.dataPackageProfile?.price?.onRequest === false">
+          <span *ngIf="package?.dataPackageProfile?.price?.price; else emptyprice">
+            {{ package?.dataPackageProfile?.price?.price || 0 | currency }} USD -
+            {{ package?.dataPackageProfile?.price?.durationTerm || 0 }} MONTHS
+          </span>
+          <ng-template #emptyprice>
+            <span> -- -- </span>
+          </ng-template>
+        </ng-container>
+        <span *ngIf="package?.dataPackageProfile?.price?.onRequest === true">Price on request</span>
+      </div>
+    </div>
+    <div class="grid-item header-left2">
+      <button data-slb-id="close" (click)="closeThisPane()" slb-icon-button>
+        <mat-icon svgIcon="close"></mat-icon>
+      </button>
+    </div>
+    <div class="grid-item header-right3"></div>
+    <div class="grid-item hr"></div>
+
+    <div class="grid-item imgcell-left1">
+      <apollo-package-media-viewer [packageMedia]="package.dataPackageProfile?.profile.media"></apollo-package-media-viewer>
+    </div>
+    <div class="grid-item datalist-right">
+      <ul class="profile">
+        <li data-slb-id="data-vendor-name">
+          <span class="label">DATA PROVIDER</span>
+          <span class="value">{{ package?.vendorName }}</span>
+        </li>
+        <li data-slb-id="dataPackageId">
+          <span class="label">PACKAGE ID </span>
+          <span class="value">{{ package?.dataPackageId }}</span>
+        </li>
+        <li data-slb-id="region">
+          <span class="label">REGION</span>
+          <span class="value">{{ package?.dataPackageProfile?.profile?.regions.join(', ') }}</span>
+        </li>
+        <li class="mask">
+          <span class="label">ENVIRONMENT</span>
+          <span class="value">N/A</span>
+        </li>
+        <li class="mask">
+          <span class="label">DATA TYPE</span>
+          <span class="value">N/A</span>
+        </li>
+        <li class="mask">
+          <span class="label">LAST UPDATED ON</span>
+          <span class="value">N/A</span>
+        </li>
+        <li class="mask">
+          <span class="label">AVG UPDATE FREQUENCY</span>
+          <span class="value">N/A</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="grid-item descript-left1">
+      <p class="sub-title">Package Overview</p>
+      <div [innerHTML]="package?.dataPackageProfile?.profile?.overview?.overView || '- no data'">
+      </div>
+      <div>
+        <ul>
+          <ng-container *ngFor="let point of package?.dataPackageProfile?.profile?.overview?.keyPoints">
+            <li *ngIf="point">{{ point }}</li>
+          </ng-container>
+        </ul>
+      </div>
+      <p class="sub-title">Feature KeyPoints</p>
+      <div>
+        <ul *ngIf="package?.dataPackageProfile?.profile?.featuresAndContents?.keyPoints.length > 0; else nofeat">
+          <ng-container *ngFor="let feature of package?.dataPackageProfile?.profile?.featuresAndContents?.keyPoints">
+            <li *ngIf="feature">
+              <ng-container *ngFor="let content of feature.split('\n')"> {{ content }}<br /> </ng-container>
+            </li>
+          </ng-container>
+        </ul>
+        <ng-template #nofeat> - no data </ng-template>
+      </div>
+    </div>
+    <div class="grid-item descript-left2"></div>
+    <div data-slb-id="package-request" class="grid-item request-card">
+      <apollo-package-request></apollo-package-request>
+    </div>
+  </div>
+</div>

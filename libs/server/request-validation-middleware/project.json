@@ -1,0 +1,23 @@
+{
+  "root": "libs/server/request-validation-middleware",
+  "sourceRoot": "libs/server/request-validation-middleware/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/server/request-validation-middleware/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/server/request-validation-middleware"],
+      "options": {
+        "jestConfig": "libs/server/request-validation-middleware/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

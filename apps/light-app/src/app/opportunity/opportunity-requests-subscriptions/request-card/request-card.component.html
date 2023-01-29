@@ -1,0 +1,73 @@
+<mat-card
+  class="opportunity-request-card"
+  [ngClass]="{
+    pending: opportunityRequestDetails?.requestStatus === 'Pending',
+    rejected: opportunityRequestDetails?.requestStatus === 'Rejected',
+    cancelled: opportunityRequestDetails?.requestStatus === 'Cancelled',
+    'opportunity-subscription-card--disabled': isOpportunityDisabled()
+  }"
+>
+  <mat-card-content>
+    <div class="flex-row caption">
+      <div class="name">
+        <div class="opportunity-request-caption" title="{{ opportunityRequestDetails?.opportunityName }}">
+          {{ opportunityRequestDetails?.opportunityName }}
+        </div>
+        <div class="logo-container">
+          <img *ngIf="signedUrl" [alt]="" [src]="signedUrl" />
+        </div>
+        <div class="chips">
+          <mat-chip-list>
+            <mat-chip
+              [ngClass]="{
+                pending: opportunityRequestDetails?.requestStatus === 'Pending',
+                rejected: opportunityRequestDetails?.requestStatus === 'Rejected',
+                cancelled: opportunityRequestDetails?.requestStatus === 'Cancelled'
+              }"
+              >{{ opportunityRequestDetails?.requestStatus }}</mat-chip
+            >
+          </mat-chip-list>
+        </div>
+      </div>
+      <div class="menu">
+        <button slb-icon-button aria-label="More" class="more" title="Menu" [matMenuTriggerFor]="requestCardMenu">
+          <mat-icon svgIcon="more"></mat-icon>
+        </button>
+        <ng-container *ngIf="opportunityRequestDetails?.opportunityStatus?.toUpperCase() === opportunityStatusEnum.Expired.toUpperCase()">
+          <mat-icon
+            class="oppor-expired-icon"
+            matTooltip="The opportunity validity has expired and access management is disabled"
+            svgIcon="warning"
+          ></mat-icon>
+        </ng-container>
+        <ng-container
+          *ngIf="opportunityRequestDetails?.opportunityStatus?.toUpperCase() === opportunityStatusEnum.Unpublished.toUpperCase()"
+        >
+          <mat-icon
+            class="oppor-ubpublished-icon"
+            matTooltip="The opportunity has been unpublished, access management is disabled till it is published again"
+            svgIcon="notification-block"
+          ></mat-icon>
+        </ng-container>
+        <mat-menu class="opp-menu" #requestCardMenu="matMenu">
+          <button data-slb-id="message-host" mat-menu-item disabled><mat-icon svgIcon="chat"></mat-icon>Message Host</button>
+          <button data-slb-id="cancel-request" mat-menu-item disabled><mat-icon svgIcon="close-job"></mat-icon>Cancel Request</button>
+        </mat-menu>
+      </div>
+    </div>
+    <ul class="properties-container">
+      <li data-slb-id="data-access-type-info">
+        <div class="label" title="Access Type">Access Type</div>
+        <div class="value">
+          {{ opportunityRequestDetails?.accessLevels.join(', ') }}
+        </div>
+      </li>
+      <li data-slb-id="data-req-type-info">
+        <div class="label" title="Requested date">Requested On</div>
+        <div class="value">
+          {{ opportunityRequestDetails?.requestedOn | date: 'dd-MMM-YYYY' }}
+        </div>
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>

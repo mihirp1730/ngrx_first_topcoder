@@ -1,0 +1,30 @@
+@import 'libs/app/styles';
+
+.modal-nonpublic-signin {
+  margin: 15px 20px 15px 20px;
+
+  .modal-content {
+    height: 150px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+  }
+}
+
+.title-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 5px 0 15px 0 !important;
+
+  h4 {
+    margin: 0;
+  }
+}
+
+.btn-container {
+  text-align: right;
+}

@@ -1,0 +1,223 @@
+<form [formGroup]="addUserDetails" class="user-modal">
+  <div class="title">
+    <h3>{{ title }}</h3>
+  </div>
+  <ng-container *ngIf="context === 'add_user'">
+    <div class="opportunity-name">
+      <label class="label">1.Select Opportunity <span class="mandatory">*</span></label>
+      <slb-dropdown
+        formControlName="opportunityName"
+        (selectionChange)="onOpportunitySelectionChanged($event)"
+        [options]="opportunityNameList"
+      ></slb-dropdown>
+      <mat-error *ngIf="!addUserDetails.get('opportunityName').value && addUserDetails.get('opportunityName').touched">
+        Please select an opportunity
+      </mat-error>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="context === 'invite_attendee'">
+    <div class="opportunity-name__single">
+      <h5>Opportunity Name</h5>
+      <div>{{ opportunityName }}</div>
+    </div>
+    <div class="opportunity-name__single_url">
+      <label class="label">1.Opportunity URL</label>
+      <div>
+        <mat-form-field slbFormField>
+          <input matInput type="text" formControlName="opportunityUrl" readonly />
+        </mat-form-field>
+        <button
+          type="button"
+          data-slb-id="copy-invite-url-btn"
+          slb-tertiary-button
+          class="copy-url"
+          color="primary"
+          (click)="copyToClipBoard()"
+          title="Copy this URL to the clipboard"
+        >
+          Copy URL
+        </button>
+        <span class="url-link" *ngIf="showTooltip">Link Copied</span>
+      </div>
+    </div>
+  </ng-container>
+  <hr class="divider" />
+  <div class="users">
+    <label class="label">2.Add Users to the selected opportunity <span class="mandatory">*</span></label>
+    <div formArrayName="userDetails" class="user-details">
+      <div *ngFor="let user of users.controls; let i = index">
+        <div class="user-info" [formGroupName]="i">
+          <div class="info subscription-check">
+            <div *ngIf="isSubscriptionAvailable(users.controls[i].get('attendeeId').value, i) === false">
+              <mat-icon class="approve-icon" svgIcon="approved"></mat-icon>
+            </div>
+            <div *ngIf="isSubscriptionAvailable(users.controls[i].get('attendeeId').value, i)">
+              <mat-icon class="warning-icon" svgIcon="warning"></mat-icon>
+            </div>
+          </div>
+          <div class="info email-field">
+            <mat-form-field slbFormField>
+              <mat-label>Email</mat-label>
+              <input matInput type="text" formControlName="attendeeId" placeholder="Enter email" />
+              <mat-error *ngIf="users.controls[i].get('attendeeId')?.errors?.subscriptionAvailable">
+                Subscription already exists for the user</mat-error
+              >
+              <mat-error *ngIf="users.controls[i].get('attendeeId')?.errors?.required"> Field Required</mat-error>
+              <mat-error *ngIf="users.controls[i].get('attendeeId')?.errors?.email"> Please enter valid email id</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="info">
+            <mat-form-field slbFormField>
+              <mat-label>First Name</mat-label>
+              <input matInput type="text" formControlName="firstName" placeholder="Enter first name" />
+              <mat-error *ngIf="users.controls[i].get('firstName')?.errors?.required"> Field Required</mat-error>
+              <mat-error *ngIf="users.controls[i].get('firstName')?.errors?.pattern"> Please enter valid first name</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="info">
+            <mat-form-field slbFormField>
+              <mat-label>Last Name</mat-label>
+              <input matInput type="text" formControlName="lastName" placeholder="Enter last name" />
+              <mat-error *ngIf="users.controls[i].get('lastName')?.errors?.required"> Field Required</mat-error>
+              <mat-error *ngIf="users.controls[i].get('lastName')?.errors?.pattern"> Please enter valid last name</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="info">
+            <mat-form-field slbFormField>
+              <mat-label>Company</mat-label>
+              <input matInput type="text" formControlName="companyName" placeholder="Enter company name" />
+              <mat-error *ngIf="users.controls[i].get('companyName')?.errors?.required"> Field Required</mat-error>
+              <mat-error *ngIf="users.controls[i].get('companyName')?.errors?.pattern"> Please enter valid company name</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="info" (click)="removeUser(i)">
+            <span class="remove-icon" *ngIf="users.value.length !== 1">
+              <mat-icon svgIcon="delete"></mat-icon>
+            </span>
+          </div>
+        </div>
+      </div>
+      <button class="adduser-icon" [ngClass]="{ 'adduser-disable': users.invalid }" [disabled]="!users.valid" (click)="addUser()">
+        + Add Another User
+      </button>
+    </div>
+  </div>
+  <hr class="divider" />
+  <div class="details">
+    <div class="access-details">
+      <label class="label">3.Provide Access <span class="mandatory">*</span></label>
+      <div class="info-container">
+        <div class="details-info sub-heading">
+          <span>Select Access Type</span>
+          <span>Select Validity</span>
+        </div>
+        <div class="details-info" formGroupName="confidentialInfo">
+          <div class="levels">
+            <mat-checkbox
+              [value]="!confidentialInfoDateRangeDisabled"
+              formControlName="isChecked"
+              (change)="onCheckboxChange($event, 'confidentialInfo')"
+            ></mat-checkbox>
+            Details
+          </div>
+          <div class="date-picker">
+            <slb-date-picker-range
+              [dateRange]="confidentialDateRange"
+              [dateControl]="confidentialDateControl"
+              disableTextInput="true"
+              (rangeSelected)="dateSelected($event, 'confidentialInfo')"
+              [disabled]="confidentialInfoDateRangeDisabled"
+              placeholder="Select Date Range"
+              closeCalendarOnRangeSelected="true"
+              [minValue]="minDate"
+              [maxValue]="opportunityMaxDate"
+            >
+            </slb-date-picker-range>
+            <mat-hint *ngIf="opportunityMaxDate">Opportunity expires on {{ opportunityMaxDate | date: 'dd-MMM-YYYY' }}</mat-hint>
+            <mat-error *ngIf="confidentialDateControl.touched && addUserDetails.get('confidentialInfo.dateRange')?.errors?.required">
+              Date is required</mat-error
+            >
+            <mat-error *ngIf="addUserDetails.get('confidentialInfo.dateRange')?.hasError('invalidSelection')">
+              Please select valid date range</mat-error
+            >
+            <mat-error *ngIf="addUserDetails.get('confidentialInfo.dateRange')?.hasError('invalidDateRange')">
+              Start and End Date cannot be same</mat-error
+            >
+            <mat-error
+              *ngIf="
+                addUserDetails.get('confidentialInfo.dateRange')?.touched &&
+                addUserDetails.get('confidentialInfo.dateRange')?.hasError('slbDatePickerRangeOutOfBoundaries')
+              "
+            >
+              Please select valid date range</mat-error
+            >
+          </div>
+        </div>
+        <div class="details-info" formGroupName="vdrInfo">
+          <div class="levels">
+            <mat-checkbox [value]="!vdrInfoDateRangeDisabled" formControlName="isChecked" (change)="onCheckboxChange($event, 'vdrInfo')">
+            </mat-checkbox>
+            Virtual Data Room (VDR)
+          </div>
+          <div class="date-picker">
+            <slb-date-picker-range
+              [dateControl]="vdrDateControl"
+              [dateRange]="vdrDateRange"
+              (rangeSelected)="dateSelected($event, 'vdrInfo')"
+              disableTextInput="true"
+              [disabled]="vdrInfoDateRangeDisabled"
+              placeholder="Select Date Range"
+              closeCalendarOnRangeSelected="true"
+              [minValue]="minDate"
+              [maxValue]="opportunityMaxDate"
+            >
+            </slb-date-picker-range>
+            <mat-hint *ngIf="opportunityMaxDate">Opportunity expires on {{ opportunityMaxDate | date: 'dd-MMM-YYYY' }}</mat-hint>
+            <mat-error *ngIf="vdrDateControl.touched && addUserDetails.get('vdrInfo.dateRange')?.errors?.required">
+              Date is required</mat-error
+            >
+            <mat-error *ngIf="addUserDetails.get('vdrInfo.dateRange')?.hasError('invalidSelection')">
+              Please select valid date range</mat-error
+            >
+            <mat-error *ngIf="addUserDetails.get('vdrInfo.dateRange')?.hasError('invalidDateRange')">
+              Start and End Date cannot be same</mat-error
+            >
+            <mat-error
+              *ngIf="
+                addUserDetails.get('vdrInfo.dateRange')?.touched &&
+                addUserDetails.get('vdrInfo.dateRange')?.hasError('slbDatePickerRangeOutOfBoundaries')
+              "
+            >
+              Please select valid date range</mat-error
+            >
+          </div>
+        </div>
+        <div>
+          <mat-error
+            *ngIf="
+              confidentialInfoDateRangeDisabled &&
+              vdrInfoDateRangeDisabled &&
+              (addUserDetails.get('vdrInfo.isChecked').touched || addUserDetails.get('confidentialInfo.isChecked').touched)
+            "
+          >
+            One of the access levels is required
+          </mat-error>
+        </div>
+      </div>
+    </div>
+    <div class="message-info">
+      <mat-form-field slbFormField class="message-field">
+        <mat-label class="label"> 4.Message to Users (optional) </mat-label>
+        <textarea matInput formControlName="message" name="message" placeholder="Type here" rows="14"></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+  <hr />
+  <div class="action-buttons">
+    <div *ngIf="showLoader">
+      <mat-spinner data-slb-id="load-spinner" [diameter]="32"></mat-spinner>
+    </div>
+    <button slb-secondary-button (click)="closeModal()">Cancel</button>
+    <button slb-button (click)="save()">{{ saveText }}</button>
+  </div>
+</form>

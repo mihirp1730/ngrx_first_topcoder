@@ -1,0 +1,90 @@
+@import '../../../../styles';
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  background-color: $color-grey-01;
+  border: 1px solid $color-grey-07;
+  border-radius: 4px;
+
+  &__menu {
+    position: relative;
+    top: -2px;
+  }
+
+  // Gis canvas overwrite
+  ::ng-deep gis-search-box {
+    height: 47px;
+    width: 100%;
+
+    .search-box {
+      margin: 0;
+      border-color: transparent;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+
+      &:hover {
+        border-color: transparent !important;
+      }
+
+      .slb-search-field {
+        align-items: center;
+        justify-content: space-between;
+        float: none !important;
+
+        #gisSearch {
+          font-family: 'Roboto';
+          font-size: 14px;
+          color: white;
+        }
+
+        .searchIcon,
+        .searchIconOnResult {
+          position: initial;
+          margin-right: 10px;
+        }
+
+        .searchIconOnResult mat-icon {
+          position: initial;
+        }
+      }
+
+      .foundsearchbuttons {
+        margin-left: 5px;
+        margin-right: 5px;
+
+        &::before {
+          left: -6px;
+        }
+      }
+
+      .close {
+        display: flex;
+        width: 42px;
+        margin: 0;
+        padding: 0;
+        float: none;
+        align-items: center;
+        justify-content: center;
+        border-left: none;
+
+        .layericon {
+          width: 41px !important;
+          max-width: none;
+          max-height: none;
+          height: 60% !important;
+          border-left: 1px solid #8993a0;
+        }
+      }
+    }
+
+    input[type='search']::-webkit-search-decoration,
+    input[type='search']::-webkit-search-cancel-button,
+    input[type='search']::-webkit-search-results-button,
+    input[type='search']::-webkit-search-results-decoration {
+      display: none;
+    }
+  }
+}

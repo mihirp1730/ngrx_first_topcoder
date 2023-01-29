@@ -1,0 +1,53 @@
+{{$definitionName := getenv "BUILD_DEFINITIONNAME" -}}
+{{$sourceBranchName := getenv "BUILD_SOURCEBRANCHNAME" -}}
+{{$buildNumber := getenv "BUILD_BUILDNUMBER" -}}
+{{$gcloudProject := getenv "GCLOUD_PROJECT" -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{$definitionName}}$DEPLOYMENTID
+  annotations:
+    release-description: "$RELEASE_DESCRIPTION"
+  labels:
+    BUILD_DEFINITIONNAME: "{{$definitionName}}"
+    BUILD_SOURCEBRANCHNAME: "{{$sourceBranchName}}"
+    BUILD_BUILDNUMBER: "{{$buildNumber}}"
+    RELEASE_NAME: "$RELEASE_NAME"
+    RELEASE_REQUESTEDFOR: "$REQUESTED_FOR"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{$definitionName}}$DEPLOYMENTID
+  template:
+    metadata:
+      labels:
+        ssr: EAR-AA-20129
+        project-id: $GCLOUD_PROJECT
+        cluster-name: $CONTAINER_CLUSTER
+        app: {{$definitionName}}$DEPLOYMENTID
+        version: "{{$buildNumber}}"
+        BUILD_DEFINITIONNAME: "{{$definitionName}}"
+        BUILD_SOURCEBRANCHNAME: "{{$sourceBranchName}}"
+        BUILD_BUILDNUMBER: "{{$buildNumber}}"
+    spec:
+      serviceAccountName: $GCLOUD_PROJECT-k8sa-svc
+      containers:
+      - image: gcr.io/{{$gcloudProject}}/{{$definitionName}}:{{$sourceBranchName}}-{{$buildNumber}}
+        name: {{$definitionName}}
+        ports:
+        - name: http-app
+          containerPort: 8080
+        volumeMounts:
+        - name: light-app-environment-volume
+          mountPath: /usr/share/nginx/html/environments
+        - name: light-app-nginx-config-volume
+          mountPath: /etc/nginx/conf.d/
+      volumes:
+      - name: light-app-environment-volume
+        configMap:
+          name: {{$definitionName}}environments$DEPLOYMENTID
+      - name: light-app-nginx-config-volume
+        configMap:
+          name: {{$definitionName}}nginx-config$DEPLOYMENTID
+

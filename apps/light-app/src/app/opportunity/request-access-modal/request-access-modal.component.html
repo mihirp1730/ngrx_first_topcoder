@@ -1,0 +1,70 @@
+<div class="request-access-modal material-theme-light">
+  <div mat-dialog-title class="request-access-modal__title-content">
+    <h4>{{ title }}</h4>
+    <slb-modal-close-button data-slb-id="close" [dialogRef]="dialogRef" buttonType="Icon"></slb-modal-close-button>
+  </div>
+  <form [formGroup]="requestAccessForm">
+    <div mat-dialog-content class="mat-dialog-content request-access-modal__mat-dialog-content">
+      <div class="request-access-modal__content-container">
+        <h6 class="sub-heading" title="{{ opportunityName }}">
+          {{ opportunityName }}
+        </h6>
+        <div>
+          <mat-form-field slbFormField>
+            <mat-label> Please provide your Company Name </mat-label>
+            <input matInput formControlName="company" placeholder="Company name here" required />
+            <mat-error *ngIf="requestAccessForm.get('company')?.errors?.required"> Please enter company name.</mat-error>
+            <mat-error *ngIf="requestAccessForm.get('company')?.errors?.pattern"> Please enter valid company name.</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="request-access-modal__checkbox">
+          <mat-label class="label">Choose access type</mat-label>
+          <ul>
+            <li *ngFor="let inviteOption of inviteOptions; let i = index" formArrayName="accessLevels">
+              <mat-checkbox [value]="inviteOption.value" [disabled]="inviteOption.disabled" (change)="onCheckboxChange($event)">
+                {{ inviteOption.name }}
+              </mat-checkbox>
+              &nbsp;&nbsp;&nbsp;
+              <strong
+                *ngIf="inviteOption.disabled"
+                [ngClass]="{
+                  approved: accessTag === 'LIVE',
+                  pending: accessTag === 'REQUESTED'
+                }"
+                >{{ accessTag }}</strong
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="request-access-modal__formField">
+          <mat-form-field slbFormField class="attendees-form-field">
+            <mat-label> Message </mat-label>
+            <textarea
+              matInput
+              class="message-attendees"
+              name="message"
+              placeholder="Type your message here"
+              rows="6"
+              formControlName="message"
+            ></textarea>
+          </mat-form-field>
+        </div>
+        <div class="request-access-modal__action-buttons">
+          <div class="request-access-modal__loader-container" *ngIf="showloader">
+            <mat-spinner data-slb-id="load-spinner" [diameter]="32"></mat-spinner>
+          </div>
+          <slb-modal-close-button [dialogRef]="dialogRef" buttonType="Secondary" [buttonText]="cancelButtonText"></slb-modal-close-button>
+          <button
+            data-slb-id="request-access-modal-btn"
+            class="request-access-modal__button-yes"
+            slb-button
+            [disabled]="!requestAccessForm.valid"
+            (click)="requestAccess()"
+          >
+            {{ confirmButtonText }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

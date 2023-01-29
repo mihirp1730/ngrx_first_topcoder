@@ -1,0 +1,10 @@
+// Overwrite slb-navigation-framework styles
+::ng-deep slb-navigation-framework {
+  mat-toolbar {
+    display: none !important;
+  }
+
+  .dls-framework-canvas .dls-navigation-framework-content {
+    overflow-x: hidden;
+  }
+}

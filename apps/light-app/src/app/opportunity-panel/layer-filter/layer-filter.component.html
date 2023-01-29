@@ -1,0 +1,16 @@
+<mat-chip-list>
+  <slb-dropdown-panel mat-chip [template]="panelTemplate" [ngClass]="{'filter-selected': itemSelected }">
+    <div class="filter-content">
+      <mat-icon svgIcon="apollo:dataObject"></mat-icon>
+      <span>Data Objects</span>
+    </div>
+  </slb-dropdown-panel>
+</mat-chip-list>
+
+<ng-template #panelTemplate>
+  <mat-selection-list #list [formControl]="selectedLayers" [disableRipple]="disableRipple">
+    <mat-list-option *ngFor="let item of items" [checkboxPosition]="'before'" [value]="item.value">
+      {{item.viewText}}
+    </mat-list-option>
+  </mat-selection-list>
+</ng-template>

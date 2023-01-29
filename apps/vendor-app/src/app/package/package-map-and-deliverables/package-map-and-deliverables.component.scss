@@ -1,0 +1,138 @@
+@import 'libs/app/styles';
+
+.map-deliverables {
+  background-color: $color-grey-02;
+
+  ::ng-deep mat-accordion {
+    mat-expansion-panel {
+      box-shadow: none;
+    }
+
+    mat-expansion-panel-header,
+    mat-expansion-panel-header:hover,
+    mat-expansion-panel-header:focus {
+      background-color: $color-grey-01 !important;
+    }
+
+    .mat-expansion-panel-body {
+      padding: 0 20px;
+    }
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    background-color: $color-grey-01;
+    padding: 20px;
+  }
+
+  &__description {
+    font-size: small;
+    color: $color-grey-07;
+    padding: 15px 0 0;
+    margin: 0;
+  }
+
+  &__files {
+    mat-form-field {
+      width: 100%;
+    }
+
+    .close-btn {
+      background-color: $color-grey-02;
+      border: 1px solid $color-grey-02;
+      cursor: pointer;
+      float: right;
+      margin-bottom: 15px;
+      -webkit-appearance: none;
+
+      .close-icon {
+        height: 15px;
+        width: 15px;
+        color: $color-white;
+      }
+    }
+
+    .go-back-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      button .go-back-icon {
+        ::ng-deep mat-icon {
+          margin-right: 10px;
+          margin-top: 10px;
+        }
+      }
+
+      button[disabled] {
+        cursor: not-allowed;
+        background-color: $color-grey-04;
+        border: 1px solid $color-grey-05;
+      }
+    }
+  }
+
+  &__spinner {
+    margin-right: 10px;
+  }
+}
+
+::ng-deep button.add-group-button {
+  padding: 10px 0;
+  font-size: 14px;
+  font-weight: normal;
+  width: 100%;
+
+  & > span.dls-button-wrapper.mat-button-wrapper {
+    display: flex;
+    align-items: center;
+
+    mat-icon {
+      width: 16px;
+      height: 16px;
+      line-height: 16px;
+      margin-right: 8px;
+      position: relative;
+      top: -1px;
+    }
+  }
+}
+
+.add-file {
+  background-color: $color-grey-02;
+  margin-bottom: 20px;
+  padding-top: 20px;
+
+  &:after {
+    content: '';
+    width: calc(100% + 40px);
+    height: 1px;
+    background-color: $color-grey-05;
+    display: flex;
+    position: relative;
+    bottom: -20px;
+    left: -20px;
+    right: -20px;
+  }
+
+  &--no-border {
+    &:after {
+      display: none;
+    }
+  }
+}
+
+.label {
+  font-size: 12px;
+}
+
+.required {
+  color: $color-candy;
+}
+
+.custom-dropdown {
+  display: flex;
+  align-items: center;
+}

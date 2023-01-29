@@ -1,0 +1,67 @@
+@import '../../../../styles';
+
+.menu {
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px;
+    border-top: 1px solid $color-grey-07;
+    border-bottom: 1px solid $color-grey-07;
+  }
+
+  &__initials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    width: 60px;
+    border-radius: 99px;
+    background-color: $color-vox-blue;
+    font-size: 24px;
+  }
+
+  &__name {
+    text-align: center;
+
+    span {
+      display: block;
+    }
+  }
+
+  &__options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__option {
+    border-bottom: 1px solid $color-grey-07;
+
+    a {
+      display: block;
+      padding: 15px;
+      color: white;
+      cursor: pointer;
+      text-decoration: none;
+
+      &:hover {
+        background-color: $color-grey-03;
+      }
+    }
+  }
+  
+  .privacy {
+    position: absolute;
+    right: 10px;
+    bottom: 20px;
+    font-size: 12px;
+    a {
+      color: $color-white; 
+    }
+  }
+  
+}
